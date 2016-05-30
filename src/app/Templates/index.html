@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Webpack Redux Boilerplate</title>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic' rel='stylesheet' type='text/css'>
+	<link rel='stylesheet' href='/main.css' type='text/css'>
+</head>
+<body>
+	<div id="app">${componentHtml}</div>
+	<script>window.__INITIAL_STATE__ = ${JSON.stringify(finalState)}</script>
+	<script src="http://${process.env.HOST}:${process.env.HOT_PORT}/bundle.client.js"></script></body>
+</body>
+</html>

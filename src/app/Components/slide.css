@@ -1,0 +1,14 @@
+.wrapper {
+	position: relative;
+	float: left;
+}
+
+.element {
+	position: relative;
+	top: 0;
+}
+
+.image {
+	height: 100vh;
+	background-size: cover;
+}

@@ -1,0 +1,39 @@
+.wrapper {
+	composes: wrapper from 'Stylesheets/shared';
+	position: relative;
+	/*height: 100vh;*/
+	width: 100vw;
+	text-align: center;
+}
+
+.center {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.logo {
+	display: block;
+	max-width: 12.5em;
+	margin: 0 auto 2em auto;
+}
+
+.title {
+	color: #888;
+	font-size: 2em;
+}
+
+.container {
+	position: relative;
+	width: 100%;
+}
+
+:global .slider {
+	overflow: hidden;
+}
+
+:global .slider__track {
+	display: flex;
+}
