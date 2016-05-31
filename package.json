@@ -48,6 +48,7 @@
     "webpack-dev-server": "^1.12.1"
   },
   "dependencies": {
+    "dotenv-safe": "^2.3.1",
     "es6-promise": "^3.0.2",
     "es6-template": "^1.0.4",
     "html-loader": "^0.4.3",
@@ -68,6 +69,7 @@
     "redux-act": "0.4.0",
     "redux-form": "^4.2.0",
     "redux-thunk": "^1.0.3",
-    "swipe-js-iso": "^2.0.3"
+    "swipe-js-iso": "^2.0.3",
+    "webpack-dotenv-plugin": "^1.2.0"
   }
 }
