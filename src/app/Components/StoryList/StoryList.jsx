@@ -18,7 +18,7 @@ class StoryList extends Component {
 	}
 
 	componentDidMount() {
-		fetch('http://persgroep.api.dev/api/stories')
+		fetch(`${process.env.API_ENDPOINT}/api/stories`)
 			.then(response => response.json())
 			.then(response => StoryStore.addStories(response.data));
 	}
