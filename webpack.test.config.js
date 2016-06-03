@@ -1,6 +1,7 @@
 const PATH = __dirname;
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
 
@@ -18,6 +19,10 @@ module.exports = {
 		},
 	},
 
+	plugins: [
+		new ExtractTextPlugin('main.css'),
+	],
+
 	module: {
 		loaders: [
 			{
@@ -32,7 +37,11 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				loader: 'null-loader',
+				loader: ExtractTextPlugin.extract(
+					'style-loader',
+					`css-loader?modules&importLoaders=1
+					&localIdentName=[local]!postcss-loader`
+				),
 			},
 		],
 	},
