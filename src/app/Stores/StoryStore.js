@@ -1,15 +1,16 @@
-import _ from 'lodash';
-import { observable, action, asMap } from 'mobx';
+import { observable, action } from 'mobx';
 
 class StoryStore {
-	@observable stories = asMap([])
+	@observable stories = [];
 
 	@action addStory(story) {
-		this.stories.set(story.id, story);
+		this.stories.push(story);
 	}
 
 	@action addStories(stories) {
-		this.stories.merge(_.keyBy(stories, 'id'));
+		stories.map(story => {
+			this.stories.push(story);
+		});
 	}
 }
 

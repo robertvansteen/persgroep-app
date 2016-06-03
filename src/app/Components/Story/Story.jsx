@@ -1,8 +1,10 @@
 import _ from 'lodash';
+import moment from 'momentjs';
 import styles from './story.css';
 import React, { Component, PropTypes } from 'react';
+import LikeButton from 'Components/LikeButton/LikeButton';
 
-class Story extends Component {
+export class Story extends Component {
 
 	/**
 	 * The type of the props the component expects.
@@ -86,10 +88,19 @@ class Story extends Component {
 							<h1 className={styles.title}>{story.title}</h1>
 						</div>
 					</div>
+					<div>
+						{moment(story.created_at).format('D-M-YYYY')}
+					</div>
 					<div
 						className={styles.body}
 						dangerouslySetInnerHTML={{ __html: this.parseBody(story.body) }}
-					></div>
+					>
+					</div>
+					<LikeButton
+						active={false}
+						storyId={story.id}
+						onClick={() => {}}
+					/>
 				</div>
 			</div>
 		);

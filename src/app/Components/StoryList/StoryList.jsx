@@ -53,7 +53,7 @@ export class StoryList extends Component {
 	 * @return {ReactElement}
 	 */
 	render() {
-		const stories = this.props.story.stories;
+		const stories = this.props.stories;
 
 		return (
 			<div className={styles.wrapper}>
@@ -63,9 +63,9 @@ export class StoryList extends Component {
 						swipeOptions={this.swipeOptions}
 						key={stories.length}
 					>
-						{stories.map((story, index) =>
-							<Story key={story.id} story={story} active={index === this.state.active} />
-						)}
+						{stories.map((story, index) => {
+							return <Story key={story.id} story={story} active={index === this.state.active} />
+						})}
 					</Swiper>
 				</div>
 			</div>
@@ -74,5 +74,5 @@ export class StoryList extends Component {
 }
 
 export default mapProps(
-	() => ({ story: Store.story })
+	() => ({ stories: Store.story.stories })
 )(observer(StoryList));
