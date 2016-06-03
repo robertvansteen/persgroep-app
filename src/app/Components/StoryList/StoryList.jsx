@@ -1,12 +1,12 @@
 import Swiper from 'react-swipe';
+import Store from 'Stores/MainStore';
+import { mapProps } from 'recompose';
 import styles from './story_list.css';
 import { observer } from 'mobx-react';
 import Story from 'Components/Story/Story';
-import StoryStore from 'Stores/Domain/StoryStore';
 import React, { Component } from 'react';
 
-@observer
-class StoryList extends Component {
+export class StoryList extends Component {
 
 	/**
 	 * State of the component.
@@ -20,7 +20,7 @@ class StoryList extends Component {
 	componentDidMount() {
 		fetch(`${process.env.API_ENDPOINT}/api/stories`)
 			.then(response => response.json())
-			.then(response => StoryStore.addStories(response.data));
+			.then(response => Store.story.addStories(response.data));
 	}
 
 	/**
@@ -53,7 +53,7 @@ class StoryList extends Component {
 	 * @return {ReactElement}
 	 */
 	render() {
-		const stories = StoryStore.stories;
+		const stories = this.props.story.stories;
 
 		return (
 			<div className={styles.wrapper}>
@@ -73,11 +73,6 @@ class StoryList extends Component {
 	}
 }
 
-export default StoryList;
-
-// import React from 'react';
-// import { observer } from 'mobx-react';
-//
-// export default observer(({ total }) =>
-// 	<span>{total}</span>
-// );
+export default mapProps(
+	() => ({ story: Store.story })
+)(observer(StoryList));
