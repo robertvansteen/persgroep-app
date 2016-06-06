@@ -12,7 +12,8 @@ const story = {
 	author: {
 		name: 'Baz',
 	},
-	created_at: '2016-06-03 07:57:17',
+	likes: [],
+	created_at: '2016-01-01 12:00:00',
 };
 
 let component;
@@ -36,10 +37,11 @@ describe('Story component', () => {
 	});
 
 	it('should show the date of the story', () => {
-		component.should.contain('3-6-2016');
+		component.should.contain('1-1-2016');
 	});
 
 	it('should have a like button component', () => {
 		component.should.have.descendants(LikeButton);
 	});
+
 });

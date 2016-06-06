@@ -7,4 +7,8 @@
 		max-width: 100%;
 		height: auto;
 	}
+
+	button {
+		font-size: 100%;
+	}
 }

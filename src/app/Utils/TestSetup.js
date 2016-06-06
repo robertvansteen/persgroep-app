@@ -1,3 +1,5 @@
+import 'isomorphic-fetch';
+import 'babel-polyfill';
 import chai from 'chai';
 import { jsdom } from 'jsdom';
 import dirtyChai from 'dirty-chai';
@@ -20,6 +22,7 @@ factory.register('story', {
 	id: 'random.number',
 	title: 'random.words',
 	body: 'random.words',
+	liked: false,
 	author: {
 		name: 'random.words',
 	},

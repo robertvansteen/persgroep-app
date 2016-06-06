@@ -4,9 +4,13 @@ import { mapProps } from 'recompose';
 import styles from './story_list.css';
 import { observer } from 'mobx-react';
 import Story from 'Components/Story/Story';
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 export class StoryList extends Component {
+
+	static propTypes = {
+		stories: PropTypes.object.isRequired,
+	}
 
 	/**
 	 * State of the component.
@@ -17,10 +21,14 @@ export class StoryList extends Component {
 		active: 0,
 	}
 
+	/**
+	 * Invoked when the component is mounted.
+	 *
+	 * @return {void}
+	 */
 	componentDidMount() {
-		fetch(`${process.env.API_ENDPOINT}/api/stories`)
-			.then(response => response.json())
-			.then(response => Store.story.addStories(response.data));
+		console.log('did mount');
+		Store.story.fetchStories();
 	}
 
 	/**
@@ -61,10 +69,10 @@ export class StoryList extends Component {
 					<Swiper
 						className={styles.swiper}
 						swipeOptions={this.swipeOptions}
-						key={stories.length}
+						key={stories.size}
 					>
-						{stories.map((story, index) => {
-							return <Story key={story.id} story={story} active={index === this.state.active} />
+						{stories.values().map((story, index) => {
+							return <Story key={story.id} story={story} active={this.state.active === index} />;
 						})}
 					</Swiper>
 				</div>

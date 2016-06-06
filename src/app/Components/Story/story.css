@@ -1,4 +1,4 @@
-@value dark, light from "Stylesheets/colors";
+@value dark, grey, light from "Stylesheets/colors";
 
 .wrapper {
 	position: relative;
@@ -55,13 +55,23 @@
 	color: light;
 }
 
+.main {
+	padding: 1.75em 1.75em 1.75em 2.75em;
+}
+
+.date {
+	composes: sans from "Stylesheets/typography";
+	font-size: 0.875em;
+	font-weight: bold;
+	color: grey;
+}
+
 .body {
-	padding: 1.75em;
+	margin-top: 2em;
 }
 
 .body__paragraph {
 	composes: serif paragraph from "Stylesheets/typography";
 	font-size: 1.125em;
-	padding-left: 1em;
 	margin-bottom: 1em;
 }

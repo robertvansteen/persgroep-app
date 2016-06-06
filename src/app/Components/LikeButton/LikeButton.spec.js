@@ -28,6 +28,6 @@ describe('Like button component', () => {
 
 	it('should have an `is-active` class name when the user has liked the story', () => {
 		component = shallow(<LikeButton {...defaultProps} active />);
-		component.should.have.className('isActive');
+		component.should.have.className('is_active');
 	});
 });
