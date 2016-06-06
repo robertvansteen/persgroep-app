@@ -16,7 +16,7 @@
 }
 
 .text {
-	composes: sans from "Stylesheets/Typography";
+	composes: sans from "Stylesheets/typography";
 	position: relative;
 	top: 0.2em;
 	text-transform: uppercase;
