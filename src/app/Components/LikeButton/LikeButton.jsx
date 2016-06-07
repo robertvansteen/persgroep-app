@@ -10,7 +10,7 @@ export class LikeButton extends Component {
 	 * @type {Object}
 	 */
 	static propTypes = {
-		active: PropTypes.bool.isRequired,
+		active: PropTypes.bool,
 		onClick: PropTypes.func.isRequired,
 	}
 

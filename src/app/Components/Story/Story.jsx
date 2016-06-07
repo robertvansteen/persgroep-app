@@ -14,7 +14,7 @@ export class Story extends Component {
 	 * @type {Object}
 	 */
 	static propTypes = {
-		active: PropTypes.bool.isRequired,
+		active: PropTypes.bool,
 		story: PropTypes.object.isRequired,
 	}
 
