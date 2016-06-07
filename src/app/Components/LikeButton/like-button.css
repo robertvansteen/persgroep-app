@@ -1,0 +1,27 @@
+@value green from "Stylesheets/colors";
+
+.wrapper {
+	margin-top: 2em;
+}
+
+.is_active {
+	.icon { fill: green }
+	.text { color: green }
+}
+
+.icon {
+	width: 2em;
+	vertical-align: middle;
+	transition: 0.2s ease-in;
+}
+
+.text {
+	composes: sans from "Stylesheets/typography";
+	position: relative;
+	top: 0.2em;
+	text-transform: uppercase;
+	font-weight: bold;
+	vertical-align: middle;
+	margin-left: 1em;
+	transition: 0.4s ease-in;
+}

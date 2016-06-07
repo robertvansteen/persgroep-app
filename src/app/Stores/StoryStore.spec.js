@@ -1,3 +1,4 @@
+import 'Utils/TestSetup';
 import factory from 'fixture-factory';
 import StoryStore from './StoryStore';
 
@@ -46,4 +47,21 @@ describe('Storystore', () => {
 		store.stories.delete('1');
 		store.stories.should.have.property('size').equal(0);
 	});
+
+	// it('should like a story', () => {
+	// 	const story = factory.generateOne('story');
+	// 	store.addStory(story);
+	// 	store.stories.get(story.id).liked.should.be.false();
+	// 	store.likeStory(story);
+	// 	store.stories.get(story.id).liked.should.be.true();
+	// });
+	//
+	// it('should unlike a story', () => {
+	// 	const story = factory.generateOne('story');
+	// 	store.addStory(story);
+	// 	store.likeStory(story);
+	// 	store.stories.get(story.id).liked.should.be.true();
+	// 	store.unlikeStory(story);
+	// 	store.stories.get(story.id).liked.should.be.false();
+	// });
 });

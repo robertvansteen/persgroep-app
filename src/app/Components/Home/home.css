@@ -1,7 +1,6 @@
 .wrapper {
 	composes: wrapper from 'Stylesheets/shared';
 	position: relative;
-	/*height: 100vh;*/
 	width: 100vw;
 	text-align: center;
 }

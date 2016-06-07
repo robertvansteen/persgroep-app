@@ -1,10 +1,11 @@
 const PATH = __dirname;
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
 
-	target: 'node', // in order to ignore built-in modules like path, fs, etc.
+	target: 'node',
 	externals: [nodeExternals()],
 	devtool: 'cheap-module-source-map',
 
@@ -17,6 +18,10 @@ module.exports = {
 			env: path.join(PATH, 'env'),
 		},
 	},
+
+	plugins: [
+		new ExtractTextPlugin('main.css'),
+	],
 
 	module: {
 		loaders: [
@@ -32,7 +37,11 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				loader: 'null-loader',
+				loader: ExtractTextPlugin.extract(
+					'style-loader',
+					`css-loader?modules&importLoaders=1
+					&localIdentName=[local]!postcss-loader`
+				),
 			},
 		],
 	},

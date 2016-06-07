@@ -1,5 +1,6 @@
 import 'Stylesheets/reset';
 import 'Stylesheets/shared';
+import DevTools from 'mobx-react-devtools';
 import React, { Component, PropTypes } from 'react';
 
 class App extends Component {
@@ -14,6 +15,18 @@ class App extends Component {
 	}
 
 	/**
+	 * Render the devtools.
+	 * This will only be done on non-production environments.
+	 *
+	 * @return {ReactElement|null}
+	 */
+	renderDevTools() {
+		if (process.env.ENV === 'production') return null;
+
+		return <DevTools />;
+	}
+
+	/**
 	 * Render the component.
 	 *
 	 * @return {ReactElement}
@@ -21,6 +34,7 @@ class App extends Component {
 	render() {
 		return (
 			<div>
+				{this.renderDevTools()}
 				{this.props.children}
 			</div>
 		);
