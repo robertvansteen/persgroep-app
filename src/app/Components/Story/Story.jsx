@@ -73,7 +73,7 @@ export class Story extends Component {
 	 * @param  {String} body
 	 * @return {String}
 	 */
-	parseBody(body) {
+	parseBody(body = '') {
 		let parsedBody = body;
 
 		if (!parsedBody.match(/<p(.*?)>/g)) {

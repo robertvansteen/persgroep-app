@@ -7,7 +7,7 @@ class StoryStore {
 
 	fetchStories() {
 		fetch.get(`${process.env.API_ENDPOINT}/api/stories`)
-			.then(response => this.addStories(response.data));
+			.then(response => this.addStories(response.data.data));
 	}
 
 	@action addStory(story) {

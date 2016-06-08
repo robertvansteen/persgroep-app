@@ -27,7 +27,6 @@ export class StoryList extends Component {
 	 * @return {void}
 	 */
 	componentDidMount() {
-		console.log('did mount');
 		Store.story.fetchStories();
 	}
 

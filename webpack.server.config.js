@@ -38,7 +38,6 @@ module.exports = {
 		require('postcss-modules-values'),
 		require('postcss-extend'),
 		require('postcss-nested'),
-		require('postcss-nested-ancestors'),
 		require('autoprefixer'),
 	],
 
