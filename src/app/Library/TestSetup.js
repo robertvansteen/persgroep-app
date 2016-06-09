@@ -2,18 +2,18 @@ import 'isomorphic-fetch';
 import 'babel-polyfill';
 import chai from 'chai';
 import { jsdom } from 'jsdom';
-import dirtyChai from 'dirty-chai';
 import sinonChai from 'sinon-chai';
 import enzymeChai from 'chai-enzyme';
 import factory from 'fixture-factory';
+import promisedChai from 'chai-as-promised';
 
 /**
  * Set up chai & add-ons.
  */
 chai.should();
-chai.use(dirtyChai);
 chai.use(sinonChai);
 chai.use(enzymeChai());
+chai.use(promisedChai);
 
 /**
  * Register the story as factory model.
@@ -43,5 +43,5 @@ Object.keys(document.defaultView).forEach((property) => {
 });
 
 global.navigator = {
-	userAgent: 'node.js'
+	userAgent: 'node.js',
 };

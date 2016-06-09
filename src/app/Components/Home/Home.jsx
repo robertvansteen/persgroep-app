@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import StoryList from 'Components/StoryList/StoryList';
+import StoryList from 'Domain/StoryList/Component';
 
 class Home extends Component {
 	render() {

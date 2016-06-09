@@ -1,4 +1,4 @@
-import 'Utils/TestSetup';
+import 'Library/TestSetup';
 import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
@@ -23,7 +23,7 @@ describe('Like button component', () => {
 	it('should trigger callback on click', () => {
 		const button = component.find('button');
 		button.simulate('click');
-		onClickStub.should.have.been.called();
+		onClickStub.should.have.been.called;
 	});
 
 	it('should have an `is-active` class name when the user has liked the story', () => {

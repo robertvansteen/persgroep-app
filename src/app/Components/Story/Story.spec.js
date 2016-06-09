@@ -1,4 +1,4 @@
-import 'Utils/TestSetup';
+import 'Library/TestSetup';
 import React from 'react';
 import { shallow } from 'enzyme';
 import LikeButton from 'Components/LikeButton/LikeButton';

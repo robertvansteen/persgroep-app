@@ -1,20 +1,28 @@
-import 'Utils/TestSetup';
+import 'Library/TestSetup';
 import _ from 'lodash';
 import React from 'react';
 import sinon from 'sinon';
 import { map } from 'mobx';
-import { mount, shallow } from 'enzyme';
 import factory from 'fixture-factory';
+import { shallow, mount } from 'enzyme';
 import Story from 'Components/Story/Story';
+import { StoryList } from 'Domain/StoryList/Component';
 
-const storeStub = {
-	story: {
-		fetchStories: sinon.stub(),
-	},
-};
 
-let StoryList;
+/**
+ * The component to be tested.
+ */
 let component;
+
+/**
+ * The default props.
+ *
+ * @type {Object}
+ */
+const defaultProps = {
+	fetchStories: () => {},
+	stories: map(),
+};
 
 /**
  * Create stories in a map format.
@@ -33,20 +41,18 @@ function createStories(amount) {
  */
 describe('StoryList Component', () => {
 	before(() => {
-		StoryList = require('inject!Components/StoryList/StoryList')({
-			'Stores/MainStore': storeStub,
-		}).StoryList;
+		component = shallow(<StoryList {...defaultProps} />);
 	});
 
 	it('should render the stories passed in', () => {
 		const stories = createStories(3);
-		component = shallow(<StoryList stories={stories} />);
+		component = shallow(<StoryList {...defaultProps} stories={stories} />);
 		component.should.have.exactly(3).descendants(Story);
 	});
 
 	it('should fetch stories on mount', () => {
-		const stories = createStories(3);
-		component = mount(<StoryList stories={stories} />);
-		storeStub.story.fetchStories.should.have.been.called();
+		const fetchStories = sinon.spy();
+		component = mount(<StoryList {...defaultProps} fetchStories={fetchStories} />);
+		fetchStories.should.have.been.called;
 	});
 });

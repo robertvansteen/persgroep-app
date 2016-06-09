@@ -1,15 +1,21 @@
 import Swiper from 'react-swipe';
-import Store from 'Stores/MainStore';
-import { mapProps } from 'recompose';
-import styles from './story_list.css';
+import styles from './style.css';
+import Store from 'Stores/StoryStore';
 import { observer } from 'mobx-react';
 import Story from 'Components/Story/Story';
+import { compose, mapProps } from 'recompose';
 import React, { Component, PropTypes } from 'react';
 
 export class StoryList extends Component {
 
+	/**
+	 * Define the prop types of the component.
+	 *
+	 * @type {Object}
+	 */
 	static propTypes = {
 		stories: PropTypes.object.isRequired,
+		fetchStories: PropTypes.func.isRequired,
 	}
 
 	/**
@@ -27,7 +33,7 @@ export class StoryList extends Component {
 	 * @return {void}
 	 */
 	componentDidMount() {
-		Store.story.fetchStories();
+		this.props.fetchStories();
 	}
 
 	/**
@@ -70,9 +76,13 @@ export class StoryList extends Component {
 						swipeOptions={this.swipeOptions}
 						key={stories.size}
 					>
-						{stories.values().map((story, index) => {
-							return <Story key={story.id} story={story} active={this.state.active === index} />;
-						})}
+						{stories.values().map((story, index) =>
+							<Story
+								key={story.id}
+								story={story}
+								active={this.state.active === index}
+							/>
+						)}
 					</Swiper>
 				</div>
 			</div>
@@ -80,6 +90,7 @@ export class StoryList extends Component {
 	}
 }
 
-export default mapProps(
-	() => ({ stories: Store.story.stories })
-)(observer(StoryList));
+export default compose(
+	mapProps(() => ({ ...Store })),
+	observer
+)(StoryList);
