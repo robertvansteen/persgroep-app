@@ -1,4 +1,4 @@
-import 'Utils/TestSetup';
+import 'Library/TestSetup';
 import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
