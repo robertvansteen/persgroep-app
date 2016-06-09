@@ -1,0 +1,24 @@
+@value grey, grey-light from "Stylesheets/colors";
+
+.label {
+	display: block;
+	composes: condensed from "Stylesheets/typography";
+	color: grey;
+	margin-bottom: 0.5em;
+}
+
+.input {
+	display: block;
+	border: 1px solid grey-light;
+	border-radius: 2px;
+	font-size: 1em;
+	padding: 0.5em;
+}
+
+.error {
+	composes: sans from "Stylesheets/typography";
+	color: red;
+	font-size: 0.875em;
+	margin: 0.25em 0 0.5em 0;
+	height: 1em;
+}
