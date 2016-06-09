@@ -1,6 +1,5 @@
-import 'Utils/TestSetup';
+import 'Library/TestSetup';
 import factory from 'fixture-factory';
-import StoryStore from './StoryStore';
 
 /**
  * The instance of the store.
@@ -13,7 +12,7 @@ let store;
  */
 describe('Storystore', () => {
 	beforeEach(() => {
-		store = new StoryStore();
+		store = require('inject!./StoryStore')({}).StoryStore;
 	});
 
 	it('should have a empty stories array by default', () => {
