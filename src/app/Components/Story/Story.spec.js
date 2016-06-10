@@ -1,4 +1,3 @@
-import 'Library/TestSetup';
 import React from 'react';
 import { shallow } from 'enzyme';
 import LikeButton from 'Components/LikeButton/LikeButton';
@@ -43,5 +42,4 @@ describe('Story component', () => {
 	it('should have a like button component', () => {
 		component.should.have.descendants(LikeButton);
 	});
-
 });

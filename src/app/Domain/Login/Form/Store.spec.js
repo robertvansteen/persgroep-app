@@ -1,4 +1,3 @@
-import 'Library/TestSetup';
 import { expect } from 'chai';
 
 /**

@@ -35,7 +35,7 @@ export const StoryStore = {
 		const story = this.stories.get(ref.id);
 		story.liked = false;
 
-		fetch.delete(`${process.env.API_ENDPOINT}/api/stories/${story.id}/likes`)
+		fetch.delete(`/stories/${story.id}/likes`)
 			.then(() => story.liked = false)
 			.catch(() => story.liked = true);
 	},

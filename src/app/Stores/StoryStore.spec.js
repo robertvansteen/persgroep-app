@@ -1,4 +1,3 @@
-import 'Library/TestSetup';
 import factory from 'fixture-factory';
 
 /**

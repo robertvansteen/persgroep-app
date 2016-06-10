@@ -5,9 +5,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
 
+	environment: 'node',
 	target: 'node',
 	externals: [nodeExternals()],
-	devtool: 'cheap-module-source-map',
+	devtool: 'eval',
 
 	// Instructions to how resolve the modules
 	resolve: {
