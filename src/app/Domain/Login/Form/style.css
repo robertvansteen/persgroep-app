@@ -1,0 +1,22 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	padding: 2em;
+}
+
+.title {
+	composes: condensed h3 from "Stylesheets/typography";
+}
+
+.form {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	margin-top: 2em;
+}
+
+.form__actions {
+	margin-top: auto;
+	text-align: right;
+}

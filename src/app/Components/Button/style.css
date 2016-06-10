@@ -1,0 +1,10 @@
+@value blue, light from "Stylesheets/colors";
+
+.button {
+	composes: sans from "Stylesheets/typography";
+	font-size: 1.125em;
+	background: blue;
+	color: light;
+	padding: 0.75em 1em;
+	border: 0;
+}
