@@ -5,7 +5,9 @@ module.exports = (config) => {
 	config.set({
 		frameworks: ['mocha', 'sinon-chai'],
 		reporters: ['coverage', 'mocha'],
-		browsers: ['Chrome'],
+		browsers: process.env.TRAVIS
+      ? ['ChromeTravis']
+      : ['Chrome'],
 
 		autoWatch: false,
 		singleRun: true,
@@ -34,15 +36,14 @@ module.exports = (config) => {
 		webpackMiddleware: {
 			noInfo: true,
 			stats: 'errors-only',
-
 		},
 
-		// customLaunchers: {
-		// 	ChromeTravis: {
-		// 		base: 'Chrome',
-		// 		flags: ['--no-sandbox'],
-		// 	},
-		// },
+		customLaunchers: {
+			ChromeTravis: {
+				base: 'Chrome',
+				flags: ['--no-sandbox'],
+			},
+		},
 
 		coverageReporter: {
 			dir: path.join(process.cwd(), 'coverage'),
