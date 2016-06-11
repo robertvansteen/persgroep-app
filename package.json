@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A boilerplate for webpack, redux & react",
   "scripts": {
-    "start": "rm -rf ./build & nodemon -w server.js server.js",
+    "start": "rm -rf ./build & nodemon -w server server",
     "production": "rm -rf ./build && webpack -p --config webpack.production.config.js",
     "lint": "eslint src",
     "test": "rm -rf ./coverage && karma start internals/testing/karma.conf.js",

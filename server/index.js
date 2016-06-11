@@ -7,8 +7,8 @@ require('dotenv-safe').load();
 const webpack = require('webpack');
 const express = require('express');
 const config = {
-	client: require('./webpack.client.config.js'),
-	server: require('./webpack.server.config.js'),
+	client: require('../internals/webpack/client.js'),
+	server: require('../internals/webpack/server.js'),
 };
 const server = express();
 const compiler = webpack(config.server);
@@ -20,7 +20,7 @@ let bundleValid = false;
 compiler.plugin('compile', () => {
 	if (bundleValid) {
 		bundleValid = false;
-		delete require.cache[require.resolve('./build/bundle.server.js')];
+		delete require.cache[require.resolve('../build/bundle.server.js')];
 	}
 
 	console.log('Bundling...');
@@ -56,7 +56,7 @@ server.use((request, response) => {
 		return response.status(400).end('Bundle not valid');
 	}
 
-	app = require('./build/bundle.server.js');
+	app = require('../build/bundle.server.js');
 
 	return app.default(request, response);
 });
@@ -73,7 +73,7 @@ const hotServer = new WebpackDevServer(webpack(config.client), {
 		children: false,
 	},
 	historyApiFallback: true,
-	contentBase: './src/templates/',
+	contentBase: '../src/templates/',
 });
 hotServer.listen(process.env.HOT_PORT, process.env.HOST, (err) => {
 	if (err) console.log(err);
