@@ -1,20 +1,4 @@
-# Redux webpack boilerplate
+# Persgroep app
 
-A boilerplate for Webpack with Redux & React.
-Also includes
-* React DOM
-* React router + react router redux
-* Redux act
-* Redux thunk
-* React devtools
-* Lodash
-* Isomorphic fetch
-* ES6 promise
-
-## NPM scripts
-
-### Development
-Run `npm start` to start a development server on `0.0.0.0:8080`.
-
-### Production
-Run `npm run compile` to compile the application to the dist folder.
+[![Build Status](https://travis-ci.org/reauv/persgroep-app.svg?branch=master)](https://travis-ci.org/reauv/persgroep-app)
+[![Coverage Status](https://coveralls.io/repos/github/reauv/persgroep-app/badge.svg?branch=feature%2Ftest-coverage)](https://coveralls.io/github/reauv/persgroep-app?branch=feature%2Ftest-coverage)
