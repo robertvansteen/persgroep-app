@@ -11,7 +11,7 @@ const modules = [
 ];
 
 module.exports = {
-	devtool: 'inline-source-map',
+	devtool: 'cheap-module-source-map',
 
 	module: {
 		// Some libraries don't like being run through babel.
@@ -30,6 +30,7 @@ module.exports = {
 			{ test: /\.jsx?$/,
 				loader: 'isparta',
 				include: path.resolve('src/app/'),
+				exclude: /.*?(\.spec).js/,
 			},
 		],
 
@@ -40,8 +41,7 @@ module.exports = {
 		 */
 		loaders: [
 			{ test: /\.json$/, loader: 'json-loader' },
-			{
-				test: /\.css$/,
+			{ test: /\.css$/,
 				loader: ExtractTextPlugin.extract(
 					'style-loader',
 					`css-loader?modules&importLoaders=1

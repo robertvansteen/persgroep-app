@@ -7,8 +7,8 @@
     "production": "rm -rf ./build && webpack -p --config webpack.production.config.js",
     "lint": "eslint src",
     "test": "rm -rf ./coverage && karma start internals/testing/karma.conf.js",
-    "test:watch": "mocha-webpack --webpack-config webpack.test.config.js \"src/**/*.spec.js\" --watch --colors",
-		"coveralls": "cat ./coverage/lcov/lcov.info | coveralls"
+    "test:watch": "npm run test -- --auto-watch --no-single-run --reporters mocha",
+    "coveralls": "cat ./coverage/lcov/lcov.info | coveralls"
   },
   "author": "Robert van Steen <studio@rovansteen.nl> (http://github.com/reauv)",
   "license": "MIT",
@@ -57,7 +57,7 @@
     "karma-mocha-reporter": "^2.0.4",
     "karma-sinon-chai": "^1.2.0",
     "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^1.7.0",
+    "karma-webpack-with-fast-source-maps": "^1.9.2",
     "mocha": "^2.5.3",
     "mocha-webpack": "^0.3.1",
     "nodemon": "^1.9.2",

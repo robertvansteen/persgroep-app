@@ -25,6 +25,8 @@ factory.register('story', {
 	},
 });
 
+const __karmaWebpackManifest__ = [];
+
 // Include all .js files under `app`, except app.js, reducers.js, routes.js and
 // store.js. This is for isparta code coverage
 const context = require.context(
@@ -32,4 +34,16 @@ const context = require.context(
 	true,
 	/^^((?!(client|server)).)*\.js$/
 );
-context.keys().forEach(context);
+
+function inManifest(path) {
+	return __karmaWebpackManifest__.indexOf(path) >= 0;
+}
+
+let runnable = context.keys().filter(inManifest);
+
+// Run all tests if we didn't find any changes
+if (!runnable.length) {
+	runnable = context.keys();
+}
+
+runnable.forEach(context);
