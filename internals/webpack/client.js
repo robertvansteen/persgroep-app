@@ -10,8 +10,8 @@ module.exports = require('./base')({
 	},
 
 	entry: [
-		// `webpack-dev-server/client?http://${process.env.HOST}:${process.env.HOT_PORT}`,
-		// 'webpack/hot/only-dev-server',
+		`webpack-dev-server/client?http://${process.env.HOST}:${process.env.HOT_PORT}`,
+		'webpack/hot/only-dev-server',
 		path.join(PATH, 'src/client'),
 	],
 
