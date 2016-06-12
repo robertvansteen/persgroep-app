@@ -11,7 +11,7 @@ import { register, resolve } from 'store';
 const KEY = 'auth';
 
 export const AuthStore = {
-	@observable token: null,
+	@observable token: cookie.get('token'),
 
 	authenticate(data = {}) {
 		return fetch.post('/authenticate', data)

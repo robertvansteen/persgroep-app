@@ -61,10 +61,10 @@ export class Story extends Component {
 	 */
 	onLikeButtonClick = () => {
 		if (this.props.story.liked) {
-			return Store.story.unlikeStory(this.props.story);
+			return Store.unlikeStory(this.props.story);
 		}
 
-		return Store.story.likeStory(this.props.story);
+		return Store.likeStory(this.props.story);
 	}
 
 	/**

@@ -1,4 +1,3 @@
-import 'Library/TestSetup';
 import _ from 'lodash';
 import React from 'react';
 import sinon from 'sinon';

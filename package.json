@@ -3,25 +3,25 @@
   "version": "1.0.0",
   "description": "A boilerplate for webpack, redux & react",
   "scripts": {
-    "start": "rm -rf ./build & nodemon -w server.js server.js",
+    "start": "rm -rf ./build & nodemon -w server server",
     "production": "rm -rf ./build && webpack -p --config webpack.production.config.js",
     "lint": "eslint src",
-    "test": "mocha-webpack --webpack-config webpack.test.config.js \"src/**/*.spec.js\" --colors",
-    "test:watch": "mocha-webpack --webpack-config webpack.test.config.js \"src/**/*.spec.js\" --watch --colors"
+    "test": "rm -rf ./coverage && karma start internals/testing/karma.conf.js",
+    "test:watch": "npm run test -- --auto-watch --no-single-run --reporters mocha",
+    "coveralls": "cat ./coverage/lcov/lcov.info | coveralls"
   },
-  "keywords": [
-    "react",
-    "reactjs",
-    "boilerplate",
-    "hot",
-    "reload",
-    "hmr",
-    "live",
-    "edit",
-    "webpack"
-  ],
   "author": "Robert van Steen <studio@rovansteen.nl> (http://github.com/reauv)",
   "license": "MIT",
+  "babel": {
+    "presets": [
+      "es2015",
+      "react",
+      "stage-0"
+    ],
+    "plugins": [
+      "babel-plugin-transform-decorators-legacy"
+    ]
+  },
   "devDependencies": {
     "autoprefixer": "^6.3.3",
     "babel-core": "^6.9.1",
@@ -35,6 +35,7 @@
     "chai-as-promised": "^5.3.0",
     "chai-enzyme": "^0.4.2",
     "classnames": "^2.2.5",
+    "coveralls": "^2.11.9",
     "css-loader": "^0.23.1",
     "enzyme": "^2.3.0",
     "eslint": "^1.10.3",
@@ -44,11 +45,23 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "fixture-factory": "^1.5.1",
     "html-webpack-plugin": "^2.9.0",
+    "imports-loader": "^0.6.5",
     "inject-loader": "^2.0.1",
+    "isparta-loader": "^2.0.0",
+    "istanbul": "^1.0.0-alpha.2",
     "jsdom": "^9.2.1",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.0.0",
+    "karma-mocha": "^1.0.1",
+    "karma-mocha-reporter": "^2.0.4",
+    "karma-sinon-chai": "github:adambrunner/karma-sinon-chai",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack-with-fast-source-maps": "^1.9.2",
     "mocha": "^2.5.3",
     "mocha-webpack": "^0.3.1",
     "nodemon": "^1.9.2",
+    "nyc": "^6.4.4",
     "postcss-loader": "^0.8.1",
     "postcss-modules-values": "^1.1.1",
     "postcss-nested": "^1.0.0",
@@ -56,6 +69,7 @@
     "react-hot-loader": "^1.3.0",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
+    "source-map-support": "^0.4.0",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.1",

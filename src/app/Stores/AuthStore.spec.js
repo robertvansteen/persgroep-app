@@ -1,4 +1,3 @@
-import 'Library/TestSetup';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
@@ -17,6 +16,7 @@ const stubs = {
 		post: sinon.stub().returns(Promise.resolve()),
 	},
 	'js-cookie': {
+		get: sinon.stub(),
 		set: sinon.stub(),
 	},
 };
@@ -32,7 +32,9 @@ describe('Auth Store', () => {
 	it('should authenticate with api', () => {
 		const data = { email: 'john@doe.com', password: 'foo' };
 		const postStub = sinon.stub().returns({ then: () => {} });
-		store = require('inject!./AuthStore')({ axios: { post: postStub } }).AuthStore;
+		store = require('inject!./AuthStore')({ ...stubs,
+			axios: { post: postStub },
+		}).AuthStore;
 
 		store.authenticate(data);
 
@@ -56,7 +58,7 @@ describe('Auth Store', () => {
 		const setCookieStub = sinon.spy();
 		const postStub = sinon.stub().returns(Promise.resolve(response));
 		store = require('inject!./AuthStore')({ ...stubs,
-			'js-cookie': { set: setCookieStub },
+			'js-cookie': { get: sinon.stub(), set: setCookieStub },
 			axios: { post: postStub },
 		}).AuthStore;
 
