@@ -55,7 +55,7 @@
     "karma-coverage": "^1.0.0",
     "karma-mocha": "^1.0.1",
     "karma-mocha-reporter": "^2.0.4",
-    "karma-sinon-chai": "^1.2.0",
+    "karma-sinon-chai": "github:adambrunner/karma-sinon-chai",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack-with-fast-source-maps": "^1.9.2",
     "mocha": "^2.5.3",
