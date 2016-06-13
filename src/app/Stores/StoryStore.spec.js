@@ -15,20 +15,20 @@ describe('Storystore', () => {
 	});
 
 	it('should have a empty stories array by default', () => {
-		store.stories.should.have.property('size').equal(0);
+		store.stories.should.have.length(0);
 	});
 
 	it('should add a single story to the collection', () => {
 		store.addStory({ id: '1', title: 'foo', body: 'baz' });
-		store.stories.has('1').should.equal(true);
-		store.stories.get('1').should.have.property('title').equal('foo');
-		store.stories.should.have.property('size').equal(1);
+		store.has('1').should.equal(true);
+		store.find('1').should.have.property('title').equal('foo');
+		store.stories.should.have.length(1);
 	});
 
 	it('should add an array of stories to the collection', () => {
 		const stories = factory.generate('story', 3);
 		store.addStories(stories);
-		store.stories.should.have.property('size').equal(3);
+		store.stories.should.have.length(3);
 	});
 
 	it('should accept multiple additions of stories to the collection', () => {
@@ -36,14 +36,15 @@ describe('Storystore', () => {
 		const stories2 = factory.generate('story', 3);
 		store.addStories(stories1);
 		store.addStories(stories2);
-		store.stories.should.have.property('size').equal(6);
+		store.stories.should.have.length(6);
 	});
 
 	it('should remove a story', () => {
 		store.addStory({ id: '1', title: 'foo', body: 'baz' });
-		store.stories.should.have.property('size').equal(1);
-		store.stories.delete('1');
-		store.stories.should.have.property('size').equal(0);
+		store.stories.should.have.length(1);
+		store.delete('1');
+		store.stories.should.have.length(0);
+		store.has('1').should.equal(false);
 	});
 
 	// it('should like a story', () => {
