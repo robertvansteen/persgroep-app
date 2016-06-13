@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import 'isomorphic-fetch';
 import getRoutes from 'routes';
 import { createElement } from 'react';
 import template from 'Templates/index.html';
