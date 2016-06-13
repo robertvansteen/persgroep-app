@@ -18,11 +18,18 @@ global.should = chai.should();
 factory.register('story', {
 	id: 'random.number',
 	title: 'random.words',
+	excerpt: 'random.words',
 	body: 'random.words',
 	liked: false,
 	author: {
 		name: 'random.words',
 	},
+	created_at: 'date.recent.value',
+});
+
+factory.register('category', {
+	id: 'random.number',
+	name: 'random.word',
 });
 
 const __karmaWebpackManifest__ = [];
