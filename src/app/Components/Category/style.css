@@ -1,0 +1,16 @@
+@value grey-light from 'Stylesheets/colors';
+
+.wrapper {
+	margin-top: 2em;
+}
+
+.title {
+	composes: condensed-light from 'Stylesheets/typography';
+	font-size: 1.25em;
+	padding: 0.25rem 1rem;
+	border-bottom: 1px solid grey-light;
+}
+
+.list {
+	padding: 1em;
+}

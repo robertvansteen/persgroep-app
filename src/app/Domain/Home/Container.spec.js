@@ -1,8 +1,8 @@
 import React from 'react';
-import Home from './Component';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
+import { HomeContainer } from './Container';
 import CategoryList from 'Components/CategoryList/Component';
 
 /**
@@ -15,7 +15,7 @@ let component;
  */
 describe('Home Component', () => {
 	beforeEach(() => {
-		component = shallow(<Home />);
+		component = shallow(<HomeContainer />);
 	});
 	it('renders a category list component', () => {
 		expect(component.find(CategoryList)).to.have.length(1);

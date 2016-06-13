@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 import App from 'Containers/App';
-import Home from 'Domain/Home/Component';
+import Home from 'Domain/Home/Container';
 import Login from 'Domain/Login/Container';
 
 export default function getRoutes() {

@@ -6,7 +6,7 @@ import Story from 'Components/Story/Story';
 import { compose, mapProps } from 'recompose';
 import React, { Component, PropTypes } from 'react';
 
-export class StoryList extends Component {
+export class StorySwiper extends Component {
 
 	/**
 	 * Define the prop types of the component.
@@ -14,8 +14,7 @@ export class StoryList extends Component {
 	 * @type {Object}
 	 */
 	static propTypes = {
-		stories: PropTypes.object.isRequired,
-		fetchStories: PropTypes.func.isRequired,
+		stories: PropTypes.array.isRequired,
 	}
 
 	/**
@@ -76,7 +75,7 @@ export class StoryList extends Component {
 						swipeOptions={this.swipeOptions}
 						key={stories.size}
 					>
-						{stories.values().map((story, index) =>
+						{stories.map((story, index) =>
 							<Story
 								key={story.id}
 								story={story}
@@ -93,4 +92,4 @@ export class StoryList extends Component {
 export default compose(
 	mapProps(() => ({ ...Store })),
 	observer
-)(StoryList);
+)(StorySwiper);
