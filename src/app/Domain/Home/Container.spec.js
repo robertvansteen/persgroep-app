@@ -17,7 +17,4 @@ describe('Home Component', () => {
 	beforeEach(() => {
 		component = shallow(<HomeContainer />);
 	});
-	it('renders a category list component', () => {
-		expect(component.find(CategoryList)).to.have.length(1);
-	});
 });
