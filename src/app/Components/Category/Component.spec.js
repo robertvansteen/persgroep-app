@@ -14,7 +14,7 @@ import StoryExcerpt from 'Components/StoryExcerpt/Component';
 const defaultProps = {
 	category: factory.generateOne('category', {
 		name: 'foo',
-		topStories: ['model.story', 3],
+		topStories: [factory.generateOne('story'), 3],
 	}),
 };
 

@@ -1,6 +1,7 @@
+import React from 'react';
 import styles from './style';
 import { Link } from 'react-router';
-import React, { PropTypes } from 'react';
+import { Iteratable } from 'Library/PropTypes';
 
 const CategoryList = props => {
 	return (
@@ -17,7 +18,7 @@ const CategoryList = props => {
 };
 
 CategoryList.propTypes = {
-	categories: PropTypes.object.isRequired,
+	categories: Iteratable,
 };
 
 export default CategoryList;

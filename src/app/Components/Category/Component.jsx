@@ -15,11 +15,11 @@ const Category = (props) => {
 			<h1 className={styles.title}>
 				{category.name}
 			</h1>
-			<ul className={styles.list}>
+			<div className={styles.list}>
 				{category.topStories.map(story =>
 					<StoryExcerpt key={story.id} story={story} />
 				)}
-			</ul>
+			</div>
 		</section>
 	);
 };
