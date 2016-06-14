@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import moment from 'momentjs';
 import styles from './story.css';
-import Store from 'Stores/StoryStore';
 import { observer } from 'mobx-react';
 import React, { Component, PropTypes } from 'react';
 import LikeButton from 'Components/LikeButton/LikeButton';
@@ -60,11 +59,7 @@ export class Story extends Component {
 	 * @return {void}
 	 */
 	onLikeButtonClick = () => {
-		if (this.props.story.liked) {
-			return Store.unlikeStory(this.props.story);
-		}
-
-		return Store.likeStory(this.props.story);
+		// TODO: Reimplement this.
 	}
 
 	/**

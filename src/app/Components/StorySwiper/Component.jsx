@@ -1,9 +1,7 @@
 import Swiper from 'react-swipe';
 import styles from './style.css';
-import Store from 'Stores/StoryStore';
 import { observer } from 'mobx-react';
 import Story from 'Components/Story/Story';
-import { compose, mapProps } from 'recompose';
 import React, { Component, PropTypes } from 'react';
 
 export class StorySwiper extends Component {
@@ -24,15 +22,6 @@ export class StorySwiper extends Component {
 	 */
 	state = {
 		active: 0,
-	}
-
-	/**
-	 * Invoked when the component is mounted.
-	 *
-	 * @return {void}
-	 */
-	componentDidMount() {
-		this.props.fetchStories();
 	}
 
 	/**
@@ -89,7 +78,4 @@ export class StorySwiper extends Component {
 	}
 }
 
-export default compose(
-	mapProps(() => ({ ...Store })),
-	observer
-)(StorySwiper);
+export default observer(StorySwiper);

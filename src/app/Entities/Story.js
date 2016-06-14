@@ -1,12 +1,12 @@
-import UserStore from 'Stores/UserStore';
+import { computed } from 'mobx';
+import Users from 'Collections/Users';
 import BaseModel from 'Entities/BaseModel';
-import { observable, computed } from 'mobx';
 
 export default class Story extends BaseModel {
 
 	static relationships = ['author'];
 
 	@computed get author() {
-		return UserStore.users.get(this.author_id);
+		return Users.find(this.author_id);
 	}
 }
