@@ -4,7 +4,11 @@ import React, { PropTypes } from 'react';
 import StoryExcerpt from 'Components/StoryExcerpt/Component';
 
 const Category = (props) => {
-	const { stories, category } = props;
+	const category = props.category;
+
+	if (!category) {
+		return <div></div>
+	}
 
 	return (
 		<section className={styles.wrapper}>
@@ -12,7 +16,7 @@ const Category = (props) => {
 				{category.name}
 			</h1>
 			<ul className={styles.list}>
-				{stories.map(story =>
+				{category.topStories.map(story =>
 					<StoryExcerpt key={story.id} story={story} />
 				)}
 			</ul>
@@ -21,7 +25,6 @@ const Category = (props) => {
 };
 
 Category.propTypes = {
-	stories: PropTypes.array.isRequired,
 	category: PropTypes.object.isRequired,
 };
 

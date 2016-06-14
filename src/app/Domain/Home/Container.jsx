@@ -1,21 +1,7 @@
-import Store from 'Stores/StoryStore';
+import fetch from 'axios';
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
-import Category from 'Components/Category/Component';
-import CategoryList from 'Components/CategoryList/Component';
-
-const categories = [
-	{ id: '1', name: 'Wereld' },
-	{ id: '2', name: 'Sport' },
-	{ id: '3', name: 'Media' },
-	{ id: '4', name: 'Cultuur' },
-	{ id: '5', name: 'Technologie' },
-	{ id: '6', name: 'Lifestyle' },
-];
-
-const headlines = {
-	id: '0', name: 'Headlines',
-};
+import categories from 'Collections/Categories';
 
 export class HomeContainer extends Component {
 
@@ -24,9 +10,7 @@ export class HomeContainer extends Component {
 	 *
 	 * @return {void}
 	 */
-	componentDidMount() {
-		Store.fetchStories();
-	}
+	componentDidMount() {}
 
 	/**
 	 * Render the component.
@@ -35,10 +19,7 @@ export class HomeContainer extends Component {
 	 */
 	render() {
 		return (
-			<div>
-				<CategoryList categories={categories} />
-				<Category category={headlines} stories={Store.featuredStories} />
-			</div>
+			<div>Home</div>
 		);
 	}
 }

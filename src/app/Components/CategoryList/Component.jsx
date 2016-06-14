@@ -17,7 +17,7 @@ const CategoryList = props => {
 };
 
 CategoryList.propTypes = {
-	categories: PropTypes.array.isRequired,
+	categories: PropTypes.object.isRequired,
 };
 
 export default CategoryList;
