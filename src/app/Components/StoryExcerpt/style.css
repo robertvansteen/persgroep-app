@@ -1,0 +1,25 @@
+@value grey from 'Stylesheets/colors';
+
+.article {
+	margin-bottom: 2em;
+}
+
+.title {
+	composes: condensed from 'Stylesheets/typography';
+	line-height: 1.25;
+	font-size: 1.5em;
+	margin-bottom: 1rem;
+}
+
+.date {
+	composes: sans from 'Stylesheets/typography';
+	font-weight: bold;
+	font-size: 0.75em;
+	color: grey;
+	margin-bottom: 0.25em;
+}
+
+.body {
+	composes: paragraph sans from 'Stylesheets/typography';
+	font-size: 0.875em;
+}

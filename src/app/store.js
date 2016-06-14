@@ -16,6 +16,11 @@ const container = {};
  * @return {void}
  */
 export function register(key, store) {
+	if (typeof store === 'function') {
+		container[key] = new store();
+		return;
+	}
+
 	container[key] = store;
 }
 

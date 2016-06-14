@@ -1,0 +1,19 @@
+@value grey-vivid, dark from "Stylesheets/colors";
+
+.list {
+	display: flex;
+	background: grey-vivid;
+	padding: 0.75em 1em;
+	overflow-x: scroll;
+}
+
+.item {
+	margin-right: 1.5em;
+}
+
+.item__link {
+	composes: condensed-light from "Stylesheets/typography";
+	font-size: 1.125em;
+	line-height: 1;
+	color: dark;
+}

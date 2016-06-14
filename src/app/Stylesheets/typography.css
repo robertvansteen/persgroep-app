@@ -1,5 +1,14 @@
-:global body {
-	-webkit-font-smoothing: antialiased;
+:global {
+	body {
+		-webkit-font-smoothing: antialiased;
+	}
+
+	a,
+	a:hover,
+	a:active,
+	a:visited {
+		text-decoration: none;
+	}
 }
 
 .serif {
@@ -14,6 +23,12 @@
 	font-family: 'Open Sans Condensed', sans-serif;
 	letter-spacing: 0.015em;
 	text-transform: uppercase;
+	font-weight: 700;
+}
+
+.condensed-light {
+	composes: condensed;
+	font-weight: 300;
 }
 
 .h1 {

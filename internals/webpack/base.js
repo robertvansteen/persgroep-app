@@ -1,6 +1,5 @@
 const PATH = process.cwd();
 const path = require('path');
-const webpack = require('webpack');
 const DotenvPlugin = require('webpack-dotenv-plugin');
 
 module.exports = (options) => ({
