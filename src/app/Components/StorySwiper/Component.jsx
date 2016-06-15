@@ -1,8 +1,9 @@
 import Swiper from 'react-swipe';
 import styles from './style.css';
 import { observer } from 'mobx-react';
+import React, { Component } from 'react';
 import Story from 'Components/Story/Story';
-import React, { Component, PropTypes } from 'react';
+import { Iteratable } from 'Library/PropTypes';
 
 export class StorySwiper extends Component {
 
@@ -12,7 +13,7 @@ export class StorySwiper extends Component {
 	 * @type {Object}
 	 */
 	static propTypes = {
-		stories: PropTypes.array.isRequired,
+		stories: Iteratable,
 	}
 
 	/**
@@ -62,7 +63,7 @@ export class StorySwiper extends Component {
 					<Swiper
 						className={styles.swiper}
 						swipeOptions={this.swipeOptions}
-						key={stories.size}
+						key={stories.length}
 					>
 						{stories.map((story, index) =>
 							<Story

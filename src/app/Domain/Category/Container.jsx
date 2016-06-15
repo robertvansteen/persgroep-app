@@ -27,7 +27,11 @@ class CategoryContainer extends Component {
 			.then(response => {
 				categories.addCollection(response.data.categories);
 			});
-		fetchStoriesByCategory(this.props.params.id);
+		fetchStoriesByCategory(this.props.params.id)
+			.then(data => {
+				const category = categories.find(this.props.params.id);
+				if (category) category.topStories_id = data.results.data;
+			});
 	}
 
 	/**
