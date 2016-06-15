@@ -9,6 +9,7 @@ const user = new Schema('users');
 
 story.define({
 	author: user,
+	related: arrayOf(story),
 	categories: arrayOf(category),
 });
 
