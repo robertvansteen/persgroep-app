@@ -40,6 +40,10 @@ module.exports = {
 		 * @type {Array}
 		 */
 		loaders: [
+			{
+				test: /(flickity|fizzy-ui-utils|get-size|unipointer)/,
+				loader: 'imports?define=>false&this=>window',
+			},
 			{ test: /\.json$/, loader: 'json-loader' },
 			{ test: /\.css$/,
 				loader: ExtractTextPlugin.extract(
