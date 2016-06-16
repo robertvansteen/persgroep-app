@@ -33,7 +33,7 @@ export class StorySwiper extends Component {
 	 */
 	componentWillReceiveProps(nextProps) {
 		if (this.props.index !== nextProps.index) {
-			// this.refs.swiper.slide(nextProps.index, 0);
+			this.refs.swiper.slide(nextProps.index);
 		}
 	}
 
@@ -75,6 +75,7 @@ export class StorySwiper extends Component {
 			<div className={styles.wrapper}>
 				<div className={styles.container}>
 					<Swiper
+						ref="swiper"
 						className={styles.swiper}
 						options={this.swiperOptions}
 						onSlideChange={this.onSlideChange}

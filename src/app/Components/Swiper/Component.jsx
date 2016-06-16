@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 const isBrowser = typeof window !== 'undefined';
 const Flickity = isBrowser ? require('flickity') : undefined;
@@ -9,8 +9,18 @@ if (Flickity) {
 	};
 }
 
-
 class Swiper extends Component {
+
+	/**
+	 * Define the prop types for the component.
+	 *
+	 * @type {Object}
+	*/
+	static propTypes = {
+		children: PropTypes.node,
+		options: PropTypes.object,
+		onSlideChange: PropTypes.func,
+	}
 
 	/**
 	 * The default props of the element.
@@ -35,6 +45,18 @@ class Swiper extends Component {
 	}
 
 	/**
+	 * Invoked when the slide is changed.
+	 *
+	 * @return {void}
+	 */
+	onSlideChange = () => {
+		const newIndex = this.swiper.selectedIndex;
+		const newCell = this.swiper.selectedCell;
+		this.updateHeight();
+		this.props.onSlideChange(newIndex, newCell);
+	}
+
+	/**
 	 * Initialize the swiper.
 	 *
 	 * @return {void}
@@ -55,19 +77,17 @@ class Swiper extends Component {
 	updateHeight() {
 		const cell = this.swiper.selectedCell;
 		const viewport = this.refs.element.querySelector('.flickity-viewport');
-		viewport.style.height = cell.size.height + 'px';
+		viewport.style.height = `${cell.size.height}px`;
 	}
 
 	/**
-	 * Invoked when the slide is changed.
+	 * Slide to a certain cell.
 	 *
+	 * @param  {Integer} index
 	 * @return {void}
 	 */
-	onSlideChange = () => {
-		const newIndex = this.swiper.selectedIndex;
-		const newCell = this.swiper.selectedCell;
-		this.updateHeight();
-		this.props.onSlideChange(newIndex, newCell);
+	slide(index) {
+		this.swiper.select(index);
 	}
 
 	/**

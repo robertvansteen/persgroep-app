@@ -42,14 +42,24 @@ class StoryContainer extends Component {
 			});
 	}
 
+	/**
+	 * Component is about to receive new props.
+	 *
+	 * @param  {Object} newProps
+	 * @return {void}
+	 */
 	componentWillReceiveProps(nextProps) {
-		console.log('Component will receive props!');
-		console.log('New id param', nextProps.params.id);
 		if (nextProps.params.id !== this.props.params.id) {
 			this.setState({ index: this.getIndex(nextProps.params.id) });
 		}
 	}
 
+	/**
+	 * Invoked when the story is changed via the swiper.
+	 *
+	 * @param  {Object} newIndex
+	 * @return {void}
+	 */
 	onChange = (newIndex) => {
 		const story = store.stories[newIndex];
 		this.props.router.push({ pathname: `/story/${story.id}` });
@@ -65,6 +75,11 @@ class StoryContainer extends Component {
 		return store.stories.findIndex(story => story.id === id);
 	}
 
+	/**
+	 * Render the component.
+	 *
+	 * @return {ReactElement}
+	 */
 	render() {
 		return (
 			<StorySwiper
