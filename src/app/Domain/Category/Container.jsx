@@ -1,10 +1,10 @@
-import fetch from 'axios';
 import { observer } from 'mobx-react';
 import categories from 'Collections/Categories';
 import React, { Component, PropTypes } from 'react';
 import Category from 'Components/Category/Component';
-import CategoryList from 'Components/CategoryList/Component';
+import { fetchCategories } from 'Sources/Categories';
 import { fetchStoriesByCategory } from 'Sources/Stories';
+import CategoryList from 'Components/CategoryList/Component';
 
 class CategoryContainer extends Component {
 
@@ -23,15 +23,8 @@ class CategoryContainer extends Component {
 	 * @return {void}
 	 */
 	componentDidMount() {
-		fetch.get('categories')
-			.then(response => {
-				categories.addCollection(response.data.categories);
-			});
-		fetchStoriesByCategory(this.props.params.id)
-			.then(data => {
-				const category = categories.find(this.props.params.id);
-				if (category) category.topStories_id = data.results.data;
-			});
+		fetchCategories();
+		this.fetchStories(this.props.params.id);
 	}
 
 	/**
@@ -42,8 +35,23 @@ class CategoryContainer extends Component {
 	 */
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.params.id !== this.props.params.id) {
-			fetchStoriesByCategory(nextProps.params.id);
+			this.fetchStories(nextProps.params.id);
 		}
+	}
+
+	/**
+	 * Fetch the stories by the currently visisted category.
+	 *
+	 * @param  {String} categoryId
+	 *
+	 * @return {void}
+	 */
+	fetchStories(categoryId) {
+		fetchStoriesByCategory(categoryId)
+			.then(data => {
+				const category = categories.find(categoryId);
+				if (category) category.topStories_id = data.result.data;
+			});
 	}
 
 	/**
