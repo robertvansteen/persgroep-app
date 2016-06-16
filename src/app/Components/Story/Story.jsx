@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import moment from 'momentjs';
 import styles from './story.css';
+import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import React, { Component, PropTypes } from 'react';
 import LikeButton from 'Components/LikeButton/LikeButton';
@@ -14,6 +15,7 @@ export class Story extends Component {
 	 */
 	static propTypes = {
 		active: PropTypes.bool,
+		className: PropTypes.string,
 		story: PropTypes.object.isRequired,
 	}
 
@@ -91,6 +93,13 @@ export class Story extends Component {
 		return parsedBody;
 	}
 
+	getClassName() {
+		return classNames({
+			[styles.wrapper]: true,
+			[this.props.className]: true,
+		});
+	}
+
 	/**
 	 * Render the component.
 	 *
@@ -100,7 +109,7 @@ export class Story extends Component {
 		const story = this.props.story;
 
 		return (
-			<div className={styles.wrapper}>
+			<div className={this.getClassName()}>
 				<div ref="element" className={styles.element}>
 					<div className={styles.header}>
 						<div

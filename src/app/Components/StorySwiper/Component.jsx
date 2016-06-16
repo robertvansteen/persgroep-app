@@ -1,8 +1,8 @@
-import Swiper from 'react-swipe';
 import styles from './style.css';
 import { observer } from 'mobx-react';
 import Story from 'Components/Story/Story';
 import { Iteratable } from 'Library/PropTypes';
+import Swiper from 'Components/Swiper/Component';
 import React, { Component, PropTypes } from 'react';
 
 export class StorySwiper extends Component {
@@ -18,20 +18,12 @@ export class StorySwiper extends Component {
 		onChange: PropTypes.func,
 	}
 
-	state = {
-		dragging: false,
-	}
-
 	/**
 	 * Invoked when the component is mounted.
 	 *
 	 * @return {void}
 	 */
-	componentDidMount() {
-		if (this.props.index) {
-			this.refs.swiper.slide(this.props.index, 0);
-		}
-	}
+	componentDidMount() {}
 
 	/**
 	 * Invoked when the component is about to receive new props.
@@ -41,12 +33,8 @@ export class StorySwiper extends Component {
 	 */
 	componentWillReceiveProps(nextProps) {
 		if (this.props.index !== nextProps.index) {
-			this.refs.swiper.slide(nextProps.index, 0);
+			// this.refs.swiper.slide(nextProps.index, 0);
 		}
-	}
-
-	onDrag = () => {
-		this.setState({ dragging: true });
 	}
 
 	/**
@@ -55,11 +43,10 @@ export class StorySwiper extends Component {
 	 * @param  {Integer} newIndex
 	 * @return {void}
 	 */
-	onTransitionEnd = (newIndex) => {
+	onSlideChange = (newIndex) => {
 		if (newIndex !== this.props.index) {
 			window.scrollTo(0, 0);
 			if (this.props.onChange) this.props.onChange(newIndex);
-			this.setState({ dragging: false });
 		}
 	}
 
@@ -68,11 +55,12 @@ export class StorySwiper extends Component {
 	 *
 	 * @type {Object}
 	 */
-	swipeOptions = {
-		continuous: false,
-		disableScroll: this.state.dragging,
-		callback: this.onDrag,
-		transitionEnd: this.onTransitionEnd,
+	swiperOptions = {
+		cellSelector: `.${styles.slide}`,
+		selectedAttraction: 0.2,
+		friction: 0.8,
+		prevNextButtons: false,
+		pageDots: false,
 	}
 
 	/**
@@ -87,13 +75,13 @@ export class StorySwiper extends Component {
 			<div className={styles.wrapper}>
 				<div className={styles.container}>
 					<Swiper
-						ref="swiper"
 						className={styles.swiper}
-						swipeOptions={this.swipeOptions}
-						key={stories.length}
+						options={this.swiperOptions}
+						onSlideChange={this.onSlideChange}
 					>
 						{stories.map((story, index) =>
 							<Story
+								className={styles.slide}
 								key={story.id}
 								story={story}
 								active={this.props.index === index}

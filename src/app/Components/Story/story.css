@@ -2,7 +2,7 @@
 
 .wrapper {
 	position: relative;
-	float: left;
+	width: 100%;
 }
 
 .element {
