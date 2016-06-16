@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react';
+import StoryStore from 'Domain/Story/Store';
 import categories from 'Collections/Categories';
 import React, { Component, PropTypes } from 'react';
 import Category from 'Components/Category/Component';
@@ -39,6 +40,10 @@ class CategoryContainer extends Component {
 		}
 	}
 
+	onStoryClick = () => {
+		StoryStore.context = categories.find(this.props.params.id).topStories_id;
+	}
+
 	/**
 	 * Fetch the stories by the currently visisted category.
 	 *
@@ -67,7 +72,10 @@ class CategoryContainer extends Component {
 		return (
 			<div>
 				<CategoryList categories={categories.all()} />
-				<Category category={categories.find(this.props.params.id)} />
+				<Category
+					onClick={this.onStoryClick}
+					category={categories.find(this.props.params.id)}
+				/>
 			</div>
 		);
 	}

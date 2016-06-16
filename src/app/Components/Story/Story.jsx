@@ -23,7 +23,7 @@ export class Story extends Component {
 	 * @return {void}
 	 */
 	componentDidMount() {
-		window.addEventListener('scroll', _.throttle(() => this.onScroll(), 200, { trailing: true }));
+		window.addEventListener('scroll', this.onScroll);
 	}
 
 	/**
@@ -40,18 +40,27 @@ export class Story extends Component {
 	}
 
 	/**
+	 * Invoked when the component is unmounted.
+	 *
+	 * @return {void}
+	 */
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.onScroll);
+	}
+
+	/**
 	 * Invoked when there is a scroll event.
 	 * This function is throttled to improve performance, see ComponentDidMount.
 	 *
 	 * @return {void}
 	 */
-	onScroll() {
+	onScroll = _.throttle(() => {
 		const scrolled = window.scrollY;
 		if (!this.props.active) {
 			this.refs.element.style.transform = `translateY(${scrolled}px)`;
 			this.refs.element.style.height = '100vh';
 		}
-	}
+	}, 200, { trailing: true });
 
 	/**
 	 * Invoked when the like button is clicked.
@@ -96,7 +105,7 @@ export class Story extends Component {
 					<div className={styles.header}>
 						<div
 							className={styles.cover}
-							style={{ backgroundImage: `url(/images/photo.png)` }}
+							style={{ backgroundImage: `url(${story.image_url})` }}
 						></div>
 						<div className={styles.overlay}></div>
 						<div className={styles.header_wrapper}>

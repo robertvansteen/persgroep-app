@@ -1,9 +1,9 @@
 import Swiper from 'react-swipe';
 import styles from './style.css';
 import { observer } from 'mobx-react';
-import React, { Component } from 'react';
 import Story from 'Components/Story/Story';
 import { Iteratable } from 'Library/PropTypes';
+import React, { Component, PropTypes } from 'react';
 
 export class StorySwiper extends Component {
 
@@ -14,15 +14,39 @@ export class StorySwiper extends Component {
 	 */
 	static propTypes = {
 		stories: Iteratable,
+		index: PropTypes.number,
+		onChange: PropTypes.func,
+	}
+
+	state = {
+		dragging: false,
 	}
 
 	/**
-	 * State of the component.
+	 * Invoked when the component is mounted.
 	 *
-	 * @type {Object}
+	 * @return {void}
 	 */
-	state = {
-		active: 0,
+	componentDidMount() {
+		if (this.props.index) {
+			this.refs.swiper.slide(this.props.index, 0);
+		}
+	}
+
+	/**
+	 * Invoked when the component is about to receive new props.
+	 *
+	 * @param  {Object} nextProps
+	 * @return {void}
+	 */
+	componentWillReceiveProps(nextProps) {
+		if (this.props.index !== nextProps.index) {
+			this.refs.swiper.slide(nextProps.index, 0);
+		}
+	}
+
+	onDrag = () => {
+		this.setState({ dragging: true });
 	}
 
 	/**
@@ -32,11 +56,11 @@ export class StorySwiper extends Component {
 	 * @return {void}
 	 */
 	onTransitionEnd = (newIndex) => {
-		if (newIndex !== this.state.active) {
+		if (newIndex !== this.props.index) {
 			window.scrollTo(0, 0);
+			if (this.props.onChange) this.props.onChange(newIndex);
+			this.setState({ dragging: false });
 		}
-
-		this.setState({ active: newIndex });
 	}
 
 	/**
@@ -46,6 +70,8 @@ export class StorySwiper extends Component {
 	 */
 	swipeOptions = {
 		continuous: false,
+		disableScroll: this.state.dragging,
+		callback: this.onDrag,
 		transitionEnd: this.onTransitionEnd,
 	}
 
@@ -61,6 +87,7 @@ export class StorySwiper extends Component {
 			<div className={styles.wrapper}>
 				<div className={styles.container}>
 					<Swiper
+						ref="swiper"
 						className={styles.swiper}
 						swipeOptions={this.swipeOptions}
 						key={stories.length}
@@ -69,7 +96,7 @@ export class StorySwiper extends Component {
 							<Story
 								key={story.id}
 								story={story}
-								active={this.state.active === index}
+								active={this.props.index === index}
 							/>
 						)}
 					</Swiper>
