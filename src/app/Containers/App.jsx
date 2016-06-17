@@ -11,7 +11,11 @@ class App extends Component {
 	 * @type {Object}
 	 */
 	static propTypes = {
+		location: PropTypes.object,
 		children: PropTypes.node,
+	}
+	componentWillReceiveProps() {
+		window.previousLocation = this.props.location;
 	}
 
 	/**
