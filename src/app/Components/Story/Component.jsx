@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import moment from 'momentjs';
-import styles from './story.css';
+import styles from './style.css';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import React, { Component, PropTypes } from 'react';
