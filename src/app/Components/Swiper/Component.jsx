@@ -71,7 +71,6 @@ class Swiper extends Component {
 	 * @return {void}
 	 */
 	initializeSwiper() {
-		console.log('Initialize the swiper!');
 		if (this.swiper) this.swiper.destroy();
 		const element = this.refs.element;
 		this.swiper = new Flickity(element, this.props.options);
