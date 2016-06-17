@@ -1,4 +1,5 @@
 import styles from './style.css';
+import { Link } from 'react-router';
 import { observer } from 'mobx-react';
 import Story from 'Components/Story/Story';
 import { Iteratable } from 'Library/PropTypes';
@@ -16,6 +17,7 @@ export class StorySwiper extends Component {
 		stories: Iteratable,
 		index: PropTypes.number,
 		onChange: PropTypes.func,
+		previousLocation: PropTypes.object,
 	}
 
 	/**
@@ -63,6 +65,19 @@ export class StorySwiper extends Component {
 		pageDots: false,
 	}
 
+	renderBackButton() {
+		if (!this.props.previousLocation) return null;
+
+		return (
+			<Link
+				className={styles.backButton}
+				to={this.props.previousLocation.pathname}
+			>
+				<i className="icon-arrow-back"></i>
+			</Link>
+		);
+	}
+
 	/**
 	 * Render the component.
 	 *
@@ -74,6 +89,7 @@ export class StorySwiper extends Component {
 		return (
 			<div className={styles.wrapper}>
 				<div className={styles.container}>
+					{this.renderBackButton()}
 					<Swiper
 						ref="swiper"
 						className={styles.swiper}

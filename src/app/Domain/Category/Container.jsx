@@ -24,8 +24,8 @@ class CategoryContainer extends Component {
 	 * @return {void}
 	 */
 	componentDidMount() {
-		fetchCategories();
-		this.fetchStories(this.props.params.id);
+		fetchCategories()
+			.then(() => this.fetchStories(this.props.params.id));
 	}
 
 	/**
@@ -40,23 +40,29 @@ class CategoryContainer extends Component {
 		}
 	}
 
+	/**
+	 * Invoked when clicked on a story.
+	 *
+	 * @return {void}
+	 */
 	onStoryClick = () => {
 		StoryStore.context = categories.find(this.props.params.id).topStories_id;
 	}
 
 	/**
 	 * Fetch the stories by the currently visisted category.
+	 * Only fetch it if we don't have topstories for said category.
 	 *
 	 * @param  {String} categoryId
 	 *
 	 * @return {void}
 	 */
 	fetchStories(categoryId) {
-		fetchStoriesByCategory(categoryId)
-			.then(data => {
-				const category = categories.find(categoryId);
-				if (category) category.topStories_id = data.result.data;
-			});
+		const category = categories.find(categoryId);
+		if (category.topStories_id.length > 0) return false;
+
+		return fetchStoriesByCategory(categoryId)
+			.then(data => category.topStories_id = data.result.data);
 	}
 
 	/**

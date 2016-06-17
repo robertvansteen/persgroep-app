@@ -1,1 +1,12 @@
+@value light from 'Stylesheets/colors';
+
 .slide {}
+
+.backButton {
+	position: absolute;
+	top: 1.5rem;
+	left: 1.5rem;
+	color: light;
+	z-index: 99;
+	font-size: 2em;
+}

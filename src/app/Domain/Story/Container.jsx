@@ -3,6 +3,7 @@ import { compose } from 'recompose';
 import { observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import { fetchStory } from 'Sources/Stories';
+import { isBrowser } from 'Library/Utilities';
 import React, { Component, PropTypes } from 'react';
 import StorySwiper from 'Components/StorySwiper/Component';
 
@@ -25,6 +26,17 @@ class StoryContainer extends Component {
 	 */
 	state = {
 		index: 0,
+	}
+
+	/**
+	 * Invoked when the component will mount.
+	 *
+	 * @return {void}
+	 */
+	componentWillMount() {
+		if (isBrowser() && window.previousLocation) {
+			this.setState({ previousLocation: window.previousLocation });
+		}
 	}
 
 	/**
@@ -86,6 +98,7 @@ class StoryContainer extends Component {
 				onChange={this.onChange}
 				index={this.state.index}
 				stories={store.stories}
+				previousLocation={this.state.previousLocation}
 			/>
 		);
 	}

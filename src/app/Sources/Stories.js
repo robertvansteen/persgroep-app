@@ -8,8 +8,9 @@ import categories from 'Collections/Categories';
 export function fetchStoriesByCategory(categoryId) {
 	return fetch.get(`/categories/${categoryId}/stories?limit=3`)
 		.then(response => {
+			console.log('Stories by category fetched!');
 			const data = normalize(response.data, { data: arrayOf(storySchema) });
-			categories.addCollection(data.entities.categories);
+			categories.addCollection(data.entities.categories, false);
 			users.addCollection(data.entities.users);
 			stories.addCollection(data.entities.stories);
 			return data;

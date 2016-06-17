@@ -33,6 +33,15 @@ class Swiper extends Component {
 	}
 
 	/**
+	 * Invoked when the component is mounted.
+	 *
+	 * @return {void}
+	 */
+	componentDidMount() {
+		this.initializeSwiper();
+	}
+
+	/**
 	 * Invoked when the component is updated.
 	 *
 	 * @param  {Object} nextProps
@@ -62,6 +71,7 @@ class Swiper extends Component {
 	 * @return {void}
 	 */
 	initializeSwiper() {
+		console.log('Initialize the swiper!');
 		if (this.swiper) this.swiper.destroy();
 		const element = this.refs.element;
 		this.swiper = new Flickity(element, this.props.options);
@@ -77,6 +87,9 @@ class Swiper extends Component {
 	updateHeight() {
 		const cell = this.swiper.selectedCell;
 		const viewport = this.refs.element.querySelector('.flickity-viewport');
+
+		if (!cell || !viewport) return false;
+
 		viewport.style.height = `${cell.size.height}px`;
 	}
 
