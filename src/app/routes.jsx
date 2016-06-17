@@ -2,7 +2,6 @@ import React from 'react';
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 
 import App from 'Containers/App';
-import Home from 'Domain/Home/Container';
 import Story from 'Domain/Story/Container';
 import Login from 'Domain/Login/Container';
 import Category from 'Domain/Category/Container';
