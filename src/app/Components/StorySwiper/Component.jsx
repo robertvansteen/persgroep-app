@@ -1,8 +1,8 @@
 import styles from './style.css';
 import { Link } from 'react-router';
 import { observer } from 'mobx-react';
-import Story from 'Components/Story/Story';
 import { Iteratable } from 'Library/PropTypes';
+import Story from 'Components/Story/Component';
 import Swiper from 'Components/Swiper/Component';
 import React, { Component, PropTypes } from 'react';
 

@@ -1,0 +1,12 @@
+@value red, blue from 'Stylesheets/colors';
+
+.header {
+	background: red;
+	padding: 1em;
+}
+
+.title {
+	color: blue;
+	font-family: 'acier-bat-noir';
+	font-size: 2em;
+}

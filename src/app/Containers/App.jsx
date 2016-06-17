@@ -1,6 +1,7 @@
 import 'Stylesheets/reset';
 import 'Stylesheets/shared';
 import DevTools from 'mobx-react-devtools';
+import Header from 'Components/Header/Component';
 import React, { Component, PropTypes } from 'react';
 
 class App extends Component {
@@ -14,6 +15,12 @@ class App extends Component {
 		location: PropTypes.object,
 		children: PropTypes.node,
 	}
+
+	/**
+	 * Invoked when the component receives new props.
+	 *
+	 * @return {void}
+	 */
 	componentWillReceiveProps() {
 		window.previousLocation = this.props.location;
 	}
@@ -38,6 +45,7 @@ class App extends Component {
 	render() {
 		return (
 			<div>
+				<Header />
 				{this.renderDevTools()}
 				{this.props.children}
 			</div>

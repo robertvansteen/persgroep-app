@@ -1,5 +1,10 @@
 @value light from 'Stylesheets/colors';
 
+.wrapper {
+	position: relative;	
+}
+
+/* This is a classname as hook for the swiper, do not delete. */
 .slide {}
 
 .backButton {
