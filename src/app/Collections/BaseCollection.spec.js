@@ -47,6 +47,18 @@ describe('BaseCollection', () => {
 		instance.items.should.have.length(1);
 	});
 
+	it('Should replace an item by default', () => {
+		instance.add({ id: '1', foo: 'bar' });
+		instance.add({ id: '1', foo: 'baz' });
+		instance.items[0].foo.should.equal('baz');
+	});
+
+	it('Should not replace if specified', () => {
+		instance.add({ id: '1', foo: 'bar' }, false);
+		instance.add({ id: '1', foo: 'baz' }, false);
+		instance.items[0].foo.should.equal('bar');
+	});
+
 	it('Should add item of resource', () => {
 		instance.add({ id: '1' });
 		const item = instance.items[0];
