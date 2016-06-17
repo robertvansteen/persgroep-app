@@ -2,7 +2,7 @@
 
 .wrapper {
 	position: relative;
-	float: left;
+	width: 100%;
 }
 
 .element {
@@ -12,7 +12,7 @@
 
 .header {
 	position: relative;
-	height: 100vh;
+	height: 90vh;
 }
 
 .cover {

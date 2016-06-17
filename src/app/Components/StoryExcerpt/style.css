@@ -1,7 +1,8 @@
-@value grey from 'Stylesheets/colors';
+@value dark, grey from 'Stylesheets/colors';
 
 .article {
 	margin-bottom: 2em;
+	color: dark;
 }
 
 .title {

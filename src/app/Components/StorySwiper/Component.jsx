@@ -1,7 +1,9 @@
-import Swiper from 'react-swipe';
 import styles from './style.css';
+import { Link } from 'react-router';
 import { observer } from 'mobx-react';
-import Story from 'Components/Story/Story';
+import { Iteratable } from 'Library/PropTypes';
+import Story from 'Components/Story/Component';
+import Swiper from 'Components/Swiper/Component';
 import React, { Component, PropTypes } from 'react';
 
 export class StorySwiper extends Component {
@@ -12,16 +14,29 @@ export class StorySwiper extends Component {
 	 * @type {Object}
 	 */
 	static propTypes = {
-		stories: PropTypes.array.isRequired,
+		stories: Iteratable,
+		index: PropTypes.number,
+		onChange: PropTypes.func,
+		previousLocation: PropTypes.object,
 	}
 
 	/**
-	 * State of the component.
+	 * Invoked when the component is mounted.
 	 *
-	 * @type {Object}
+	 * @return {void}
 	 */
-	state = {
-		active: 0,
+	componentDidMount() {}
+
+	/**
+	 * Invoked when the component is about to receive new props.
+	 *
+	 * @param  {Object} nextProps
+	 * @return {void}
+	 */
+	componentWillReceiveProps(nextProps) {
+		if (this.props.index !== nextProps.index) {
+			this.refs.swiper.slide(nextProps.index);
+		}
 	}
 
 	/**
@@ -30,12 +45,11 @@ export class StorySwiper extends Component {
 	 * @param  {Integer} newIndex
 	 * @return {void}
 	 */
-	onTransitionEnd = (newIndex) => {
-		if (newIndex !== this.state.active) {
+	onSlideChange = (newIndex) => {
+		if (newIndex !== this.props.index) {
 			window.scrollTo(0, 0);
+			if (this.props.onChange) this.props.onChange(newIndex);
 		}
-
-		this.setState({ active: newIndex });
 	}
 
 	/**
@@ -43,9 +57,25 @@ export class StorySwiper extends Component {
 	 *
 	 * @type {Object}
 	 */
-	swipeOptions = {
-		continuous: false,
-		transitionEnd: this.onTransitionEnd,
+	swiperOptions = {
+		cellSelector: `.${styles.slide}`,
+		selectedAttraction: 0.2,
+		friction: 0.8,
+		prevNextButtons: false,
+		pageDots: false,
+	}
+
+	renderBackButton() {
+		if (!this.props.previousLocation) return null;
+
+		return (
+			<Link
+				className={styles.backButton}
+				to={this.props.previousLocation.pathname}
+			>
+				<i className="icon-arrow-back"></i>
+			</Link>
+		);
 	}
 
 	/**
@@ -59,16 +89,19 @@ export class StorySwiper extends Component {
 		return (
 			<div className={styles.wrapper}>
 				<div className={styles.container}>
+					{this.renderBackButton()}
 					<Swiper
+						ref="swiper"
 						className={styles.swiper}
-						swipeOptions={this.swipeOptions}
-						key={stories.size}
+						options={this.swiperOptions}
+						onSlideChange={this.onSlideChange}
 					>
 						{stories.map((story, index) =>
 							<Story
+								className={styles.slide}
 								key={story.id}
 								story={story}
-								active={this.state.active === index}
+								active={this.props.index === index}
 							/>
 						)}
 					</Swiper>

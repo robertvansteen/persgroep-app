@@ -1,10 +1,11 @@
-import fetch from 'axios';
 import { observer } from 'mobx-react';
+import StoryStore from 'Domain/Story/Store';
 import categories from 'Collections/Categories';
 import React, { Component, PropTypes } from 'react';
 import Category from 'Components/Category/Component';
-import CategoryList from 'Components/CategoryList/Component';
+import { fetchCategories } from 'Sources/Categories';
 import { fetchStoriesByCategory } from 'Sources/Stories';
+import CategoryList from 'Components/CategoryList/Component';
 
 class CategoryContainer extends Component {
 
@@ -23,11 +24,8 @@ class CategoryContainer extends Component {
 	 * @return {void}
 	 */
 	componentDidMount() {
-		fetch.get('categories')
-			.then(response => {
-				categories.addCollection(response.data.categories);
-			});
-		fetchStoriesByCategory(this.props.params.id);
+		fetchCategories()
+			.then(() => this.fetchStories(this.props.params.id));
 	}
 
 	/**
@@ -38,8 +36,33 @@ class CategoryContainer extends Component {
 	 */
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.params.id !== this.props.params.id) {
-			fetchStoriesByCategory(nextProps.params.id);
+			this.fetchStories(nextProps.params.id);
 		}
+	}
+
+	/**
+	 * Invoked when clicked on a story.
+	 *
+	 * @return {void}
+	 */
+	onStoryClick = () => {
+		StoryStore.context = categories.find(this.props.params.id).topStories_id;
+	}
+
+	/**
+	 * Fetch the stories by the currently visisted category.
+	 * Only fetch it if we don't have topstories for said category.
+	 *
+	 * @param  {String} categoryId
+	 *
+	 * @return {void}
+	 */
+	fetchStories(categoryId) {
+		const category = categories.find(categoryId);
+		if (category.topStories_id.length > 0) return false;
+
+		return fetchStoriesByCategory(categoryId)
+			.then(data => category.topStories_id = data.result.data);
 	}
 
 	/**
@@ -55,7 +78,10 @@ class CategoryContainer extends Component {
 		return (
 			<div>
 				<CategoryList categories={categories.all()} />
-				<Category category={categories.find(this.props.params.id)} />
+				<Category
+					onClick={this.onStoryClick}
+					category={categories.find(this.props.params.id)}
+				/>
 			</div>
 		);
 	}

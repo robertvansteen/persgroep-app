@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import LikeButton from 'Components/LikeButton/LikeButton';
 
-import { Story } from 'Components/Story/Story';
+import { Story } from 'Components/Story/Component';
 
 const story = {
 	id: '1',

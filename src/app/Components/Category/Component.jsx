@@ -17,7 +17,11 @@ const Category = (props) => {
 			</h1>
 			<div className={styles.list}>
 				{category.topStories.map(story =>
-					<StoryExcerpt key={story.id} story={story} />
+					<StoryExcerpt
+						key={story.id}
+						story={story}
+						onClick={props.onClick}
+					/>
 				)}
 			</div>
 		</section>
@@ -25,6 +29,7 @@ const Category = (props) => {
 };
 
 Category.propTypes = {
+	onClick: PropTypes.func,
 	category: PropTypes.object.isRequired,
 };
 

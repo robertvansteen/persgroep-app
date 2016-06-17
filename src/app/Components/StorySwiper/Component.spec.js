@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import factory from 'fixture-factory';
 import { StorySwiper } from './Component';
-import Story from 'Components/Story/Story';
+import Story from 'Components/Story/Component';
 
 /**
  * The component to be tested.

@@ -43,6 +43,10 @@ module.exports = (options) => ({
 		fallback: path.join(PATH, 'node_modules'),
 		alias: {
 			env: path.join(PATH, 'env'),
+			'eventEmitter/EventEmitter': 'wolfy87-eventemitter/EventEmitter',
+			'get-style-property': 'desandro-get-style-property',
+			'matches-selector': 'desandro-matches-selector',
+			classie: 'desandro-classie',
 		},
 	},
 
@@ -74,6 +78,10 @@ module.exports = (options) => ({
 	 */
 	module: {
 		loaders: [
+			{
+				test: /(flickity|fizzy-ui-utils|get-size|unipointer)/,
+				loader: 'imports?define=>false&this=>window',
+			},
 			{
 				test: /\.jsx?$/,
 				loaders: [

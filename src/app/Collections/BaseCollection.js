@@ -45,9 +45,10 @@ export default class BaseCollection {
 	 * Add an item to the collection.
 	 *
 	 * @param  {Array|Object} item
+	 * @param  {Boolean} replace
 	 * @return {void}
 	 */
-	add(item) {
+	add(item, replace = true) {
 		if (Array.isArray(item)) {
 			return _.each(item, x => this.add(x));
 		}
@@ -55,6 +56,7 @@ export default class BaseCollection {
 		const index = this.findIndex(item.id);
 
 		if (index >= 0) {
+			if (!replace) return false;
 			this.items[index] = new this.constructor.Resource(item);
 		} else {
 			this.items.push(new this.constructor.Resource(item));
@@ -65,11 +67,12 @@ export default class BaseCollection {
 	 * Add an collection (object) to the collection.
 	 *
 	 * @param  {Object} collection
+	 * @param  {Boolean} replace
 	 * @return {void}
 	 */
-	addCollection(collection) {
+	addCollection(collection, replace = true) {
 		return _.each(collection, item => {
-			this.add(item);
+			this.add(item, replace);
 		});
 	}
 

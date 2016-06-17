@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import moment from 'momentjs';
-import styles from './story.css';
+import styles from './style.css';
+import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import React, { Component, PropTypes } from 'react';
 import LikeButton from 'Components/LikeButton/LikeButton';
@@ -14,6 +15,7 @@ export class Story extends Component {
 	 */
 	static propTypes = {
 		active: PropTypes.bool,
+		className: PropTypes.string,
 		story: PropTypes.object.isRequired,
 	}
 
@@ -23,7 +25,7 @@ export class Story extends Component {
 	 * @return {void}
 	 */
 	componentDidMount() {
-		window.addEventListener('scroll', _.throttle(() => this.onScroll(), 200, { trailing: true }));
+		window.addEventListener('scroll', this.onScroll);
 	}
 
 	/**
@@ -40,18 +42,27 @@ export class Story extends Component {
 	}
 
 	/**
+	 * Invoked when the component is unmounted.
+	 *
+	 * @return {void}
+	 */
+	componentWillUnmount() {
+		window.removeEventListener('scroll', this.onScroll);
+	}
+
+	/**
 	 * Invoked when there is a scroll event.
 	 * This function is throttled to improve performance, see ComponentDidMount.
 	 *
 	 * @return {void}
 	 */
-	onScroll() {
+	onScroll = _.throttle(() => {
 		const scrolled = window.scrollY;
 		if (!this.props.active) {
 			this.refs.element.style.transform = `translateY(${scrolled}px)`;
 			this.refs.element.style.height = '100vh';
 		}
-	}
+	}, 200, { trailing: true });
 
 	/**
 	 * Invoked when the like button is clicked.
@@ -82,6 +93,13 @@ export class Story extends Component {
 		return parsedBody;
 	}
 
+	getClassName() {
+		return classNames({
+			[styles.wrapper]: true,
+			[this.props.className]: true,
+		});
+	}
+
 	/**
 	 * Render the component.
 	 *
@@ -91,12 +109,12 @@ export class Story extends Component {
 		const story = this.props.story;
 
 		return (
-			<div className={styles.wrapper}>
+			<div className={this.getClassName()}>
 				<div ref="element" className={styles.element}>
 					<div className={styles.header}>
 						<div
 							className={styles.cover}
-							style={{ backgroundImage: `url(/images/photo.png)` }}
+							style={{ backgroundImage: `url(${story.image_url})` }}
 						></div>
 						<div className={styles.overlay}></div>
 						<div className={styles.header_wrapper}>

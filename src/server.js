@@ -26,6 +26,11 @@ export default function (request, response) {
 			return response.status(500).end('Internal server error');
 		}
 
+		if (redirectLocation) {
+			return response
+				.redirect(302, redirectLocation.pathname + redirectLocation.search);
+		}
+
 		if (!routerState) {
 			return response.status(400).end('Not found');
 		}
