@@ -1,0 +1,32 @@
+@value blue from 'Stylesheets/colors';
+
+.toolbar {
+	position: absolute;
+	background: blue;
+	border-radius: 5px;
+	padding: 0 0.25em;
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+
+	&:after {
+		top: 100%;
+		left: 50%;
+		border: solid transparent;
+		content: '';
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+		border-top-color: blue;
+		border-width: 0.75em;
+		margin-left: -0.75em;
+	}
+}
+
+.divider {
+	width: 1px;
+    height: 1.5em;
+    background: #45506E;
+    display: inline-block;
+    vertical-align: middle;
+	margin: 0 0.25em;
+}

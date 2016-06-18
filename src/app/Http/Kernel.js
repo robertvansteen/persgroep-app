@@ -1,5 +1,8 @@
 import HttpKernel from 'Library/HttpKernel';
+
 import JWT from 'Http/Middleware/Requests/JWT';
+
+import RefreshJWT from 'Http/Middleware/Responses/RefreshJWT';
 
 class Kernel extends HttpKernel {
 	/**
@@ -19,7 +22,9 @@ class Kernel extends HttpKernel {
 	 * @return {Array}
 	 */
 	getResponseMiddleware() {
-		return [];
+		return [
+			RefreshJWT,
+		];
 	}
 }
 

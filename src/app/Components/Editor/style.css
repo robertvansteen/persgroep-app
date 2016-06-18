@@ -1,0 +1,16 @@
+.wrapper {
+	composes: sans from 'Stylesheets/typography';
+	position: relative;
+	padding: 2em 5em;
+}
+
+.editor {
+}
+
+.header-one {
+	font-size: 2em;
+}
+
+.header-two {
+	font-size: 1.5em;
+}

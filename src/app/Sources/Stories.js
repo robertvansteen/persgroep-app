@@ -25,3 +25,11 @@ export function fetchStory(id) {
 			return data;
 		});
 }
+
+export function publishStory(data) {
+	return fetch.post(`/stories`)
+		.then(response => {
+			const data = normalize(response.data.story, storySchema);
+			console.log(data);
+		});
+}
