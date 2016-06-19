@@ -1,4 +1,3 @@
-import mobx from 'mobx';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import { AuthStore } from 'Stores/AuthStore';
