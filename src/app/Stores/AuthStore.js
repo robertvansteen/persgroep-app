@@ -18,12 +18,17 @@ export class AuthStore {
 		cookie.set('token', this.token);
 	});
 
+	/**
+	 * Authenticate the user with the API.
+	 *
+	 * @param  {Object} data
+	 * @return {Promise}
+	 */
 	authenticate(data = {}) {
 		return fetch.post('/authenticate', data)
 			.then(response => {
 				const token = response.data.token;
 				this.token = token;
-				cookie.set('token', token);
 			});
 	}
 }
