@@ -110,4 +110,9 @@ module.exports = (options) => ({
 			},
 		],
 	},
+
+	/**
+	 * Configure uglify js plugin
+	 */
+
 });

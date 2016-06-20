@@ -27,14 +27,15 @@ function setSession(request) {
  *
  * @param  {Response} response
  * @param  {Object} routerState
+ * @param  {Object} assets
  * @return {Response}
  */
-function render(response, routerState) {
+function render(response, routerState, assets) {
 	const componentHtml = renderToString(
 		createElement(RouterContext, routerState),
 	);
 
-	const HTML = _.template(template)({ componentHtml });
+	const HTML = _.template(template)({ componentHtml, assets });
 	response.end(HTML);
 }
 
@@ -43,9 +44,10 @@ function render(response, routerState) {
  *
  * @param  {Request} request
  * @param  {Response} response
+ * @param  {Object} assets
  * @return {void}
  */
-export default function (request, response) {
+export default function (request, response, assets) {
 	const routes = getRoutes();
 	const location = createLocation(request.url);
 	const history = createHistory(request.originalUrl);
@@ -66,6 +68,6 @@ export default function (request, response) {
 			return response.status(400).end('Not found');
 		}
 
-		render(response, routerState);
+		render(response, routerState, assets);
 	});
 }

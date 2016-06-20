@@ -52,6 +52,10 @@ server.use(express.static('build'));
 server.use(express.static('public'));
 
 server.use((request, response) => {
+	const assets = {
+		js: 'http://${process.env.HOST}:${process.env.HOT_PORT}/bundle.client.js',
+		css: '/main.css',
+	};
 	let app;
 
 	if (!bundleValid) {
@@ -60,7 +64,7 @@ server.use((request, response) => {
 
 	app = require('../build/bundle.server.js');
 
-	return app.default(request, response);
+	return app.default(request, response, assets);
 });
 
 console.log(`Listening at ${process.env.HOST} on port ${process.env.PORT}`);
