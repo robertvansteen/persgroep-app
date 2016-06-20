@@ -1,0 +1,20 @@
+@value blue, light from 'Stylesheets/colors';
+
+.menu {
+	position: absolute;
+	z-index: 999;
+	top:  0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: blue;
+	color: light;
+	padding: 2em 1em;
+}
+
+.item {
+	display: block;
+	composes: sans from 'Stylesheets/typography';
+	color: light;
+	margin-bottom: 1.5em;
+}

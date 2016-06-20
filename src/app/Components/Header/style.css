@@ -6,7 +6,16 @@
 }
 
 .wrapper {
+	display: flex;
+	align-items: center;
 	composes: wrapper from 'Stylesheets/general';
+}
+
+.menu {
+	color: blue;
+	font-size: 1.5em;
+	margin-right: 1em;
+	cursor: pointer;
 }
 
 .title {
