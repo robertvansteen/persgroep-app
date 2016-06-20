@@ -7,11 +7,13 @@ require('dotenv-safe').load();
 // Load assets
 const assets = require('./assets');
 const express = require('express');
+const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const server = express();
 
 // Set up the regular server
 server.use(cookieParser());
+server.use(compression());
 server.use(express.static('build'));
 server.use(express.static('public'));
 
