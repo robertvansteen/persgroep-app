@@ -1,6 +1,4 @@
-import _ from 'lodash';
 import React from 'react';
-import { map } from 'mobx';
 import { shallow } from 'enzyme';
 import Category from './Component';
 import factory from 'fixture-factory';

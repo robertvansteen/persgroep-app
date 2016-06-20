@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import each from 'lodash/each';
 
 /**
  * The container that holds all the stores.
@@ -35,7 +35,7 @@ export function resolve(key) {
 }
 
 export function hydrate(data = {}) {
-	_.each(container, (store, key) => {
+	each(container, (store, key) => {
 		if (typeof data[key] === 'object') {
 			Object.assign(store, data[key]);
 		}

@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import each from 'lodash/each';
+import omit from 'lodash/omit';
+import pick from 'lodash/pick';
 import { extendObservable } from 'mobx';
 
 export default class BaseModel {
@@ -9,8 +11,8 @@ export default class BaseModel {
 	 * @param {Object}
 	 */
 	setRelationData(data) {
-		const relationData = _.pick(data, this.constructor.relationships);
-		_.each(relationData, (value, key) => extendObservable(this, { [`${key}_id`]: value }));
+		const relationData = pick(data, this.constructor.relationships);
+		each(relationData, (value, key) => extendObservable(this, { [`${key}_id`]: value }));
 	}
 
 	/**
@@ -19,8 +21,8 @@ export default class BaseModel {
 	 * @param {Object}
 	 */
 	setData(data) {
-		const ownData = _.omit(data, this.constructor.relationships);
-		_.each(ownData, (value, key) => extendObservable(this, { [key]: value }));
+		const ownData = omit(data, this.constructor.relationships);
+		each(ownData, (value, key) => extendObservable(this, { [key]: value }));
 	}
 
 	constructor(data) {

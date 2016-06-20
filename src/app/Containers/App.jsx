@@ -3,7 +3,6 @@ import 'Stylesheets/shared';
 import styles from './style.css';
 import { fetchMe } from 'Sources/Auth';
 import AuthStore from 'Stores/AuthStore';
-import DevTools from 'mobx-react-devtools';
 import Menu from 'Components/Menu/Component';
 import Header from 'Components/Header/Component';
 import React, { Component, PropTypes } from 'react';
@@ -59,18 +58,6 @@ class App extends Component {
 	}
 
 	/**
-	 * Render the devtools.
-	 * This will only be done on non-production environments.
-	 *
-	 * @return {ReactElement|null}
-	 */
-	renderDevTools() {
-		if (process.env.ENV === 'production') return null;
-
-		return <DevTools />;
-	}
-
-	/**
 	 * Render the menu.
 	 *
 	 * @return {ReactElement|null}
@@ -91,8 +78,6 @@ class App extends Component {
 	render() {
 		return (
 			<div className={styles.container}>
-				{this.renderDevTools()}
-
 				<Header
 					fixed
 					onMenuClick={this.onMenuClick}

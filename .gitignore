@@ -8,3 +8,5 @@ dist
 .tmp
 coverage
 webpack-assets.json
+
+stats.json

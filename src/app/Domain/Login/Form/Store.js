@@ -1,6 +1,6 @@
-import _ from 'lodash';
 import validate from 'validate.js';
 import AuthStore from 'Stores/AuthStore';
+import mapValues from 'lodash/mapValues';
 import { register, resolve } from 'store';
 import { observable, action, computed } from 'mobx';
 
@@ -34,7 +34,7 @@ export const LoginStore = {
 
 	@computed get errors() {
 		const errors = validate(this.getValues(), this.rules);
-		return _.mapValues(errors, error => error[0]);
+		return mapValues(errors, error => error[0]);
 	},
 
 	@action updateInput(name, value) {
@@ -51,7 +51,7 @@ export const LoginStore = {
 	 * @return {Object}
 	 */
 	getValues() {
-		return _.mapValues(this.input, input => input.value);
+		return mapValues(this.input, input => input.value);
 	},
 };
 

@@ -1,8 +1,8 @@
-import _ from 'lodash';
 import moment from 'momentjs';
 import styles from './style.css';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
+import throttle from 'lodash/throttle';
 import React, { Component, PropTypes } from 'react';
 import LikeButton from 'Components/LikeButton/LikeButton';
 
@@ -56,7 +56,7 @@ export class Story extends Component {
 	 *
 	 * @return {void}
 	 */
-	onScroll = _.throttle(() => {
+	onScroll = throttle(() => {
 		const scrolled = window.scrollY;
 		if (!this.props.active) {
 			this.refs.element.style.transform = `translateY(${scrolled}px)`;

@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import omit from 'lodash/omit';
 import React, { PropTypes } from 'react';
 import style from './style';
 
@@ -6,7 +6,7 @@ import style from './style';
  * Define the component.
  */
 const Input = props => {
-	const inputProps = _.omit(props, ['label', 'touched', 'error']);
+	const inputProps = omit(props, ['label', 'touched', 'error']);
 
 	return (
 		<div className={style.wrapper}>

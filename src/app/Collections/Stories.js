@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import take from 'lodash/take';
 import { computed } from 'mobx';
 import Story from 'Entities/Story';
 import { register, resolve } from 'store';
@@ -14,7 +14,7 @@ export class Stories extends BaseCollection {
 	static Resource = Story;
 
 	@computed get featuredStories() {
-		return _.take(this.items, 3);
+		return take(this.items, 3);
 	}
 
 }

@@ -1,8 +1,8 @@
-import _ from 'lodash';
 import getRoutes from 'routes';
 import { createElement } from 'react';
+import template from 'lodash/template';
 import AuthStore from 'Stores/AuthStore';
-import template from 'Templates/index.html';
+import indexTemplate from 'Templates/index.html';
 import { renderToString } from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
 import createLocation from 'history/lib/createLocation';
@@ -35,7 +35,7 @@ function render(response, routerState, assets) {
 		createElement(RouterContext, routerState),
 	);
 
-	const HTML = _.template(template)({ componentHtml, assets });
+	const HTML = template(indexTemplate)({ componentHtml, assets });
 	response.end(HTML);
 }
 

@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import each from 'lodash/each';
 import { observable } from 'mobx';
 import BaseModel from 'Entities/BaseModel';
 
@@ -50,7 +50,7 @@ export default class BaseCollection {
 	 */
 	add(item, replace = true) {
 		if (Array.isArray(item)) {
-			return _.each(item, x => this.add(x));
+			return each(item, x => this.add(x));
 		}
 
 		const index = this.findIndex(item.id);
@@ -71,7 +71,7 @@ export default class BaseCollection {
 	 * @return {void}
 	 */
 	addCollection(collection, replace = true) {
-		return _.each(collection, item => {
+		return each(collection, item => {
 			this.add(item, replace);
 		});
 	}
