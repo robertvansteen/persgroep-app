@@ -14,7 +14,9 @@ const server = express();
 // Set up the regular server
 server.use(cookieParser());
 server.use(compression());
-server.use(express.static('build'));
+server.use(express.static('build', {
+	maxage: '365d',
+}));
 server.use(express.static('public'));
 
 server.use((request, response) => {
