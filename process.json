@@ -1,0 +1,4 @@
+{
+  "script": "server/production.js",
+  "name": "persgroep",
+}
