@@ -1,9 +1,10 @@
 import 'draft-js/dist/Draft.css';
 import styles from './style.css';
-import React, { Component } from 'react';
-import { publishStory } from 'Sources/Stories';
+import ActionBar from './ActionBar/Component';
+import TitleInput from './TitleInput/Component';
 import Button from 'Components/Button/Component';
 import { stateToHTML } from 'draft-js-export-html';
+import React, { Component, PropTypes } from 'react';
 import InlineToolbar from './InlineToolbar/Component';
 import {
 	Editor,
@@ -13,7 +14,23 @@ import {
 } from 'draft-js';
 
 class EditorComponent extends Component {
+
+	/**
+	 * Define the prop types for the component.
+	 *
+	 * @type {Object}
+	*/
+	static propTypes = {
+		onSave: PropTypes.func,
+	}
+
+	/**
+	 * The state of the component.
+	 *
+	 * @type {Object}
+	 */
 	state = {
+		title: null,
 		editorState: EditorState.createEmpty(),
 		inlineToolbar: {
 			show: false,
@@ -21,6 +38,22 @@ class EditorComponent extends Component {
 		},
 	}
 
+	/**
+	 * Invoked when the title is changed.
+	 *
+	 * @param  {Event} event
+	 * @return {void}
+	 */
+	onTitleChange = (event) => {
+		this.setState({ title: event.target.value });
+	}
+
+	/**
+	 * Invoked when the editor changes.
+	 *
+	 * @param  {Object} editorState
+	 * @return {void}
+	 */
 	onChange = (editorState) => {
 		const selection = editorState.getSelection();
 
@@ -42,6 +75,7 @@ class EditorComponent extends Component {
 	 * @return {[type]} [description]
 	 */
 	onSelect() {
+		console.log('On select');
 		const rangeBounds = getVisibleSelectionRect(window);
 
 		if (!rangeBounds) {
@@ -55,16 +89,58 @@ class EditorComponent extends Component {
 		this.setState({ inlineToolbar: { show: true, position } });
 	}
 
+	/**
+	 * Invoked when the editor blurs.
+	 *
+	 * @return {void}
+	 */
 	onBlur = () => {
 		this.setState({ inlineToolbar: { show: false } });
 	}
 
+	/**
+	 * Invoked when the publish button is clicked.
+	 *
+	 * @return {void}
+	 */
+	onPublishClick = () => {
+		const contentState = this.state.editorState.getCurrentContent();
+		const content = stateToHTML(contentState);
+		this.props.onSave({ title: this.state.title, body: content });
+	}
+
+	/**
+	 * Get the position of the toolbar.
+	 *
+	 * @param  {Object} rangeBounds
+	 * @param  {Object} editorBounds
+	 * @return {Object}
+	 */
 	getToolbarPosition = (rangeBounds, editorBounds) => {
+		console.log('Range bounds', rangeBounds);
+		console.log('Editor bounds', editorBounds);
 		const top = rangeBounds.top - editorBounds.top;
-		const left = rangeBounds.left + (rangeBounds.width / 2);
+		const left = (rangeBounds.left - editorBounds.left) + (rangeBounds.width / 2);
 		return { top, left };
 	}
 
+	/**
+	 * Get the style for the block type.
+	 *
+	 * @param  {Object} contentBlock
+	 * @return {String}
+	 */
+	getBlockStyle(contentBlock) {
+		const type = contentBlock.getType();
+		return styles[type];
+	}
+
+	/**
+	 * Toggle the block type.
+	 *
+	 * @param  {Object} blockType
+	 * @return {void}
+	 */
 	toggleBlockType = (blockType) => {
 		this.onChange(
 			RichUtils.toggleBlockType(
@@ -74,6 +150,12 @@ class EditorComponent extends Component {
 		);
 	}
 
+	/**
+	 * Toggle the inline style.
+	 *
+	 * @param  {Object} inlineStyle
+	 * @return {void}
+	 */
 	toggleInlineStyle = (inlineStyle) => {
 		this.onChange(
 			RichUtils.toggleInlineStyle(
@@ -83,11 +165,11 @@ class EditorComponent extends Component {
 		);
 	}
 
-	getBlockStyle(contentBlock) {
-		const type = contentBlock.getType();
-		return styles[type];
-	}
-
+	/**
+	 * Render the inline toolbar.
+	 *
+	 * @return {ReactElement|null}
+	 */
 	renderInlineToolbar() {
 		if (!this.state.inlineToolbar.show) return null;
 
@@ -101,26 +183,36 @@ class EditorComponent extends Component {
 		);
 	}
 
-	onPublishClick = () => {
-		const contentState = this.state.editorState.getCurrentContent();
-		const content = stateToHTML(contentState);
-		publishStory({ title: 'foo', body: content });
-	}
 
+	/**
+	 * Render the component.
+	 *
+	 * @return {ReactElement}
+	 */
 	render() {
 		return (
-			<div className={styles.wrapper}>
-				{this.renderInlineToolbar()}
-				<Editor
-					ref="instance"
-					className={styles.editor}
-					placeholder="Schrijf een verhaal"
-					onBlur={this.onBlur}
-					onChange={this.onChange}
-					blockStyleFn={this.getBlockStyle}
-					editorState={this.state.editorState}
+			<div className={styles.container}>
+				<ActionBar
+					onPublish={this.onPublishClick}
 				/>
-				<Button onClick={this.onPublishClick} label='Publish' />
+				<div className={styles.editor_wrapper}>
+					<TitleInput
+						placeholder="Titel"
+						onChange={this.onTitleChange}
+					/>
+					<div className={styles.editor}>
+						{this.renderInlineToolbar()}
+						<Editor
+							ref="instance"
+							className={styles.editor}
+							placeholder="Schrijf een verhaal"
+							onBlur={this.onBlur}
+							onChange={this.onChange}
+							blockStyleFn={this.getBlockStyle}
+							editorState={this.state.editorState}
+						/>
+					</div>
+				</div>
 			</div>
 		);
 	}

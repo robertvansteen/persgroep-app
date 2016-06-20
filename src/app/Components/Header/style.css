@@ -5,6 +5,10 @@
 	padding: 1em;
 }
 
+.wrapper {
+	composes: wrapper from 'Stylesheets/general';
+}
+
 .title {
 	color: blue;
 	font-family: 'acier-bat-noir';

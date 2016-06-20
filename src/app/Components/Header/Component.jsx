@@ -5,11 +5,13 @@ import { Link } from 'react-router';
 const Header = () => {
 	return (
 		<div className={styles.header}>
-			<Link to="/">
-				<h1 className={styles.title}>
-					Persgroep
-				</h1>
-			</Link>
+			<div className={styles.wrapper}>
+				<Link to="/">
+					<h1 className={styles.title}>
+						Persgroep
+					</h1>
+				</Link>
+			</div>
 		</div>
 	);
 };

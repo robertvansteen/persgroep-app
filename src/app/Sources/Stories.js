@@ -26,10 +26,6 @@ export function fetchStory(id) {
 		});
 }
 
-export function publishStory(data) {
-	return fetch.post(`/stories`)
-		.then(response => {
-			const data = normalize(response.data.story, storySchema);
-			console.log(data);
-		});
+export function publishStory(payload) {
+	return fetch.post(`/stories`, payload);
 }

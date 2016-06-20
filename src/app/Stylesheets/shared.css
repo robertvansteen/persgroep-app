@@ -8,7 +8,10 @@
 		height: auto;
 	}
 
-	button {
+	body,
+	button,
+	input,
+	textarea {
 		font-size: 100%;
 	}
 }

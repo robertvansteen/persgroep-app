@@ -38,7 +38,7 @@ class InlineToolbar extends Component {
 		const element = this.refs.element;
 		const width = element.offsetWidth;
 		const height = element.offsetHeight;
-		const top = this.props.position.top - (height / 1.75);
+		const top = this.props.position.top - (height + 16);
 		const left = this.props.position.left - (width / 2);
 
 		// if (top < 0) top = 0;
