@@ -6,6 +6,7 @@ require('dotenv-safe').load();
 
 const webpack = require('webpack');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const config = {
 	client: require('../internals/webpack/client.js'),
 	server: require('../internals/webpack/server.js'),
@@ -46,6 +47,7 @@ compiler.watch({}, (error) => {
 });
 
 // Set up the regular server
+server.use(cookieParser());
 server.use(express.static('build'));
 server.use(express.static('public'));
 

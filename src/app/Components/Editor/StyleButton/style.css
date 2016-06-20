@@ -1,0 +1,27 @@
+@value red, light, dark from 'Stylesheets/colors';
+
+.button {
+	display: inline-block;
+	padding: 0 0.5em;
+	color: light;
+	line-height: 2.5;
+	transition: 0.2s ease-in;
+	cursor: pointer;
+	z-index: 99;
+}
+
+.button_active {
+	color: red;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.italic {
+	font-style: italic;
+}
+
+.underline {
+	text-decoration: underline;
+}

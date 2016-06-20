@@ -23,7 +23,7 @@ module.exports = (options) => ({
 	 *
 	 * @type {String}
 	 */
-	devtool: '#cheap-module-eval-source-map',
+	devtool: 'cheap-source-map',
 
 	/**
 	 * Define the target in which the compilation will run.
@@ -92,10 +92,13 @@ module.exports = (options) => ({
 			},
 			{
 				test: /\.css$/,
-				loader: options.cssLoaderQuery
-					|| 'style!css-loader?' +
-						'modules&importLoaders=1' +
-						'&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader',
+				exclude: /node_modules/,
+				loader: options.cssLoaders,
+			},
+			{
+				test: /\.css$/,
+				include: /node_modules/,
+				loader: options.cssVendorLoaders,
 			},
 			{
 				test: /\.json$/,

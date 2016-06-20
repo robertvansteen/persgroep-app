@@ -1,10 +1,22 @@
 @value blue, light from "Stylesheets/colors";
 
-.button {
+.base {
 	composes: sans from "Stylesheets/typography";
 	font-size: 1.125em;
+	cursor: pointer;
+	transition: all 0.2s ease-in;
+}
+
+.button {
 	background: blue;
 	color: light;
 	padding: 0.75em 1em;
 	border: 0;
+}
+
+.text {
+	border: 0;
+	background: none;
+
+	&:hover { color: blue }
 }

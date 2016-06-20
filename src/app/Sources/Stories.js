@@ -25,3 +25,7 @@ export function fetchStory(id) {
 			return data;
 		});
 }
+
+export function publishStory(payload) {
+	return fetch.post(`/stories`, payload);
+}

@@ -15,6 +15,12 @@ module.exports = require('./base')({
 		path.join(PATH, 'src/client'),
 	],
 
+	cssLoaders: 'style-loader!css-loader?'
+	+ 'localIdentName=[local]__[path][name]__[hash:base64:5]'
+	+ '&modules&importLoaders=1&sourceMap!postcss-loader',
+
+	cssVendorLoaders: 'style-loader!css-loader',
+
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
 	],

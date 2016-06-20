@@ -1,0 +1,5 @@
+.bar {
+	composes: wrapper from 'Stylesheets/general';
+	padding: 1em;
+	text-align: right;
+}

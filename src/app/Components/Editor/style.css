@@ -1,0 +1,27 @@
+.container {
+	composes: sans from 'Stylesheets/typography';
+	position: relative;
+}
+
+.editor_wrapper {
+	padding: 2em;
+	max-width: 45em;
+	margin: 0 auto;
+}
+
+.editor {
+	position: relative;
+	margin-top: 1em;
+}
+
+.header-one {
+	font-size: 2em;
+}
+
+.header-two {
+	font-size: 1.5em;
+}
+
+.actions {
+	margin-top: 2em;
+}
