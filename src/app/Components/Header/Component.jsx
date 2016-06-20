@@ -55,10 +55,8 @@ class Header extends Component {
 		if (!this.props.fixed) return true;
 
 		if (position > this.lastPosition) {
-			console.log('scroll down');
 			this.setState({ hidden: true });
 		} else {
-			console.log('scroll up');
 			this.setState({ hidden: false });
 		}
 

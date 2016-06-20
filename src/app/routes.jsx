@@ -16,7 +16,6 @@ import CreateStory from 'Domain/CreateStory/Container';
  * @return {void}
  */
 function requireAuth(nextState, replace) {
-	console.log(AuthStore.token);
 	if (!AuthStore.token) {
 		replace({ pathname: '/login' });
 	}

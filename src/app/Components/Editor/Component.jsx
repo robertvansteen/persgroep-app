@@ -75,7 +75,6 @@ class EditorComponent extends Component {
 	 * @return {[type]} [description]
 	 */
 	onSelect() {
-		console.log('On select');
 		const rangeBounds = getVisibleSelectionRect(window);
 
 		if (!rangeBounds) {
@@ -117,8 +116,6 @@ class EditorComponent extends Component {
 	 * @return {Object}
 	 */
 	getToolbarPosition = (rangeBounds, editorBounds) => {
-		console.log('Range bounds', rangeBounds);
-		console.log('Editor bounds', editorBounds);
 		const top = rangeBounds.top - editorBounds.top;
 		const left = (rangeBounds.left - editorBounds.left) + (rangeBounds.width / 2);
 		return { top, left };
