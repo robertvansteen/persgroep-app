@@ -19,6 +19,22 @@ class RefreshJWT extends ResponseMiddleware {
 
 		return response;
 	}
+
+	/**
+	 * Handle error.
+	 * Whenever the response of the server is of status code 401 (unauthorized)
+	 * remove the current stored token because it's invalid.
+	 *
+	 * @param  {Error} error
+	 * @return {Promise}
+	 */
+	handleError(error) {
+		if (error.status === 401) {
+			AuthStore.token = null;
+		}
+
+		return Promise.reject(error);
+	}
 }
 
 export default RefreshJWT;

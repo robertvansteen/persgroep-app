@@ -9,7 +9,8 @@ class ResponseMiddleware {
 	*/
 	register() {
 		axios.interceptors.response.use(
-			(response) => this.handle.call(this, response)
+			(response) => this.handle.call(this, response),
+			(error) => this.handleError.call(this, error),
 		);
 	}
 
@@ -21,6 +22,16 @@ class ResponseMiddleware {
 	*/
 	handle(response) {
 		return response;
+	}
+
+	/**
+	 * Handle an incoming error.
+	 *
+	 * @param  {Error} error
+	 * @return {Promise}
+	 */
+	handleError(error) {
+		return Promise.reject(error);
 	}
 }
 
