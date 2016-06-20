@@ -93,7 +93,10 @@ class App extends Component {
 			<div className={styles.container}>
 				{this.renderDevTools()}
 
-				<Header onMenuClick={this.onMenuClick} />
+				<Header
+					fixed
+					onMenuClick={this.onMenuClick}
+				/>
 				<div className={styles.main}>
 					{this.renderMenu()}
 					{this.props.children}

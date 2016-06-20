@@ -53,7 +53,7 @@ server.use(express.static('public'));
 
 server.use((request, response) => {
 	const assets = {
-		js: 'http://${process.env.HOST}:${process.env.HOT_PORT}/bundle.client.js',
+		js: `http://${process.env.HOST}:${process.env.HOT_PORT}/bundle.client.js`,
 		css: '/main.css',
 	};
 	let app;
