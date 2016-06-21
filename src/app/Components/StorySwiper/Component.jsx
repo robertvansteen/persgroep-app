@@ -21,13 +21,6 @@ export class StorySwiper extends Component {
 	}
 
 	/**
-	 * Invoked when the component is mounted.
-	 *
-	 * @return {void}
-	 */
-	componentDidMount() {}
-
-	/**
 	 * Invoked when the component is about to receive new props.
 	 *
 	 * @param  {Object} nextProps
@@ -58,6 +51,7 @@ export class StorySwiper extends Component {
 	 * @type {Object}
 	 */
 	swiperOptions = {
+		initialIndex: this.props.index,
 		cellSelector: `.${styles.slide}`,
 		selectedAttraction: 0.2,
 		friction: 0.8,
@@ -65,6 +59,11 @@ export class StorySwiper extends Component {
 		pageDots: false,
 	}
 
+	/**
+	 * Render the back button.
+	 *
+	 * @return {ReactElement|null}
+	 */
 	renderBackButton() {
 		if (!this.props.previousLocation) return null;
 

@@ -37,7 +37,11 @@ class StoryContainer extends Component {
 		if (isBrowser() && window.previousLocation) {
 			this.setState({ previousLocation: window.previousLocation });
 		}
+
+		const initialIndex = this.getIndex(this.props.params.id);
+		this.setState({ index: initialIndex >= 0 ? initialIndex : 0 });
 	}
+
 
 	/**
 	 * Invoked when the component is mounted.
