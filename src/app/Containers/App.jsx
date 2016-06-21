@@ -1,10 +1,11 @@
 import 'Stylesheets/reset';
 import 'Stylesheets/shared';
 import styles from './style.css';
-import { fetchMe } from 'Sources/Auth';
 import AuthStore from 'Stores/AuthStore';
 import Menu from 'Components/Menu/Component';
+import { fetchMe, refresh } from 'Sources/Auth';
 import Header from 'Components/Header/Component';
+import Spinner from 'Components/Spinner/Component';
 import React, { Component, PropTypes } from 'react';
 
 class App extends Component {
@@ -25,12 +26,23 @@ class App extends Component {
 	 * @type {Object}
 	 */
 	state = {
+		authenticating: !!AuthStore.token,
 		menuCollapsed: false,
 	}
 
+	/**
+	 * Invoked when the component is mounted.
+	 * When there is a token stored, we refresh it & fetch the current user.
+	 * If not we proceed as guest.
+	 *
+	 * @return {void}
+	 */
 	componentDidMount() {
 		if (AuthStore.token) {
-			fetchMe().then(response => AuthStore.user = response.data.user);
+			refresh()
+				.then(() =>
+					fetchMe().then(() => this.setState({ authenticating: false })))
+				.catch(() => this.setState({ authenticating: false }));
 		}
 	}
 
@@ -58,6 +70,18 @@ class App extends Component {
 	}
 
 	/**
+	 * Determine if the position of the header should be fixed.
+	 * Only on the story pages this should be the case.
+	 * Also, if the menu is active, it should overwrite it.
+	 *
+	 * @return {Boolean}
+	 */
+	shouldHeaderBeFixed() {
+		if (this.state.menuCollapsed) return false;
+		return this.props.location.pathname.includes('/story/');
+	}
+
+	/**
 	 * Render the menu.
 	 *
 	 * @return {ReactElement|null}
@@ -76,10 +100,14 @@ class App extends Component {
 	 * @return {ReactElement}
 	 */
 	render() {
+		if (this.state.authenticating) {
+			return <Spinner />
+		}
+
 		return (
 			<div className={styles.container}>
 				<Header
-					fixed
+					fixed={this.shouldHeaderBeFixed()}
 					onMenuClick={this.onMenuClick}
 				/>
 				<div className={styles.main}>

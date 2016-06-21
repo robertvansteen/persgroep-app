@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react';
+import { fetchMe } from 'Sources/Auth';
 import AuthStore from 'Stores/AuthStore';
 import LoginForm from './Form/Component';
 import { compose, mapProps } from 'recompose';
@@ -22,8 +23,7 @@ class FormContainer extends Component {
 	 */
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.token) {
-			// Redirect if logged in.
-			this.context.router.push('/');
+			fetchMe().then(() => this.context.router.push('/'));
 		}
 	}
 
