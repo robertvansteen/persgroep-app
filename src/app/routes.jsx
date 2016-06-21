@@ -22,9 +22,18 @@ function requireAuth(nextState, replace) {
 	}
 }
 
+/**
+ * Invoked when the route is updated/changed.
+ *
+ * @return {void}
+ */
+function onUpdate() {
+	window.scrollTo(0, 0);
+}
+
 export default function getRoutes() {
 	return (
-		<Router history={browserHistory}>
+		<Router onUpdate={onUpdate} history={browserHistory}>
 			<Route path="/" component={App}>
 				<Route path="/login" component={Login} />
 				<Route path="/logout" component={Logout} onEnter={requireAuth} />
