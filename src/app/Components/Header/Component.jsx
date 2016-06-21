@@ -31,7 +31,6 @@ class Header extends Component {
 	 * @return {void}
 	 */
 	componentDidMount() {
-		this.lastPosition = 0;
 		window.addEventListener('scroll', this.onScroll);
 	}
 
@@ -54,13 +53,7 @@ class Header extends Component {
 		const position = window.pageYOffset || document.documentElement.scrollTop;
 		if (!this.props.fixed) return true;
 
-		if (position > this.lastPosition) {
-			this.setState({ hidden: true });
-		} else {
-			this.setState({ hidden: false });
-		}
-
-		this.lastPosition = position;
+		this.setState({ hidden: (position > 1) });
 	}, 200);
 
 	/**

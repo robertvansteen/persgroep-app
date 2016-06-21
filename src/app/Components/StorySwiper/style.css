@@ -1,7 +1,7 @@
 @value light from 'Stylesheets/colors';
 
 .wrapper {
-	position: relative;	
+	position: relative;
 }
 
 /* This is a classname as hook for the swiper, do not delete. */
@@ -9,8 +9,8 @@
 
 .backButton {
 	position: absolute;
-	top: 1.5rem;
-	left: 1.5rem;
+	top: 5rem;
+	left: 1rem;
 	color: light;
 	z-index: 99;
 	font-size: 2em;

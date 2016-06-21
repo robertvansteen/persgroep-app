@@ -1,4 +1,4 @@
-@value blue, light from 'Stylesheets/colors';
+@value blue, blue-light, light from 'Stylesheets/colors';
 
 .menu {
 	position: absolute;
@@ -9,12 +9,30 @@
 	height: 100%;
 	background: blue;
 	color: light;
-	padding: 2em 1em;
+	padding: 2em 0;
+}
+
+.user {
+	display: block;
+	composes: sans from 'Stylesheets/typography';
+	color: light;
+	padding: 0 1rem;
+	margin-bottom: 0.5rem;
+	font-size: 0.875em;
 }
 
 .item {
 	display: block;
 	composes: sans from 'Stylesheets/typography';
 	color: light;
+	padding: 0 1em;
 	margin-bottom: 1.5em;
+}
+
+.divider {
+	border: 0;
+	height: 1px;
+	width: 100%;
+	background: blue-light;
+	margin: 0.5em 0 2em 0;
 }
