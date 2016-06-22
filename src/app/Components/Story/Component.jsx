@@ -80,7 +80,6 @@ export class Story extends Component {
 	 * @return {String}
 	 */
 	parseBody(body = '') {
-		console.log('parse');
 		let parsedBody = body;
 
 		if (!parsedBody.match(/<p(.*?)>/g)) {
