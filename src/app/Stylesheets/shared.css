@@ -14,6 +14,11 @@
 	textarea {
 		font-size: 100%;
 	}
+
+	button {
+		border: 0;
+		background: none;
+	}
 }
 
 /**
