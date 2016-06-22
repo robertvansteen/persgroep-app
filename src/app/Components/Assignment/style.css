@@ -1,0 +1,41 @@
+@value light from 'Stylesheets/colors';
+
+.block {
+	position: relative;
+	height: 15em;
+	flex: 0 0 10em;
+	margin-right: 1em;
+}
+
+.image,
+.overlay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.image {
+	background-size: cover;
+}
+
+.overlay {
+	background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 70%);
+}
+
+.content {
+	position: absolute;
+	z-index: 99;
+	padding: 1em;
+	bottom: 0;
+}
+
+.title {
+	composes: sans from 'Stylesheets/typography';
+	color: light;
+	font-size: 0.875em;
+	font-weight: bold;
+	line-height: 1.3;
+	letter-spacing: 0.1;
+}
