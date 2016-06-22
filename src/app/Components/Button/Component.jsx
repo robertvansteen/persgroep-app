@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { PropTypes } from 'react';
 
 const Button = props => {
-	const className = classNames(styles.base, styles[props.type]);
+	const className = classNames(styles.base, styles[props.type], styles[props.state]);
 
 	return (
 		<button
@@ -16,11 +16,13 @@ const Button = props => {
 };
 
 Button.propTypes = {
+	state: PropTypes.string,
 	type: PropTypes.string,
 	label: PropTypes.string.isRequired,
 };
 
 Button.defaultProps = {
+	state: 'default',
 	type: 'button',
 };
 

@@ -18,6 +18,10 @@ category.define({
 	stories: arrayOf(story),
 });
 
+assignment.define({
+	users: arrayOf(user),
+});
+
 export {
 	story as storySchema,
 	user as userSchema,
