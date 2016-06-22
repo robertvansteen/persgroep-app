@@ -29,3 +29,17 @@ export function fetchStory(id) {
 export function publishStory(payload) {
 	return fetch.post(`/stories`, payload);
 }
+
+export function likeStory(id) {
+	stories.find(id).like();
+	return fetch.post(`/stories/${id}/likes`)
+		.then(() => stories.find(id).like())
+		.catch(() => stories.find(id).unlike());
+}
+
+export function unlikeStory(id) {
+	stories.find(id).unlike();
+	return fetch.delete(`/stories/${id}/likes`)
+		.then(() => stories.find(id).unlike())
+		.catch(() => stories.find(id).like());
+}

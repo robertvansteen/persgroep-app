@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import throttle from 'lodash/throttle';
 import React, { Component, PropTypes } from 'react';
+import { likeStory, unlikeStory } from 'Sources/Stories';
 import LikeButton from 'Components/LikeButton/LikeButton';
 
 export class Story extends Component {
@@ -70,7 +71,8 @@ export class Story extends Component {
 	 * @return {void}
 	 */
 	onLikeButtonClick = () => {
-		// TODO: Reimplement this.
+		const id = this.props.story.id;
+		this.props.story.liked_count === 1 ? unlikeStory(id) : likeStory(id);
 	}
 
 	/**
@@ -133,7 +135,7 @@ export class Story extends Component {
 						>
 						</div>
 						<LikeButton
-							active={story.liked}
+							active={story.liked_count === 1}
 							onClick={this.onLikeButtonClick}
 						/>
 					</div>
