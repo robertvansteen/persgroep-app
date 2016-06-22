@@ -3,6 +3,7 @@ import styles from './style.css';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import throttle from 'lodash/throttle';
+import AuthStore from 'Stores/AuthStore';
 import React, { Component, PropTypes } from 'react';
 import { likeStory, unlikeStory } from 'Sources/Stories';
 import LikeButton from 'Components/LikeButton/LikeButton';
@@ -94,11 +95,33 @@ export class Story extends Component {
 		return parsedBody;
 	}
 
+	/**
+	 * Get the class name for the component.
+	 *
+	 * @return {String}
+	 */
 	getClassName() {
 		return classNames({
 			[styles.wrapper]: true,
 			[this.props.className]: true,
 		});
+	}
+
+	/**
+	 * Render the like button component.
+	 * We only do this if there is a logged in user.
+	 *
+	 * @return {ReactElement|null}
+	 */
+	renderLikeButton() {
+		if (!AuthStore.token) return null;
+
+		return (
+			<LikeButton
+				active={this.props.story.liked_count === 1}
+				onClick={this.onLikeButtonClick}
+			/>
+		);
 	}
 
 	/**
@@ -134,10 +157,8 @@ export class Story extends Component {
 							dangerouslySetInnerHTML={{ __html: body }}
 						>
 						</div>
-						<LikeButton
-							active={story.liked_count === 1}
-							onClick={this.onLikeButtonClick}
-						/>
+
+						{this.renderLikeButton()}
 					</div>
 				</div>
 			</div>
