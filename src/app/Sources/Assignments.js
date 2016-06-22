@@ -13,13 +13,13 @@ export function fetchAssignment(id) {
 
 export function subscribeAssignment(id) {
 	return fetch.post(`/assignments/${id}/subscribe`).then(() => {
-		assignments.find(id).updateStatus('pending');
+		assignments.find(id).updateSubscribeStatus('pending');
 	});
 }
 
-export function fetchOpenAssignments() {
-	return fetch('/assignments?status=open').then(response => {
-		const data = normalize(response.data, { data: arrayOf(assignmentSchema) });
+export function fetchAssignments() {
+	return fetch('/assignments').then(response => {
+		const data = normalize(response.data, { assignments: arrayOf(assignmentSchema) });
 		assignments.addCollection(data.entities.assignments);
 		return data;
 	});

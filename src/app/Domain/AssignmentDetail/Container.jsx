@@ -58,10 +58,7 @@ class Assignments extends Component {
 	onSubscribe = () => {
 		if (store.current.subscribe_status) return false;
 
-		subscribeAssignment(this.props.params.id)
-			.then(() => {
-				store.current.subscribe_status = 'pending';
-			});
+		subscribeAssignment(this.props.params.id);
 	}
 
 	/**

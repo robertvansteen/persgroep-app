@@ -2,7 +2,7 @@ import store from './Store';
 import { compose } from 'recompose';
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
-import { fetchOpenAssignments } from 'Sources/Assignments';
+import { fetchAssignments } from 'Sources/Assignments';
 import AssignmentList from 'Components/AssignmentList/Component';
 
 class Assignments extends Component {
@@ -13,8 +13,7 @@ class Assignments extends Component {
 	 * @return {void}
 	*/
 	componentDidMount() {
-		fetchOpenAssignments()
-			.then(data => store.openAssignmentsIds = data.result.data);
+		fetchAssignments();
 	}
 
 	/**
@@ -31,11 +30,15 @@ class Assignments extends Component {
 				/>
 				<AssignmentList
 					title="Pending"
-					assignments={[]}
+					assignments={store.pendingAssignments}
 				/>
 				<AssignmentList
 					title="Active"
-					assignments={[]}
+					assignments={store.acceptedAssignments}
+				/>
+				<AssignmentList
+					title="Rejected"
+					assignments={store.rejectedAssignments}
 				/>
 			</div>
 		);

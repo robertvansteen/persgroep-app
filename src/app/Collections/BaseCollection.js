@@ -109,6 +109,16 @@ export default class BaseCollection {
 	}
 
 	/**
+	 * Filter the items by predicate.
+	 *
+	 * @param  {Function} predicate
+	 * @return {Array}
+	 */
+	filter(predicate) {
+		return this.items.filter(predicate);
+	}
+
+	/**
 	 * Delete an item from the collection by it's ID.
 	 *
 	 * @param  {String} id
