@@ -80,6 +80,7 @@ export class Story extends Component {
 	 * @return {String}
 	 */
 	parseBody(body = '') {
+		console.log('parse');
 		let parsedBody = body;
 
 		if (!parsedBody.match(/<p(.*?)>/g)) {
@@ -88,7 +89,6 @@ export class Story extends Component {
 
 		parsedBody = parsedBody.replace(/<p(.*?)>/g, `<p class="${styles.body__paragraph}">`);
 		parsedBody = parsedBody.replace(/<p(.*?)>(\s*?)<\/p>/g, '');
-
 
 		return parsedBody;
 	}
@@ -107,6 +107,7 @@ export class Story extends Component {
 	 */
 	render() {
 		const story = this.props.story;
+		const body = this.parseBody(story.body);
 
 		return (
 			<div className={this.getClassName()}>
@@ -127,8 +128,9 @@ export class Story extends Component {
 							{moment(story.created_at).format('D-M-YYYY')}
 						</div>
 						<div
+							ref="body"
 							className={styles.body}
-							dangerouslySetInnerHTML={{ __html: this.parseBody(story.body) }}
+							dangerouslySetInnerHTML={{ __html: body }}
 						>
 						</div>
 						<LikeButton

@@ -1,12 +1,14 @@
 import styles from './style';
+import Status from './Status';
+import Actions from './Actions';
 import { Link } from 'react-router';
 import { observer } from 'mobx-react';
 import React, { PropTypes } from 'react';
-import SubscribeButton from './SubscribeButton/Component';
 
 const AssignmentDetail = props => {
-	const { title, image_url, description } = props.assignment;
-
+	const { title, description } = props.assignment;
+	const image = props.assignment.image_url;
+	const subscribeStatus = props.assignment.subscribe_status;
 
 	return (
 		<div className={styles.wrapper}>
@@ -15,7 +17,7 @@ const AssignmentDetail = props => {
 				<Link className={styles.backButton} to="/assignments">
 					<i className="icon-arrow-back"></i>
 				</Link>
-				<div className={styles.image} style={{ backgroundImage: `url(${image_url})` }} />
+				<div className={styles.image} style={{ backgroundImage: `url(${image})` }} />
 				<div className={styles.overlay} />
 				<div className={styles.header__content}>
 					<p className={styles.title}>
@@ -28,12 +30,16 @@ const AssignmentDetail = props => {
 				<p className={styles.description}>
 					{description}
 				</p>
-				<div className={styles.action}>
-					<SubscribeButton
-						status={props.assignment.subscribe_status}
-						onClick={props.onSubscribe}
-					/>
-				</div>
+
+				<Status status={subscribeStatus} />
+				<Actions status={subscribeStatus} onClick={props.onSubscribe} />
+				
+				{subscribeStatus === 'accepted'
+					? (<Link to="/story/new" className={styles.write}>
+							Aan de slag met de opdracht!
+						</Link>)
+					: null
+				}
 			</div>
 
 		</div>

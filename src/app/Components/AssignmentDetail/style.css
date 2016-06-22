@@ -60,3 +60,17 @@
 .action {
 	margin-top: 1em;
 }
+
+.status {
+	composes: sans from 'Stylesheets/typography';
+	font-weight: bold;
+	font-size: 1em;
+	margin-top: 1em;
+}
+
+.write {
+	display: block;
+	composes: sans from 'Stylesheets/typography';
+	color: dark;
+	margin-top: 1em;
+}

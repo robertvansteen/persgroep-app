@@ -17,6 +17,18 @@ export function subscribeAssignment(id) {
 	});
 }
 
+export function unsubscribeAssignment(id) {
+	return fetch.post(`/assignments/${id}/unsubscribe`).then(() => {
+		assignments.find(id).updateSubscribeStatus(null);
+	});
+}
+
+export function rejectAssignment(id) {
+	return fetch.post(`/assignments/${id}/reject`).then(() => {
+		assignments.find(id).updateSubscribeStatus('rejected');
+	});
+}
+
 export function fetchAssignments() {
 	return fetch('/assignments').then(response => {
 		const data = normalize(response.data, { assignments: arrayOf(assignmentSchema) });

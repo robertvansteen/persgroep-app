@@ -4,7 +4,12 @@ import { observer } from 'mobx-react';
 import Spinner from 'Components/Spinner/Component';
 import React, { Component, PropTypes } from 'react';
 import AssignmentDetail from 'Components/AssignmentDetail/Component';
-import { fetchAssignment, subscribeAssignment } from 'Sources/Assignments';
+import {
+	fetchAssignment,
+	subscribeAssignment,
+	unsubscribeAssignment,
+	rejectAssignment,
+} from 'Sources/Assignments';
 
 class Assignments extends Component {
 
@@ -56,9 +61,12 @@ class Assignments extends Component {
 	 * @return {void}
 	 */
 	onSubscribe = () => {
-		if (store.current.subscribe_status) return false;
-
-		subscribeAssignment(this.props.params.id);
+		switch (store.current.subscribe_status) {
+		case 'pending': return unsubscribeAssignment(this.props.params.id);
+		case 'accepted': return rejectAssignment(this.props.params.id);
+		case 'rejected': return false;
+		default: return subscribeAssignment(this.props.params.id);
+		}
 	}
 
 	/**

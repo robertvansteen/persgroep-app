@@ -4,18 +4,15 @@ import Button from 'Components/Button/Component';
 const SubscribeButton = props => {
 	const buttonLabel = () => {
 		switch (props.status) {
-		case 'pending': return 'In afwachting';
-		case 'accepted': return 'Geaccepteerd';
-		case 'rejected': return 'Afgewezen';
+		case 'pending': return 'Uitschrijven';
+		case 'accepted': return 'Afwijzen';
 		default: return 'Inschrijven';
 		}
 	};
 
 	const buttonState = () => {
 		switch (props.status) {
-		case 'pending': return 'inactive';
-		case 'accepted': return 'success';
-		case 'rejected': return 'error';
+		case 'accepted': return 'error';
 		default: return 'default';
 		}
 	};
