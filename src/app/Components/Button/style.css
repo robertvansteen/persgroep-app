@@ -1,15 +1,14 @@
-@value blue, light from "Stylesheets/colors";
+@value light, blue, grey-light, dark, grey, red from "Stylesheets/colors";
 
 .base {
 	composes: sans from "Stylesheets/typography";
 	font-size: 1.125em;
 	cursor: pointer;
 	transition: all 0.2s ease-in;
+	border-radius: 2px;
 }
 
 .button {
-	background: blue;
-	color: light;
 	padding: 0.75em 1em;
 	border: 0;
 }
@@ -19,4 +18,25 @@
 	background: none;
 
 	&:hover { color: blue }
+}
+
+.default {
+	background: blue;
+	color: light;
+}
+
+.success {
+	background: green;
+	color: light;
+}
+
+.error {
+	background: red;
+	color: dark;
+}
+
+.inactive {
+	background: grey;
+	color: dark;
+	cursor: not-allowed;
 }

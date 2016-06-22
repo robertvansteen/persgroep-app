@@ -71,7 +71,7 @@
 }
 
 .body__paragraph {
-	composes: serif paragraph from "Stylesheets/typography";
+	composes: sans paragraph from "Stylesheets/typography";
 	font-size: 1.125em;
 	margin-bottom: 1em;
 }

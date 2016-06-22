@@ -7,7 +7,9 @@ import Story from 'Domain/Story/Container';
 import Login from 'Domain/Login/Container';
 import Logout from 'Domain/Logout/Container';
 import Category from 'Domain/Category/Container';
+import Assignments from 'Domain/Assignments/Container';
 import CreateStory from 'Domain/CreateStory/Container';
+import AssignmentDetail from 'Domain/AssignmentDetail/Container';
 
 /**
  * Require authentication for the route.
@@ -41,6 +43,10 @@ export default function getRoutes() {
 				<Route path="/category/:id" component={Category} />
 				<Route path="story/new" component={CreateStory} onEnter={requireAuth} />
 				<Route path="/story/:id" component={Story} />
+
+				<Route path="/assignments" component={Assignments} onEnter={requireAuth} />
+				<Route path="/assignment/:id" component={AssignmentDetail} onEnter={requireAuth} />
+
 				<IndexRedirect to="/category/1" />
 			</Route>
 		</Router>

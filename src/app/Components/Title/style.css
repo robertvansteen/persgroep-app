@@ -1,0 +1,4 @@
+.title {
+	composes: h1 sans from 'Stylesheets/typography';
+	padding: 1rem;
+}
