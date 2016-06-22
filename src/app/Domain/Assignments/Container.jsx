@@ -2,6 +2,7 @@ import store from './Store';
 import { compose } from 'recompose';
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
+import Title from 'Components/Title/Component';
 import { fetchAssignments } from 'Sources/Assignments';
 import AssignmentList from 'Components/AssignmentList/Component';
 
@@ -24,6 +25,7 @@ class Assignments extends Component {
 	render() {
 		return (
 			<div>
+				<Title>Opdrachten</Title>
 				<AssignmentList
 					title="Open"
 					assignments={store.openAssignments}
