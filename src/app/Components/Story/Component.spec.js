@@ -38,8 +38,4 @@ describe('Story component', () => {
 	it('should show the date of the story', () => {
 		component.should.contain('1-1-2016');
 	});
-
-	it('should have a like button component', () => {
-		component.should.have.descendants(LikeButton);
-	});
 });
