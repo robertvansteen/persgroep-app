@@ -73,22 +73,20 @@ export class StorySwiper extends Component {
 
 		return (
 			<div className={styles.wrapper}>
-				<div className={styles.container}>
-					<Slider
-						ref="swiper"
-						onSlideChange={this.onSlideChange}
-						initialPane={this.props.index}
-					>
-						{stories.map((story, index) =>
-							<Story
-								className={styles.slide}
-								key={story.id}
-								story={story}
-								active={this.props.index === index}
-							/>
-						)}
-					</Slider>
-				</div>
+				<Slider
+					ref="swiper"
+					onSlideChange={this.onSlideChange}
+					initialPane={this.props.index}
+				>
+					{stories.map((story, index) =>
+						<Story
+							className={styles.slide}
+							key={story.id}
+							story={story}
+							active={this.props.index === index}
+						/>
+					)}
+				</Slider>
 			</div>
 		);
 	}
