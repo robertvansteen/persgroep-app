@@ -77,7 +77,10 @@ class CategoryContainer extends Component {
 
 		return (
 			<div>
-				<CategoryList categories={categories.all()} />
+				<CategoryList
+					categories={categories.all()}
+					currentCategory={this.props.params.id}
+				/>
 				<Category
 					onClick={this.onStoryClick}
 					category={categories.find(this.props.params.id)}

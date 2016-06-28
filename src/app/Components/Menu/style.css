@@ -13,19 +13,19 @@
 }
 
 .user {
-	display: block;
+	composes: wrapper from 'Stylesheets/general';
 	composes: sans from 'Stylesheets/typography';
+	display: block;
 	color: light;
-	padding: 0 1rem;
 	margin-bottom: 0.5rem;
 	font-size: 0.875em;
 }
 
 .item {
-	display: block;
 	composes: sans from 'Stylesheets/typography';
+	composes: wrapper from 'Stylesheets/general';
+	display: block;
 	color: light;
-	padding: 0 1em;
 	margin-bottom: 1.5em;
 }
 

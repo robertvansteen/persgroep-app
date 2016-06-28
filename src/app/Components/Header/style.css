@@ -2,7 +2,8 @@
 
 .header {
 	background: red;
-	padding: 1em;
+	padding-top: 1em;
+	padding-bottom: 1em;
 }
 
 .fixed {
@@ -27,6 +28,7 @@
 	color: blue;
 	font-size: 1.5em;
 	margin-right: 1em;
+	height: 1rem;
 	cursor: pointer;
 }
 

@@ -101,7 +101,7 @@ class App extends Component {
 	 */
 	render() {
 		if (this.state.authenticating) {
-			return <Spinner />
+			return <Spinner />;
 		}
 
 		return (

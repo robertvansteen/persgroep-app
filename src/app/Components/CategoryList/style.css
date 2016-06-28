@@ -1,10 +1,15 @@
 @value grey-vivid, dark from "Stylesheets/colors";
 
 .list {
+	composes: wrapper from 'Stylesheets/general';
 	display: flex;
-	background: grey-vivid;
-	padding: 0.75em 1em;
+	padding-top: 0.75em;
+	padding-bottom: 0.75em;
 	overflow-x: scroll;
+}
+
+.wrapper {
+	background: grey-vivid;
 }
 
 .item {
@@ -16,4 +21,8 @@
 	font-size: 1.125em;
 	line-height: 1;
 	color: dark;
+}
+
+.is_active {
+	font-weight: bold;
 }
