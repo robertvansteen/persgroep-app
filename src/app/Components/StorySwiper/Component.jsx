@@ -77,6 +77,7 @@ export class StorySwiper extends Component {
 					<Slider
 						ref="swiper"
 						onSlideChange={this.onSlideChange}
+						initialPane={this.props.index}
 					>
 						{stories.map((story, index) =>
 							<Story

@@ -15,6 +15,7 @@ class Slider extends Component {
 	 */
 	static propTypes = {
 		children: PropTypes.node,
+		initialPane: PropTypes.number,
 		onSlideChange: PropTypes.func,
 		transitionSpeed: PropTypes.number,
 	}
@@ -27,6 +28,7 @@ class Slider extends Component {
 	static defaultProps = {
 		transitionSpeed: 200,
 		onSlideChange: () => {},
+		initialPane: 0,
 	}
 
 	/**
@@ -37,7 +39,7 @@ class Slider extends Component {
 	state = {
 		scrolling: false,
 		panning: false,
-		currentPane: 0,
+		currentPane: this.props.initialPane,
 	}
 
 	/**
@@ -55,6 +57,7 @@ class Slider extends Component {
 			{ panmove: this.onHorizontalPan, panend: this.onHorizontalPanEnd }
 		);
 		this.bindRecognizers(this.refs.container.childNodes);
+		this.moveTo(this.state.currentPane, false);
 	}
 
 	/**
@@ -72,8 +75,6 @@ class Slider extends Component {
 			this.bindRecognizers(this.refs.container.childNodes);
 		}
 	}
-
-
 
 	/**
 	 * Invoked when the component will unmount from the DOM.
