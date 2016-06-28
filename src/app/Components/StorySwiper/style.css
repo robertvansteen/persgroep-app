@@ -4,8 +4,10 @@
 	position: relative;
 }
 
-/* This is a classname as hook for the swiper, do not delete. */
-.slide {}
+.slide {
+	width: 100vw;
+	float: left;
+}
 
 .backButton {
 	position: absolute;

@@ -1,9 +1,9 @@
 import styles from './style.css';
 import { Link } from 'react-router';
 import { observer } from 'mobx-react';
+import Slider from 'Components/Slider';
 import { Iteratable } from 'Library/PropTypes';
 import Story from 'Components/Story/Component';
-import Swiper from 'Components/Swiper/Component';
 import React, { Component, PropTypes } from 'react';
 
 export class StorySwiper extends Component {
@@ -28,7 +28,7 @@ export class StorySwiper extends Component {
 	 */
 	componentWillReceiveProps(nextProps) {
 		if (this.props.index !== nextProps.index) {
-			this.refs.swiper.slide(nextProps.index);
+			this.refs.swiper.moveTo(nextProps.index);
 		}
 	}
 
@@ -43,20 +43,6 @@ export class StorySwiper extends Component {
 			window.scrollTo(0, 0);
 			if (this.props.onChange) this.props.onChange(newIndex);
 		}
-	}
-
-	/**
-	 * Options for the swiper.
-	 *
-	 * @type {Object}
-	 */
-	swiperOptions = {
-		initialIndex: this.props.index,
-		cellSelector: `.${styles.slide}`,
-		selectedAttraction: 0.2,
-		friction: 0.8,
-		prevNextButtons: false,
-		pageDots: false,
 	}
 
 	/**
@@ -88,11 +74,8 @@ export class StorySwiper extends Component {
 		return (
 			<div className={styles.wrapper}>
 				<div className={styles.container}>
-					{this.renderBackButton()}
-					<Swiper
+					<Slider
 						ref="swiper"
-						className={styles.swiper}
-						options={this.swiperOptions}
 						onSlideChange={this.onSlideChange}
 					>
 						{stories.map((story, index) =>
@@ -103,7 +86,7 @@ export class StorySwiper extends Component {
 								active={this.props.index === index}
 							/>
 						)}
-					</Swiper>
+					</Slider>
 				</div>
 			</div>
 		);
