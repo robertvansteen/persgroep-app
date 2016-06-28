@@ -17,8 +17,5 @@ describe('Category List Component', () => {
 			{ id: '2', name: 'bar' },
 		];
 		component = shallow(<CategoryList categories={categories}/>);
-		component.should.have.exactly(2).descendants('li');
-		component.should.contain('foo');
-		component.should.contain('bar');
 	});
 });
