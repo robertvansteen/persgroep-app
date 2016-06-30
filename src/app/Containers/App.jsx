@@ -4,6 +4,7 @@ import styles from './style.css';
 import AuthStore from 'Stores/AuthStore';
 import Menu from 'Components/Menu/Component';
 import { fetchMe, refresh } from 'Sources/Auth';
+import Notifications from 'Domain/Notifications';
 import Header from 'Components/Header/Component';
 import Spinner from 'Components/Spinner/Component';
 import React, { Component, PropTypes } from 'react';
@@ -106,6 +107,7 @@ class App extends Component {
 
 		return (
 			<div className={styles.container}>
+				<Notifications />
 				<Header
 					fixed={this.shouldHeaderBeFixed()}
 					onMenuClick={this.onMenuClick}
