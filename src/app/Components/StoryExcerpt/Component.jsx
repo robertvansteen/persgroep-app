@@ -8,17 +8,24 @@ const StoryExcerpt = props => {
 	const story = props.story;
 
 	return (
-		<Link to={`/story/${story.id}`} onClick={props.onClick}>
+		<Link to={`/story/${story.id}`} onClick={props.onClick} className={styles.link}>
 			<article className={styles.article}>
-				<p className={styles.date}>
-					{moment(story.created_at).format('D-M-YYYY')}
-				</p>
-				<h1 className={styles.title}>
-					{story.title}
-				</h1>
-				<p className={styles.body}>
-					{story.excerpt}
-				</p>
+				<div className={styles.upper}>
+					<div className={styles.image} style={{ backgroundImage: `url(${story.image_url})` }} />
+					<div className={styles.overlay} />
+					<h1 className={styles.title}>
+						{story.title}
+					</h1>
+				</div>
+				<div className={styles.lower}>
+					<img className={styles.author_image} src={story.author.image_url} />
+					<p className={styles.author_name}>
+						{story.author.name}
+					</p>
+					<p className={styles.date}>
+						{moment(story.created_at).format('D-M-YYYY')}
+					</p>
+				</div>
 			</article>
 		</Link>
 	);

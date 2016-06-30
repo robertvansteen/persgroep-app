@@ -1,4 +1,4 @@
-@value grey-vivid, dark from "Stylesheets/colors";
+@value light, dark from "Stylesheets/colors";
 
 .list {
 	composes: wrapper from 'Stylesheets/general';
@@ -9,7 +9,7 @@
 }
 
 .wrapper {
-	background: grey-vivid;
+	background: light;
 }
 
 .item {

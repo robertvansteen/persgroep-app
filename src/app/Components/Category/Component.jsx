@@ -7,23 +7,18 @@ const Category = (props) => {
 	const category = props.category;
 
 	if (!category) {
-		return <div></div>
+		return <div/>;
 	}
 
 	return (
 		<section className={styles.wrapper}>
-			<h1 className={styles.title}>
-				{category.name}
-			</h1>
-			<div className={styles.list}>
-				{category.topStories.map(story =>
-					<StoryExcerpt
-						key={story.id}
-						story={story}
-						onClick={props.onClick}
-					/>
-				)}
-			</div>
+			{category.topStories.map(story =>
+				<StoryExcerpt
+					key={story.id}
+					story={story}
+					onClick={props.onClick}
+				/>
+			)}
 		</section>
 	);
 };
