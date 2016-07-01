@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 const Hammer = (typeof window !== 'undefined') ? require('hammerjs') : undefined;
 
 const DIRECTION_LEFT = 2;
-const DIRECTION_RIGHT  = 4;
+const DIRECTION_RIGHT = 4;
 
 class Slider extends Component {
 
