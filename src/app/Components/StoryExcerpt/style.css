@@ -1,6 +1,23 @@
 @value light, dark, grey from 'Stylesheets/colors';
 
-.link {
+.full {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 999;
+	background: white;
+}
+
+.full .upper {
+	height: 100vh;
+}
+
+.transitions {
+	transition: all 5s ease-in;
+}
+
+.wrapper {
 	display: block;
 	margin-bottom: 2em;
 	&:last-child { margin-bottom: 0 }
