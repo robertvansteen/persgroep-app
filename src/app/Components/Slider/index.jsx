@@ -1,4 +1,5 @@
 import each from 'lodash/each';
+import throttle from 'lodash/throttle';
 import React, { Component, PropTypes } from 'react';
 
 const Hammer = (typeof window !== 'undefined') ? require('hammerjs') : undefined;
@@ -29,6 +30,19 @@ class Slider extends Component {
 		transitionSpeed: 200,
 		onSlideChange: () => {},
 		initialPane: 0,
+	}
+
+	/**
+	 * Construct a new component.
+	 *
+	 * @param  {Object} props
+	 * @param  {Object} context
+	 *
+	 * @return {void}
+	 */
+	constructor(props, context) {
+		super(props, context);
+		this.onHorizontalPan = throttle(this.onHorizontalPan, 1000 / 60);
 	}
 
 	/**
@@ -104,7 +118,7 @@ class Slider extends Component {
 	 * @param  {Event} event
 	 * @return {void}
 	 */
-	onHorizontalPan = (event) => {
+	onHorizontalPan = event => {
 		this.setContainerOffset(-this.state.currentPane * this.paneWidth + event.deltaX);
 	}
 
@@ -128,11 +142,6 @@ class Slider extends Component {
 		}
 	}
 
-	onSwipe = (event) => {
-		if (event.direction === DIRECTION_LEFT) this.next();
-		if (event.direction === DIRECTION_RIGHT) this.prev();
-	}
-
 	/**
 	 * Invoked when the browser resizes. When that happens we want to re-calculate
 	 * positions & widths.
@@ -146,20 +155,41 @@ class Slider extends Component {
 
 	/**
 	 * Set the container offset.
+	 * Here we set the container offset on the this context. We do this to increase
+	 * the performance of the animations with a 'game loop approach'. Meaning
+	 * we call a seperate function to set the actual container offset by using
+	 * the browsers' request animation frame, this reads from our latest offset.
+	 *
+	 * If the animation flag is set to false we just set the offset and be
+	 * done with it, otherwise we enable transitions, start the animations &
+	 * disable the transitions after the animation is done.
 	 *
 	 * @param  {Number} offset
 	 * @param  {Boolean} animate
 	 * @return {void}
 	 */
 	setContainerOffset(offset, animate = false) {
-		if (!animate) {
-			this.refs.container.style.transform = `translateX(${offset}px)`;
-			return true;
-		}
+		this.offset = offset;
+
+		if (!animate) return this.updateContainerOffset();
 
 		this.enableTransition();
-		this.refs.container.style.transform = `translateX(${offset}px)`;
+		this.updateContainerOffset();
 		setTimeout(() => this.disableTransition(), this.props.transitionSpeed);
+	}
+
+	/**
+	 * Update the container offset by reading the latest offset value on the
+	 * component & calling request animation frame for a nice and steady 60 fps.
+	 *
+	 * @return {void}
+	 */
+	updateContainerOffset() {
+		requestAnimationFrame(() => this.updateContainerOffset.bind(this));
+
+		const el = this.refs.container;
+		const offset = this.offset;
+		el.style.transform = `translateX(${offset}px)`;
 	}
 
 	/**
@@ -323,6 +353,14 @@ class Slider extends Component {
 	 * @type {Number}
 	 */
 	width: 0
+
+	/**
+	 * The offset for the slider.
+	 * This is internally used by requestAnimationFrame for a smooth 60 fps.
+	 *
+	 * @type {Boolean}
+	 */
+	offset: 0
 
 	/**
 	 * Render the component.
