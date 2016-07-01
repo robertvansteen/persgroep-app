@@ -71,7 +71,7 @@ class Slider extends Component {
 			{ panmove: this.onHorizontalPan,
 				panend: this.onHorizontalPanEnd },
 		);
-		// this.bindRecognizers(this.refs.container.childNodes);
+		this.bindRecognizers(this.refs.container.childNodes);
 		this.moveTo(this.state.currentPane, false);
 	}
 
