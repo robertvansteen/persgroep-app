@@ -22,6 +22,18 @@ export class Story extends Component {
 	}
 
 	/**
+	 * Construct a new component.
+	 *
+	 * @param  {Object} props
+	 * @param  {Object} context
+	 * @return {void}
+	 */
+	constructor(props, context) {
+		super(props, context);
+		this.onScroll = throttle(this.onScroll, 200, { trailing: true });
+	}
+
+	/**
 	 * Invoked when the component is mounted.
 	 *
 	 * @return {void}
@@ -38,8 +50,10 @@ export class Story extends Component {
 	 */
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.active) {
-			this.refs.element.style.transform = 'translateY(0)';
-			this.refs.element.style.height = 'auto';
+			requestAnimationFrame(() => {
+				this.refs.element.style.transform = 'translateY(0)';
+				this.refs.element.style.height = 'auto';
+			});
 		}
 	}
 
@@ -58,13 +72,15 @@ export class Story extends Component {
 	 *
 	 * @return {void}
 	 */
-	onScroll = throttle(() => {
+	onScroll = () => {
 		const scrolled = window.scrollY;
 		if (!this.props.active) {
-			this.refs.element.style.transform = `translateY(${scrolled}px)`;
-			this.refs.element.style.height = '100vh';
+			requestAnimationFrame(() => {
+				this.refs.element.style.transform = `translateY(${scrolled}px)`;
+				this.refs.element.style.height = '100vh';
+			});
 		}
-	}, 200, { trailing: true });
+	}
 
 	/**
 	 * Invoked when the like button is clicked.
