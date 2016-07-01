@@ -68,9 +68,10 @@ class Slider extends Component {
 		this.horizontalRecognizer = this.createRecognizer(
 			this.refs.container,
 			Hammer.DIRECTION_HORIZONTAL,
-			{ panmove: this.onHorizontalPan, panend: this.onHorizontalPanEnd }
+			{ panmove: this.onHorizontalPan,
+				panend: this.onHorizontalPanEnd },
 		);
-		this.bindRecognizers(this.refs.container.childNodes);
+		// this.bindRecognizers(this.refs.container.childNodes);
 		this.moveTo(this.state.currentPane, false);
 	}
 
@@ -123,23 +124,24 @@ class Slider extends Component {
 	}
 
 	/**
-	 * Invoked when panning ends. Here we check if the user moved the pane enough
-	 * to move to the next or previous one. Otherwise we reset the current back
-	 * in position.
+	 * Invoked when panning ends.
+	 *
+	 * Here we check if either the panning distance or the velocity is enough to
+	 * go to the next or previous pane. Otherwise we snap the pane back to
+	 * it's original position.
 	 *
 	 * @param  {Event} event
 	 * @return {void}
 	 */
 	onHorizontalPanEnd = (event) => {
-		if (Math.abs(event.deltaX) > this.paneWidth * 0.25) {
-			if (event.deltaX > 0) {
-				this.prev();
-			} else {
-				this.next();
-			}
-		} else {
-			this.moveTo(this.state.currentPane);
+		const distance = Math.abs(event.deltaX) > this.paneWidth * 0.25;
+		const velocity = event.velocityX > 0.3 || event.velocityX < -0.3;
+
+		if (distance || velocity) {
+			return (event.deltaX > 0) ? this.prev() : this.next();
 		}
+
+		return this.moveTo(this.state.currentPane);
 	}
 
 	/**
@@ -321,7 +323,8 @@ class Slider extends Component {
 	*/
 	createRecognizer(element, direction, events = {}) {
 		const hammer = new Hammer.Manager(element, { touchAction: 'pan-y' });
-		hammer.add(new Hammer.Pan({ direction, treshold: 10 }));
+		const panning = new Hammer.Pan({ direction, treshold: 10 });
+		hammer.add(panning);
 		each(events, (cb, event) => hammer.on(event, cb));
 		return hammer;
 	}
