@@ -372,7 +372,7 @@ class Slider extends Component {
 	render() {
 		return (
 			<div style={{ overflow: 'hidden' }}>
-				<div ref="container" style={{ position: 'relative', willChange: 'auto' }}>
+				<div ref="container" style={{ position: 'relative', willChange: 'transform' }}>
 					{this.props.children}
 				</div>
 			</div>
