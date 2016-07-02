@@ -26,7 +26,8 @@ module.exports = require('./base')({
 	cssLoaders: ExtractTextPlugin.extract(
 		'style-loader',
 		'css-loader?modules&importLoaders=1' +
-		'&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader'
+		'&localIdentName=[local]__[path][name]__[hash:base64:5]',
+		'postcss-loader'
 	),
 
 	cssVendorLoaders: ExtractTextPlugin.extract(
