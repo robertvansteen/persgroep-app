@@ -42,7 +42,6 @@ class Slider extends Component {
 	 */
 	constructor(props, context) {
 		super(props, context);
-		// this.onHorizontalPan = throttle(this.onHorizontalPan, 1000 / 60);
 	}
 
 	/**
@@ -73,6 +72,8 @@ class Slider extends Component {
 		);
 		this.bindRecognizers(this.refs.container.childNodes);
 		this.moveTo(this.state.currentPane, false);
+
+		requestAnimationFrame(this.updateContainerOffset.bind(this));
 	}
 
 	/**
@@ -173,11 +174,10 @@ class Slider extends Component {
 	setContainerOffset(offset, animate = false) {
 		this.offset = offset;
 
-		if (!animate) return this.updateContainerOffset();
-
-		this.enableTransition();
-		this.updateContainerOffset();
-		setTimeout(() => this.disableTransition(), this.props.transitionSpeed);
+		if (animate) {
+			this.enableTransition();
+			setTimeout(() => this.disableTransition(), this.props.transitionSpeed);
+		}
 	}
 
 	/**
@@ -187,11 +187,10 @@ class Slider extends Component {
 	 * @return {void}
 	 */
 	updateContainerOffset() {
-		requestAnimationFrame(() => this.updateContainerOffset.bind(this));
-
 		const el = this.refs.container;
 		const offset = this.offset;
 		el.style.transform = `translateX(${offset}px)`;
+		requestAnimationFrame(this.updateContainerOffset.bind(this));
 	}
 
 	/**
@@ -225,7 +224,7 @@ class Slider extends Component {
 
 		setTimeout(
 			() => this.props.onSlideChange(pane),
-			animate ? this.props.transitionSpeed * 1.1 : 0
+			animate ? this.props.transitionSpeed * 2 : 0
 		);
 	}
 
