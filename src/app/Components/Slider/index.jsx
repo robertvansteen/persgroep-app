@@ -42,7 +42,7 @@ class Slider extends Component {
 	 */
 	constructor(props, context) {
 		super(props, context);
-		this.onHorizontalPan = throttle(this.onHorizontalPan, 1000 / 60);
+		// this.onHorizontalPan = throttle(this.onHorizontalPan, 1000 / 60);
 	}
 
 	/**
@@ -225,7 +225,7 @@ class Slider extends Component {
 
 		setTimeout(
 			() => this.props.onSlideChange(pane),
-			animate ? this.props.transitionSpeed : 0
+			animate ? this.props.transitionSpeed * 1.1 : 0
 		);
 	}
 
@@ -301,7 +301,7 @@ class Slider extends Component {
 	 */
 	enableTransition() {
 		const speed = this.props.transitionSpeed / 1000;
-		this.refs.container.style.transition = `transform ${speed}s ease-in`;
+		this.refs.container.style.transition = `transform ${speed}s ease-out`;
 	}
 
 	/**
@@ -373,7 +373,7 @@ class Slider extends Component {
 	render() {
 		return (
 			<div style={{ overflow: 'hidden' }}>
-				<div ref="container" style={{ position: 'relative' }}>
+				<div ref="container" style={{ position: 'relative', willChange: 'auto' }}>
 					{this.props.children}
 				</div>
 			</div>
