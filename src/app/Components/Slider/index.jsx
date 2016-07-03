@@ -121,7 +121,14 @@ class Slider extends Component {
 	 * @return {void}
 	 */
 	onHorizontalPan = event => {
-		this.setContainerOffset(-this.state.currentPane * this.paneWidth + event.deltaX);
+		let delta = event.deltaX;
+		const pane = this.state.currentPane;
+
+		if (this.isFirst(pane) || this.isLast(pane)) {
+			delta = event.deltaX * 0.4;
+		}
+
+		this.setContainerOffset(-this.state.currentPane * this.paneWidth + delta);
 	}
 
 	/**
@@ -191,6 +198,28 @@ class Slider extends Component {
 		const offset = this.offset;
 		el.style.transform = `translateX(${offset}px)`;
 		requestAnimationFrame(this.updateContainerOffset.bind(this));
+	}
+
+	/**
+	 * Check if a pane index is the first.
+	 * Which essentialy just checks if it's 0. It's just to provide a consistent
+	 * API with checking the dyanmic 'isLast'.
+	 *
+	 * @param  {Integer} pane
+	 * @return {Boolean}
+	 */
+	isFirst(pane) {
+		return pane === 0;
+	}
+
+	/**
+	 * Check if the pane is the last one.
+	 *
+	 * @param  {String} pane
+	 * @return {Boolean}
+	 */
+	isLast(pane) {
+		return pane === this.props.children.length - 1;
 	}
 
 	/**
