@@ -17,6 +17,7 @@ export class Story extends Component {
 	 */
 	static propTypes = {
 		active: PropTypes.bool,
+		visible: PropTypes.bool,
 		className: PropTypes.string,
 		story: PropTypes.object.isRequired,
 	}
@@ -49,11 +50,9 @@ export class Story extends Component {
 	 * @return {void}
 	 */
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.active) {
-			requestAnimationFrame(() => {
-				this.refs.element.style.transform = 'translateY(0)';
-				this.refs.element.style.height = 'auto';
-			});
+		if (nextProps.visible) {
+			this.refs.element.style.transform = 'translateY(0)';
+			this.refs.element.style.height = 'auto';
 		}
 	}
 
@@ -74,7 +73,7 @@ export class Story extends Component {
 	 */
 	onScroll = () => {
 		const scrolled = window.scrollY;
-		if (!this.props.active) {
+		if (!this.props.visible) {
 			requestAnimationFrame(() => {
 				this.refs.element.style.transform = `translateY(${scrolled}px)`;
 				this.refs.element.style.height = '100vh';

@@ -29,9 +29,7 @@ function requireAuth(nextState, replace) {
  *
  * @return {void}
  */
-function onUpdate() {
-	window.scrollTo(0, 0);
-}
+function onUpdate() {}
 
 export default function getRoutes() {
 	return (

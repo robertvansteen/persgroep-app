@@ -21,17 +21,6 @@ export class StorySwiper extends Component {
 	}
 
 	/**
-	 * Invoked when the slide transition ends.
-	 *
-	 * @param  {Integer} nextPane
-	 * @return {void}
-	 */
-	onSlideChange = (nextPane) => {
-		window.scrollTo(0, 0);
-		if (this.props.onChange) this.props.onChange(nextPane);
-	}
-
-	/**
 	 * Render the back button.
 	 *
 	 * @return {ReactElement|null}
@@ -62,7 +51,7 @@ export class StorySwiper extends Component {
 				<Slider
 					ref="swiper"
 					currentPane={this.props.index}
-					onSlideChange={this.onSlideChange}
+					onSlideChange={this.props.onChange}
 				>
 					{stories.map((story, index) =>
 						<Story

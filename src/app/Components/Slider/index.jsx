@@ -1,5 +1,5 @@
 import each from 'lodash/each';
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes, cloneElement } from 'react';
 
 const Hammer = (typeof window !== 'undefined') ? require('hammerjs') : undefined;
 
@@ -29,23 +29,12 @@ class Slider extends Component {
 	}
 
 	/**
-	 * Construct a new component.
-	 *
-	 * @param  {Object} props
-	 * @param  {Object} context
-	 *
-	 * @return {void}
-	 */
-	constructor(props, context) {
-		super(props, context);
-	}
-
-	/**
 	 * State of the component.
 	 *
 	 * @type {Object}
 	 */
 	state = {
+		visible: this.props.currentPane,
 		scrolling: false,
 		panning: false,
 	}
@@ -276,6 +265,23 @@ class Slider extends Component {
 	 */
 	moveTo(pane, animate = true) {
 		this.setContainerOffset(-pane * this.paneWidth, animate);
+		setTimeout(() => this.setVisible(pane), animate ? this.props.transitionSpeed : 0);
+	}
+
+	/**
+	 * Set a pane to visible.
+	 * We do this by setting the pane index as visible state, this is compared &
+	 * passed down to the children so they know if they are visible or not.
+	 * We also set the scroll position to top left so we are back on top.
+	 *
+	 * @param  {Number} pane
+	 * @return {void}
+	 */
+	setVisible(pane) {
+		if (pane === this.state.visible) return true;
+
+		window.scrollTo(0, 0);
+		this.setState({ visible: pane });
 	}
 
 	/**
@@ -388,6 +394,17 @@ class Slider extends Component {
 	offset: 0
 
 	/**
+	 * Render the children.
+	 *
+	 * @return {Node}
+	 */
+	renderChildren() {
+		return this.props.children.map((child, index) =>
+			cloneElement(child, { visible: index === this.state.visible })
+		);
+	}
+
+	/**
 	 * Render the component.
 	 *
 	 * @return {ReactElement}
@@ -396,7 +413,7 @@ class Slider extends Component {
 		return (
 			<div style={{ overflow: 'hidden' }}>
 				<div ref="container" style={{ position: 'relative', willChange: 'transform' }}>
-					{this.props.children}
+					{this.renderChildren()}
 				</div>
 			</div>
 		);
