@@ -3,6 +3,7 @@
 .element {
 	position: relative;
 	top: 0;
+	background: light;
 }
 
 .header {

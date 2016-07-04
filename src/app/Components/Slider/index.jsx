@@ -1,11 +1,7 @@
 import each from 'lodash/each';
-import throttle from 'lodash/throttle';
 import React, { Component, PropTypes } from 'react';
 
 const Hammer = (typeof window !== 'undefined') ? require('hammerjs') : undefined;
-
-const DIRECTION_LEFT = 2;
-const DIRECTION_RIGHT = 4;
 
 class Slider extends Component {
 
@@ -16,7 +12,7 @@ class Slider extends Component {
 	 */
 	static propTypes = {
 		children: PropTypes.node,
-		initialPane: PropTypes.number,
+		currentPane: PropTypes.number,
 		onSlideChange: PropTypes.func,
 		transitionSpeed: PropTypes.number,
 	}
@@ -27,9 +23,9 @@ class Slider extends Component {
 	 * @type {Object}
 	 */
 	static defaultProps = {
-		transitionSpeed: 200,
+		currentPane: 0,
+		transitionSpeed: 150,
 		onSlideChange: () => {},
-		initialPane: 0,
 	}
 
 	/**
@@ -52,7 +48,6 @@ class Slider extends Component {
 	state = {
 		scrolling: false,
 		panning: false,
-		currentPane: this.props.initialPane,
 	}
 
 	/**
@@ -71,9 +66,21 @@ class Slider extends Component {
 				panend: this.onHorizontalPanEnd },
 		);
 		this.bindRecognizers(this.refs.container.childNodes);
-		this.moveTo(this.state.currentPane, false);
+		this.moveTo(this.props.currentPane, false);
 
 		requestAnimationFrame(this.updateContainerOffset.bind(this));
+	}
+
+	/**
+	 * Invoked when the component receives new props.
+	 *
+	 * @param  {Object} nextProps
+	 * @return {void}
+	 */
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.currentPane !== this.props.currentPane) {
+			this.moveTo(nextProps.currentPane);
+		}
 	}
 
 	/**
@@ -87,7 +94,6 @@ class Slider extends Component {
 	componentDidUpdate(prevProps) {
 		if (prevProps.children.length !== this.props.children.length) {
 			this.calculateDimensions(this.refs.container);
-			this.moveTo(this.state.currentPane, false);
 			this.bindRecognizers(this.refs.container.childNodes);
 		}
 	}
@@ -122,13 +128,13 @@ class Slider extends Component {
 	 */
 	onHorizontalPan = event => {
 		let delta = event.deltaX;
-		const pane = this.state.currentPane;
+		const pane = this.props.currentPane;
 
-		if (this.isFirst(pane) || this.isLast(pane)) {
-			delta = event.deltaX * 0.4;
+		if (this.isFirst(pane) && delta > 0 || this.isLast(pane) && delta < 0) {
+			delta = delta * 0.4;
 		}
 
-		this.setContainerOffset(-this.state.currentPane * this.paneWidth + delta);
+		this.setContainerOffset(-this.props.currentPane * this.paneWidth + delta);
 	}
 
 	/**
@@ -146,10 +152,11 @@ class Slider extends Component {
 		const velocity = event.velocityX > 0.3 || event.velocityX < -0.3;
 
 		if (distance || velocity) {
-			return (event.deltaX > 0) ? this.prev() : this.next();
+			const nextPane = (event.deltaX > 0) ? this.getPrevious() : this.getNext();
+			if (nextPane !== this.props.currentPane) return this.props.onSlideChange(nextPane);
 		}
 
-		return this.moveTo(this.state.currentPane);
+		return this.moveTo(this.props.currentPane);
 	}
 
 	/**
@@ -160,7 +167,7 @@ class Slider extends Component {
 	 */
 	onResize = () => {
 		this.calculateDimensions(this.refs.container);
-		this.moveTo(this.state.currentPane, false);
+		this.moveTo(this.props.currentPane, false);
 	}
 
 	/**
@@ -185,6 +192,29 @@ class Slider extends Component {
 			this.enableTransition();
 			setTimeout(() => this.disableTransition(), this.props.transitionSpeed);
 		}
+	}
+
+	/**
+	 * Get the previous pane.
+	 *
+	 * @return {void}
+	 */
+	getPrevious() {
+		return this.props.currentPane < 1
+			? 0
+			: this.props.currentPane - 1;
+	}
+
+	/**
+	 * Get the next pane.
+	 *
+	 * @return {void}
+	 */
+	getNext() {
+		const currentPane = this.props.currentPane;
+		return currentPane === this.props.children.length - 1
+			? currentPane
+			: currentPane + 1;
 	}
 
 	/**
@@ -246,42 +276,6 @@ class Slider extends Component {
 	 */
 	moveTo(pane, animate = true) {
 		this.setContainerOffset(-pane * this.paneWidth, animate);
-
-		if (pane !== this.state.currentPane) {
-			this.setState({ currentPane: pane });
-		}
-
-		setTimeout(
-			() => this.props.onSlideChange(pane),
-			animate ? this.props.transitionSpeed * 2 : 0
-		);
-	}
-
-	/**
-	 * Go to the previous pane.
-	 *
-	 * @return {void}
-	 */
-	prev() {
-		const previousPane = this.state.currentPane < 1
-			? 0
-			: this.state.currentPane - 1;
-
-		this.moveTo(previousPane, true);
-	}
-
-	/**
-	 * Go to the next pane.
-	 *
-	 * @return {void}
-	 */
-	next() {
-		const currentPane = this.state.currentPane;
-		const nextPane = currentPane === this.props.children.length - 1
-			? currentPane
-			: currentPane + 1;
-
-		this.moveTo(nextPane, true);
 	}
 
 	/**
