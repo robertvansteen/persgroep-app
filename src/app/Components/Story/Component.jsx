@@ -122,7 +122,6 @@ export class Story extends Component {
 	 */
 	setHeight() {
 		const height = window.innerHeight;
-		console.log('Setting height to', window.innerHeight);
 		this.refs.header.style.height = `${height}px`;
 	}
 
