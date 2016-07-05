@@ -73,13 +73,13 @@ class StoryContainer extends Component {
 	/**
 	 * Invoked when the story is changed via the swiper.
 	 *
-	 * @param  {Object} newIndex
+	 * @param  {Integer} nextPane
 	 * @return {void}
 	 */
-	onChange = (newIndex) => {
-		const story = store.stories[newIndex];
+	onChange = (nextPane) => {
+		const story = store.stories[nextPane];
 		this.props.router.push({ pathname: `/story/${story.id}` });
-		this.setState({ index: newIndex });
+		this.setState({ index: nextPane });
 	}
 
 	/**

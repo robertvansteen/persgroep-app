@@ -3,6 +3,8 @@
 .element {
 	position: relative;
 	top: 0;
+	background: light;
+	padding-bottom: 1em;
 }
 
 .header {
@@ -72,4 +74,9 @@
 	composes: sans paragraph from "Stylesheets/typography";
 	font-size: 1.125em;
 	margin-bottom: 1em;
+}
+
+.navigation {
+	margin-top: 3em;
+	display: flex;
 }

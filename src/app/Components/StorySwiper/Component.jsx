@@ -21,31 +21,6 @@ export class StorySwiper extends Component {
 	}
 
 	/**
-	 * Invoked when the component is about to receive new props.
-	 *
-	 * @param  {Object} nextProps
-	 * @return {void}
-	 */
-	componentWillReceiveProps(nextProps) {
-		if (this.props.index !== nextProps.index) {
-			this.refs.swiper.moveTo(nextProps.index);
-		}
-	}
-
-	/**
-	 * Invoked when the slide transition ends.
-	 *
-	 * @param  {Integer} newIndex
-	 * @return {void}
-	 */
-	onSlideChange = (newIndex) => {
-		if (newIndex !== this.props.index) {
-			window.scrollTo(0, 0);
-			if (this.props.onChange) this.props.onChange(newIndex);
-		}
-	}
-
-	/**
 	 * Render the back button.
 	 *
 	 * @return {ReactElement|null}
@@ -73,21 +48,21 @@ export class StorySwiper extends Component {
 
 		return (
 			<div className={styles.wrapper}>
-				<div className={styles.container}>
-					<Slider
-						ref="swiper"
-						onSlideChange={this.onSlideChange}
-					>
-						{stories.map((story, index) =>
-							<Story
-								className={styles.slide}
-								key={story.id}
-								story={story}
-								active={this.props.index === index}
-							/>
-						)}
-					</Slider>
-				</div>
+				<Slider
+					ref="swiper"
+					currentPane={this.props.index}
+					onSlideChange={this.props.onChange}
+				>
+					{stories.map((story, index) =>
+						<Story
+							story={story}
+							key={story.id}
+							className={styles.slide}
+							nextStory={stories[index + 1]}
+							active={this.props.index === index}
+						/>
+					)}
+				</Slider>
 			</div>
 		);
 	}

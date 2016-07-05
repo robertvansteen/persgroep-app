@@ -1,10 +1,7 @@
 import each from 'lodash/each';
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes, cloneElement } from 'react';
 
 const Hammer = (typeof window !== 'undefined') ? require('hammerjs') : undefined;
-
-const DIRECTION_LEFT = 2;
-const DIRECTION_RIGHT  = 4;
 
 class Slider extends Component {
 
@@ -15,6 +12,7 @@ class Slider extends Component {
 	 */
 	static propTypes = {
 		children: PropTypes.node,
+		currentPane: PropTypes.number,
 		onSlideChange: PropTypes.func,
 		transitionSpeed: PropTypes.number,
 	}
@@ -25,7 +23,8 @@ class Slider extends Component {
 	 * @type {Object}
 	 */
 	static defaultProps = {
-		transitionSpeed: 200,
+		currentPane: 0,
+		transitionSpeed: 150,
 		onSlideChange: () => {},
 	}
 
@@ -35,9 +34,9 @@ class Slider extends Component {
 	 * @type {Object}
 	 */
 	state = {
+		visible: this.props.currentPane,
 		scrolling: false,
 		panning: false,
-		currentPane: 0,
 	}
 
 	/**
@@ -52,9 +51,25 @@ class Slider extends Component {
 		this.horizontalRecognizer = this.createRecognizer(
 			this.refs.container,
 			Hammer.DIRECTION_HORIZONTAL,
-			{ panmove: this.onHorizontalPan, panend: this.onHorizontalPanEnd }
+			{ panmove: this.onHorizontalPan,
+				panend: this.onHorizontalPanEnd },
 		);
 		this.bindRecognizers(this.refs.container.childNodes);
+		this.moveTo(this.props.currentPane, false);
+
+		requestAnimationFrame(this.updateContainerOffset.bind(this));
+	}
+
+	/**
+	 * Invoked when the component receives new props.
+	 *
+	 * @param  {Object} nextProps
+	 * @return {void}
+	 */
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.currentPane !== this.props.currentPane) {
+			this.moveTo(nextProps.currentPane);
+		}
 	}
 
 	/**
@@ -68,12 +83,9 @@ class Slider extends Component {
 	componentDidUpdate(prevProps) {
 		if (prevProps.children.length !== this.props.children.length) {
 			this.calculateDimensions(this.refs.container);
-			this.moveTo(this.state.currentPane, false);
 			this.bindRecognizers(this.refs.container.childNodes);
 		}
 	}
-
-
 
 	/**
 	 * Invoked when the component will unmount from the DOM.
@@ -103,33 +115,37 @@ class Slider extends Component {
 	 * @param  {Event} event
 	 * @return {void}
 	 */
-	onHorizontalPan = (event) => {
-		this.setContainerOffset(-this.state.currentPane * this.paneWidth + event.deltaX);
+	onHorizontalPan = event => {
+		let delta = event.deltaX;
+		const pane = this.props.currentPane;
+
+		if (this.isFirst(pane) && delta > 0 || this.isLast(pane) && delta < 0) {
+			delta = delta * 0.4;
+		}
+
+		this.setContainerOffset(-this.props.currentPane * this.paneWidth + delta);
 	}
 
 	/**
-	 * Invoked when panning ends. Here we check if the user moved the pane enough
-	 * to move to the next or previous one. Otherwise we reset the current back
-	 * in position.
+	 * Invoked when panning ends.
+	 *
+	 * Here we check if either the panning distance or the velocity is enough to
+	 * go to the next or previous pane. Otherwise we snap the pane back to
+	 * it's original position.
 	 *
 	 * @param  {Event} event
 	 * @return {void}
 	 */
 	onHorizontalPanEnd = (event) => {
-		if (Math.abs(event.deltaX) > this.paneWidth * 0.25) {
-			if (event.deltaX > 0) {
-				this.prev();
-			} else {
-				this.next();
-			}
-		} else {
-			this.moveTo(this.state.currentPane);
-		}
-	}
+		const distance = Math.abs(event.deltaX) > this.paneWidth * 0.25;
+		const velocity = event.velocityX > 0.3 || event.velocityX < -0.3;
 
-	onSwipe = (event) => {
-		if (event.direction === DIRECTION_LEFT) this.next();
-		if (event.direction === DIRECTION_RIGHT) this.prev();
+		if (distance || velocity) {
+			const nextPane = (event.deltaX > 0) ? this.getPrevious() : this.getNext();
+			if (nextPane !== this.props.currentPane) return this.props.onSlideChange(nextPane);
+		}
+
+		return this.moveTo(this.props.currentPane);
 	}
 
 	/**
@@ -140,25 +156,89 @@ class Slider extends Component {
 	 */
 	onResize = () => {
 		this.calculateDimensions(this.refs.container);
-		this.moveTo(this.state.currentPane, false);
+		this.moveTo(this.props.currentPane, false);
 	}
 
 	/**
 	 * Set the container offset.
+	 * Here we set the container offset on the this context. We do this to increase
+	 * the performance of the animations with a 'game loop approach'. Meaning
+	 * we call a seperate function to set the actual container offset by using
+	 * the browsers' request animation frame, this reads from our latest offset.
+	 *
+	 * If the animation flag is set to false we just set the offset and be
+	 * done with it, otherwise we enable transitions, start the animations &
+	 * disable the transitions after the animation is done.
 	 *
 	 * @param  {Number} offset
 	 * @param  {Boolean} animate
 	 * @return {void}
 	 */
 	setContainerOffset(offset, animate = false) {
-		if (!animate) {
-			this.refs.container.style.transform = `translateX(${offset}px)`;
-			return true;
-		}
+		this.offset = offset;
 
-		this.enableTransition();
-		this.refs.container.style.transform = `translateX(${offset}px)`;
-		setTimeout(() => this.disableTransition(), this.props.transitionSpeed);
+		if (animate) {
+			this.enableTransition();
+			setTimeout(() => this.disableTransition(), this.props.transitionSpeed);
+		}
+	}
+
+	/**
+	 * Get the previous pane.
+	 *
+	 * @return {void}
+	 */
+	getPrevious() {
+		return this.props.currentPane < 1
+			? 0
+			: this.props.currentPane - 1;
+	}
+
+	/**
+	 * Get the next pane.
+	 *
+	 * @return {void}
+	 */
+	getNext() {
+		const currentPane = this.props.currentPane;
+		return currentPane === this.props.children.length - 1
+			? currentPane
+			: currentPane + 1;
+	}
+
+	/**
+	 * Update the container offset by reading the latest offset value on the
+	 * component & calling request animation frame for a nice and steady 60 fps.
+	 *
+	 * @return {void}
+	 */
+	updateContainerOffset() {
+		const el = this.refs.container;
+		const offset = this.offset;
+		el.style.transform = `translateX(${offset}px)`;
+		requestAnimationFrame(this.updateContainerOffset.bind(this));
+	}
+
+	/**
+	 * Check if a pane index is the first.
+	 * Which essentialy just checks if it's 0. It's just to provide a consistent
+	 * API with checking the dyanmic 'isLast'.
+	 *
+	 * @param  {Integer} pane
+	 * @return {Boolean}
+	 */
+	isFirst(pane) {
+		return pane === 0;
+	}
+
+	/**
+	 * Check if the pane is the last one.
+	 *
+	 * @param  {String} pane
+	 * @return {Boolean}
+	 */
+	isLast(pane) {
+		return pane === this.props.children.length - 1;
 	}
 
 	/**
@@ -185,42 +265,23 @@ class Slider extends Component {
 	 */
 	moveTo(pane, animate = true) {
 		this.setContainerOffset(-pane * this.paneWidth, animate);
-
-		if (pane !== this.state.currentPane) {
-			this.setState({ currentPane: pane });
-		}
-
-		setTimeout(
-			() => this.props.onSlideChange(pane),
-			animate ? this.props.transitionSpeed : 0
-		);
+		setTimeout(() => this.setVisible(pane), animate ? this.props.transitionSpeed : 0);
 	}
 
 	/**
-	 * Go to the previous pane.
+	 * Set a pane to visible.
+	 * We do this by setting the pane index as visible state, this is compared &
+	 * passed down to the children so they know if they are visible or not.
+	 * We also set the scroll position to top left so we are back on top.
 	 *
+	 * @param  {Number} pane
 	 * @return {void}
 	 */
-	prev() {
-		const previousPane = this.state.currentPane < 1
-			? 0
-			: this.state.currentPane - 1;
+	setVisible(pane) {
+		if (pane === this.state.visible) return true;
 
-		this.moveTo(previousPane, true);
-	}
-
-	/**
-	 * Go to the next pane.
-	 *
-	 * @return {void}
-	 */
-	next() {
-		const currentPane = this.state.currentPane;
-		const nextPane = currentPane === this.props.children.length - 1
-			? currentPane
-			: currentPane + 1;
-
-		this.moveTo(nextPane, true);
+		window.scrollTo(0, 0);
+		this.setState({ visible: pane });
 	}
 
 	/**
@@ -268,7 +329,7 @@ class Slider extends Component {
 	 */
 	enableTransition() {
 		const speed = this.props.transitionSpeed / 1000;
-		this.refs.container.style.transition = `transform ${speed}s ease-in`;
+		this.refs.container.style.transition = `transform ${speed}s ease-out`;
 	}
 
 	/**
@@ -290,7 +351,8 @@ class Slider extends Component {
 	*/
 	createRecognizer(element, direction, events = {}) {
 		const hammer = new Hammer.Manager(element, { touchAction: 'pan-y' });
-		hammer.add(new Hammer.Pan({ direction, treshold: 10 }));
+		const panning = new Hammer.Pan({ direction, treshold: 10 });
+		hammer.add(panning);
 		each(events, (cb, event) => hammer.on(event, cb));
 		return hammer;
 	}
@@ -324,6 +386,25 @@ class Slider extends Component {
 	width: 0
 
 	/**
+	 * The offset for the slider.
+	 * This is internally used by requestAnimationFrame for a smooth 60 fps.
+	 *
+	 * @type {Boolean}
+	 */
+	offset: 0
+
+	/**
+	 * Render the children.
+	 *
+	 * @return {Node}
+	 */
+	renderChildren() {
+		return this.props.children.map((child, index) =>
+			cloneElement(child, { visible: index === this.state.visible })
+		);
+	}
+
+	/**
 	 * Render the component.
 	 *
 	 * @return {ReactElement}
@@ -331,8 +412,8 @@ class Slider extends Component {
 	render() {
 		return (
 			<div style={{ overflow: 'hidden' }}>
-				<div ref="container" style={{ position: 'relative' }}>
-					{this.props.children}
+				<div ref="container" style={{ position: 'relative', willChange: 'transform' }}>
+					{this.renderChildren()}
 				</div>
 			</div>
 		);

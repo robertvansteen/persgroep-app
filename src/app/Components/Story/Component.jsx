@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import throttle from 'lodash/throttle';
 import AuthStore from 'Stores/AuthStore';
+import StoryLink from 'Components/StoryLink';
 import React, { Component, PropTypes } from 'react';
 import { likeStory, unlikeStory } from 'Sources/Stories';
 import LikeButton from 'Components/LikeButton/LikeButton';
@@ -17,8 +18,23 @@ export class Story extends Component {
 	 */
 	static propTypes = {
 		active: PropTypes.bool,
+		visible: PropTypes.bool,
 		className: PropTypes.string,
+		prevStory: PropTypes.object,
+		nextStory: PropTypes.object,
 		story: PropTypes.object.isRequired,
+	}
+
+	/**
+	 * Construct a new component.
+	 *
+	 * @param  {Object} props
+	 * @param  {Object} context
+	 * @return {void}
+	 */
+	constructor(props, context) {
+		super(props, context);
+		this.onScroll = throttle(this.onScroll, 200, { trailing: true });
 	}
 
 	/**
@@ -37,7 +53,7 @@ export class Story extends Component {
 	 * @return {void}
 	 */
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.active) {
+		if (nextProps.visible) {
 			this.refs.element.style.transform = 'translateY(0)';
 			this.refs.element.style.height = 'auto';
 		}
@@ -58,13 +74,15 @@ export class Story extends Component {
 	 *
 	 * @return {void}
 	 */
-	onScroll = throttle(() => {
+	onScroll = () => {
 		const scrolled = window.scrollY;
-		if (!this.props.active) {
-			this.refs.element.style.transform = `translateY(${scrolled}px)`;
-			this.refs.element.style.height = '100vh';
+		if (!this.props.visible) {
+			requestAnimationFrame(() => {
+				this.refs.element.style.transform = `translateY(${scrolled}px)`;
+				this.refs.element.style.height = '100vh';
+			});
 		}
-	}, 200, { trailing: true });
+	}
 
 	/**
 	 * Invoked when the like button is clicked.
@@ -74,6 +92,18 @@ export class Story extends Component {
 	onLikeButtonClick = () => {
 		const id = this.props.story.id;
 		this.props.story.liked_count === 1 ? unlikeStory(id) : likeStory(id);
+	}
+
+	/**
+	 * Get the class name for the component.
+	 *
+	 * @return {String}
+	 */
+	getClassName() {
+		return classNames({
+			[styles.wrapper]: true,
+			[this.props.className]: true,
+		});
 	}
 
 	/**
@@ -96,18 +126,6 @@ export class Story extends Component {
 	}
 
 	/**
-	 * Get the class name for the component.
-	 *
-	 * @return {String}
-	 */
-	getClassName() {
-		return classNames({
-			[styles.wrapper]: true,
-			[this.props.className]: true,
-		});
-	}
-
-	/**
 	 * Render the like button component.
 	 * We only do this if there is a logged in user.
 	 *
@@ -121,6 +139,23 @@ export class Story extends Component {
 				active={this.props.story.liked_count === 1}
 				onClick={this.onLikeButtonClick}
 			/>
+		);
+	}
+
+	renderNavigation() {
+		const next = this.props.nextStory
+			? <StoryLink direction="right" story={this.props.nextStory} />
+			: null;
+
+		const prev = this.props.prevStory
+			? <StoryLink direction="left" story={this.props.prevStory} />
+			: null;
+
+		return (
+			<div className={styles.navigation}>
+				{prev}
+				{next}
+			</div>
 		);
 	}
 
@@ -157,8 +192,8 @@ export class Story extends Component {
 							dangerouslySetInnerHTML={{ __html: body }}
 						>
 						</div>
-
 						{this.renderLikeButton()}
+						{this.renderNavigation()}
 					</div>
 				</div>
 			</div>

@@ -28,9 +28,6 @@ describe('Category component', () => {
 	beforeEach(() => {
 		component = shallow(<Category {...defaultProps} />);
 	});
-	it('should render the category name', () => {
-		component.should.contain('foo');
-	});
 	it('should render the excerpt of the stories passed in', () => {
 		component.should.have.exactly(3).descendants(StoryExcerpt);
 	});

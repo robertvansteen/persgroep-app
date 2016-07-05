@@ -1,7 +1,8 @@
-@value light from 'Stylesheets/colors';
+@value grey-light, light from 'Stylesheets/colors';
 
 .wrapper {
 	position: relative;
+	background: grey-light;
 }
 
 .slide {

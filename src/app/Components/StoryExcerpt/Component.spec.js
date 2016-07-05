@@ -30,7 +30,4 @@ describe('StoryExcerpt Component', () => {
 	it('Should render the date of the story', () => {
 		component.should.contain('1-1-2016');
 	});
-	it('Should render the excerpt of the story', () => {
-		component.should.contain('bar');
-	});
 });
