@@ -4,8 +4,6 @@
 // Load environment variables
 require('dotenv-safe').load();
 
-// Load assets
-const assets = require('./assets');
 const express = require('express');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
@@ -22,7 +20,7 @@ server.use(express.static('public'));
 server.use((request, response) => {
 	const app = require('../build/bundle.server.js');
 
-	return app.default(request, response, assets);
+	return app.default(request, response);
 });
 
 console.log(`Listening at ${process.env.HOST} on port ${process.env.PORT}`);

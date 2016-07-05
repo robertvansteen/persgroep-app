@@ -1,7 +1,6 @@
 const PATH = process.cwd();
 const path = require('path');
 const webpack = require('webpack');
-const AssetsPlugin = require('assets-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = require('./base')({
@@ -14,7 +13,6 @@ module.exports = require('./base')({
 
 	plugins: [
 		new ExtractTextPlugin('[name].[contenthash].css'),
-		new AssetsPlugin(),
 		new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
 		new webpack.DefinePlugin({
 			'process.env': { NODE_ENV: JSON.stringify('production') },

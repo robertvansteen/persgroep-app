@@ -1,6 +1,9 @@
 /* eslint strict: 0 */
 'use strict';
 
+const PATH = process.cwd();
+const path = require('path');
+
 // Load environment variables
 require('dotenv-safe').load();
 
@@ -52,10 +55,6 @@ server.use(express.static('build'));
 server.use(express.static('public'));
 
 server.use((request, response) => {
-	const assets = {
-		js: `http://${process.env.HOST}:${process.env.HOT_PORT}/bundle.client.js`,
-		css: '/main.css',
-	};
 	let app;
 
 	if (!bundleValid) {
@@ -64,7 +63,7 @@ server.use((request, response) => {
 
 	app = require('../build/bundle.server.js');
 
-	return app.default(request, response, assets);
+	return app.default(request, response);
 });
 
 console.log(`Listening at ${process.env.HOST} on port ${process.env.PORT}`);
@@ -79,8 +78,11 @@ const hotServer = new WebpackDevServer(webpack(config.client), {
 		children: false,
 	},
 	historyApiFallback: true,
-	contentBase: '../src/templates/',
+	contentBase: path.join(PATH, 'hot'),
 });
+
+hotServer.use(express.static('public'));
+
 hotServer.listen(process.env.HOT_PORT, process.env.HOST, (err) => {
 	if (err) console.log(err);
 

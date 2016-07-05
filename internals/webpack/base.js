@@ -42,6 +42,7 @@ module.exports = (options) => ({
 		extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.css'],
 		fallback: path.join(PATH, 'node_modules'),
 		alias: {
+			build: path.join(PATH, 'build'),
 			config: path.join(PATH, 'src/config'),
 			bootstrap: path.join(PATH, 'src/bootstrap'),
 		},
@@ -107,9 +108,4 @@ module.exports = (options) => ({
 			},
 		],
 	},
-
-	/**
-	 * Configure uglify js plugin
-	 */
-
 });

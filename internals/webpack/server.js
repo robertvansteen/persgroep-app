@@ -1,5 +1,6 @@
 const PATH = process.cwd();
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = require('./base')({
@@ -17,6 +18,10 @@ module.exports = require('./base')({
 
 	plugins: [
 		new ExtractTextPlugin('main.css'),
+		new HtmlWebpackPlugin({
+			filename: '_index.html',
+			template: 'src/app/Templates/index.html',
+		}),
 	],
 
 	eslint: {
