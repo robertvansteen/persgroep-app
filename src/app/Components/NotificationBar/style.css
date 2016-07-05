@@ -1,0 +1,55 @@
+@value blue, light from 'Stylesheets/colors';
+
+.bar {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+}
+
+.notification {
+	padding: 1em;
+	background: blue;
+}
+
+.icon {
+	display: inline-block;
+	color: light;
+	font-size: 1.5em;
+	margin-right: 1rem;
+	vertical-align: middle;
+}
+
+.text {
+	composes: sans from 'Stylesheets/typography';
+	display: inline-block;
+	color: light;
+	vertical-align: middle;
+}
+
+.enter { animation: slideDown 0.4s }
+.enter .text { opacity: 0; animation: grow 0.3s 0.3s both }
+.enter .icon { opacity: 0; animation: grow 0.3s 0.2s both }
+.leave { animation: slideUp 0.3s both }
+.leave .text { animation: shrink 0.1s both }
+.leave .icon { animation: shrink 0.1s both }
+
+@keyframes grow {
+	0% { opacity: 0; transform: scale(0) }
+	100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shrink {
+	0% { opacity: 1; transform: scale(1) }
+	100% { opacity: 0; transform: scale(0); }
+}
+
+@keyframes slideDown {
+	0% { transform: translate3d(0,-100%,0) }
+	100% { transform: translate3d(0,0,0) }
+}
+
+@keyframes slideUp {
+	0% { transform: translate3d(0,0,0) }
+	100% { transform: translate3d(0,-100%,0) }
+}

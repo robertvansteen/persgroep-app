@@ -42,11 +42,8 @@ module.exports = (options) => ({
 		extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.css'],
 		fallback: path.join(PATH, 'node_modules'),
 		alias: {
-			env: path.join(PATH, 'env'),
-			'eventEmitter/EventEmitter': 'wolfy87-eventemitter/EventEmitter',
-			'get-style-property': 'desandro-get-style-property',
-			'matches-selector': 'desandro-matches-selector',
-			classie: 'desandro-classie',
+			config: path.join(PATH, 'src/config'),
+			bootstrap: path.join(PATH, 'src/bootstrap'),
 		},
 	},
 
