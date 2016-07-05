@@ -55,9 +55,10 @@ export class StorySwiper extends Component {
 				>
 					{stories.map((story, index) =>
 						<Story
-							className={styles.slide}
-							key={story.id}
 							story={story}
+							key={story.id}
+							className={styles.slide}
+							nextStory={stories[index + 1]}
 							active={this.props.index === index}
 						/>
 					)}

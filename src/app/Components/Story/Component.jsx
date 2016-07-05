@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import throttle from 'lodash/throttle';
 import AuthStore from 'Stores/AuthStore';
+import StoryLink from 'Components/StoryLink';
 import React, { Component, PropTypes } from 'react';
 import { likeStory, unlikeStory } from 'Sources/Stories';
 import LikeButton from 'Components/LikeButton/LikeButton';
@@ -19,6 +20,8 @@ export class Story extends Component {
 		active: PropTypes.bool,
 		visible: PropTypes.bool,
 		className: PropTypes.string,
+		prevStory: PropTypes.object,
+		nextStory: PropTypes.object,
 		story: PropTypes.object.isRequired,
 	}
 
@@ -92,6 +95,18 @@ export class Story extends Component {
 	}
 
 	/**
+	 * Get the class name for the component.
+	 *
+	 * @return {String}
+	 */
+	getClassName() {
+		return classNames({
+			[styles.wrapper]: true,
+			[this.props.className]: true,
+		});
+	}
+
+	/**
 	 * Parse the body of the story to set the CSS modules classes on the elements.
 	 *
 	 * @param  {String} body
@@ -111,18 +126,6 @@ export class Story extends Component {
 	}
 
 	/**
-	 * Get the class name for the component.
-	 *
-	 * @return {String}
-	 */
-	getClassName() {
-		return classNames({
-			[styles.wrapper]: true,
-			[this.props.className]: true,
-		});
-	}
-
-	/**
 	 * Render the like button component.
 	 * We only do this if there is a logged in user.
 	 *
@@ -136,6 +139,23 @@ export class Story extends Component {
 				active={this.props.story.liked_count === 1}
 				onClick={this.onLikeButtonClick}
 			/>
+		);
+	}
+
+	renderNavigation() {
+		const next = this.props.nextStory
+			? <StoryLink direction="right" story={this.props.nextStory} />
+			: null;
+
+		const prev = this.props.prevStory
+			? <StoryLink direction="left" story={this.props.prevStory} />
+			: null;
+
+		return (
+			<div className={styles.navigation}>
+				{prev}
+				{next}
+			</div>
 		);
 	}
 
@@ -172,8 +192,8 @@ export class Story extends Component {
 							dangerouslySetInnerHTML={{ __html: body }}
 						>
 						</div>
-
 						{this.renderLikeButton()}
+						{this.renderNavigation()}
 					</div>
 				</div>
 			</div>

@@ -1,0 +1,31 @@
+@value dark, grey from 'Stylesheets/colors';
+
+.component {
+	display: flex;
+	align-items: center;
+	max-width: 75%;
+}
+
+.left { margin-right: auto }
+.right { margin-left: auto }
+
+.label {
+	composes: sans from 'Stylesheets/typography';
+	display: block;
+	color: grey;
+	font-size: 0.75em;
+}
+
+.title {
+	composes: sans from 'Stylesheets/typography';
+	display: block;
+	color: dark;
+	margin-top: 0.25em;
+}
+
+.icon {
+	color: dark;
+	font-size: 1.75em;
+}
+
+.left .icon { order: -1 }
