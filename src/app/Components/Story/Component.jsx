@@ -44,6 +44,8 @@ export class Story extends Component {
 	 */
 	componentDidMount() {
 		window.addEventListener('scroll', this.onScroll);
+		window.addEventListener('orientationchange', this.onOrientationChange);
+		this.setHeight();
 	}
 
 	/**
@@ -66,6 +68,7 @@ export class Story extends Component {
 	 */
 	componentWillUnmount() {
 		window.removeEventListener('scroll', this.onScroll);
+		window.removeEventListener('orientationchange', this.onOrientationChange);
 	}
 
 	/**
@@ -85,6 +88,22 @@ export class Story extends Component {
 	}
 
 	/**
+	 * Invoked when the orientation is changed.
+	 * Because we can't rely on the window height after an orientation change,
+	 * because the system still needs some time to resize everything we set up
+	 * a once event listener for the resize & use that to set the height correctly.
+	 *
+	 * @return {void}
+	 */
+	onOrientationChange = () => {
+		const resizeListener = () => {
+			this.setHeight();
+			window.removeEventListener('resize', resizeListener);
+		};
+		window.addEventListener('resize', resizeListener);
+	}
+
+	/**
 	 * Invoked when the like button is clicked.
 	 *
 	 * @return {void}
@@ -92,6 +111,19 @@ export class Story extends Component {
 	onLikeButtonClick = () => {
 		const id = this.props.story.id;
 		this.props.story.liked_count === 1 ? unlikeStory(id) : likeStory(id);
+	}
+
+	/**
+	 * Set a fixed height on the header.
+	 * We do this because Android causes a jump when scrolling when using 100vh.
+	 * So we do this manually with JavaScript by grabbing the window innerheight.
+	 *
+	 * @return {void}
+	 */
+	setHeight() {
+		const height = window.innerHeight;
+		console.log('Setting height to', window.innerHeight);
+		this.refs.header.style.height = `${height}px`;
 	}
 
 	/**
@@ -171,7 +203,7 @@ export class Story extends Component {
 		return (
 			<div className={this.getClassName()}>
 				<div ref="element" className={styles.element}>
-					<div className={styles.header}>
+					<div className={styles.header} ref="header">
 						<div
 							className={styles.cover}
 							style={{ backgroundImage: `url(${story.image_url})` }}
