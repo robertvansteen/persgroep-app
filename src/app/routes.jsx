@@ -39,7 +39,7 @@ export default function getRoutes() {
 				<Route path="/logout" component={Logout} onEnter={requireAuth} />
 
 				<Route path="/category/:id" component={Category} />
-				<Route path="story/new" component={CreateStory} onEnter={requireAuth} />
+				<Route path="write" component={CreateStory} onEnter={requireAuth} />
 				<Route path="/story/:id" component={Story} />
 
 				<Route path="/assignments" component={Assignments} onEnter={requireAuth} />

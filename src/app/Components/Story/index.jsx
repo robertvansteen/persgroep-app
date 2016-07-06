@@ -148,7 +148,7 @@ export class Story extends Component {
 		}
 
 		parsedBody = parsedBody.replace(/<p(.*?)>/g, `<p class="${styles.body__paragraph}">`);
-		parsedBody = parsedBody.replace(/<p(.*?)>(\s*?)<\/p>/g, '');
+		// parsedBody = parsedBody.replace(/<p(.*?)>(\s*?)<\/p>/g, '');
 
 		return parsedBody;
 	}
