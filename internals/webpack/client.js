@@ -1,14 +1,13 @@
 const PATH = process.cwd();
 const path = require('path');
 const webpack = require('webpack');
-const OfflinePlugin = require('offline-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = require('./base')({
 	output: {
 		path: path.join(PATH, 'hot'),
 		publicPath: `http://${process.env.HOST}:${process.env.HOT_PORT}/`,
-		filename: 'bundle.client.[hash].js',
+		filename: 'bundle.client.js',
 	},
 
 	entry: [
@@ -26,14 +25,5 @@ module.exports = require('./base')({
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
 		new HtmlWebpackPlugin({ template: 'src/app/Templates/index.html' }),
-		new OfflinePlugin({
-			publicPath: '/',
-			relativePaths: false,
-			ServiceWorker: {
-				events: true,
-				entry: path.join(PATH, 'src/services/service-worker.js'),
-				navigateFallbackURL: '/',
-			},
-		}),
 	],
 });

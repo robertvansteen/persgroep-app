@@ -1,6 +1,6 @@
 import styles from './style.css';
+import Button from 'Components/Button';
 import React, { PropTypes } from 'react';
-import Button from 'Components/Button/Component';
 
 const ActionBar = props => {
 	return (

@@ -3,11 +3,9 @@ import styles from './style.css';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
 import throttle from 'lodash/throttle';
-import AuthStore from 'Stores/AuthStore';
 import StoryLink from 'Components/StoryLink';
+import LikeButton from 'Components/LikeButton';
 import React, { Component, PropTypes } from 'react';
-import { likeStory, unlikeStory } from 'Sources/Stories';
-import LikeButton from 'Components/LikeButton/LikeButton';
 
 export class Story extends Component {
 
@@ -109,8 +107,7 @@ export class Story extends Component {
 	 * @return {void}
 	 */
 	onLikeButtonClick = () => {
-		const id = this.props.story.id;
-		this.props.story.liked_count === 1 ? unlikeStory(id) : likeStory(id);
+		this.props.story.toggleLike();
 	}
 
 	/**
@@ -158,18 +155,21 @@ export class Story extends Component {
 
 	/**
 	 * Render the like button component.
-	 * We only do this if there is a logged in user.
 	 *
-	 * @return {ReactElement|null}
+	 * @return {ReactElement}
 	 */
 	renderLikeButton() {
-		if (!AuthStore.token) return null;
+		const { story } = this.props;
 
 		return (
-			<LikeButton
-				active={this.props.story.liked_count === 1}
-				onClick={this.onLikeButtonClick}
-			/>
+			<div className={styles.actions}>
+				<LikeButton
+					size="large"
+					active={story.liked}
+					amount={story.like_count}
+					onClick={this.onLikeButtonClick}
+				/>
+			</div>
 		);
 	}
 

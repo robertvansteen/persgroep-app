@@ -1,10 +1,10 @@
 import styles from './style';
 import LoginStore from './Store';
 import { observer } from 'mobx-react';
+import Button from 'Components/Button';
 import AuthStore from 'Stores/AuthStore';
 import { compose, mapProps } from 'recompose';
 import Input from 'Components/Input/Component';
-import Button from 'Components/Button/Component';
 import React, { Component, PropTypes } from 'react';
 
 export class Login extends Component {

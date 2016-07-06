@@ -1,5 +1,5 @@
+import Button from 'Components/Button';
 import React, { PropTypes } from 'react';
-import Button from 'Components/Button/Component';
 
 const SubscribeButton = props => {
 	const buttonLabel = () => {

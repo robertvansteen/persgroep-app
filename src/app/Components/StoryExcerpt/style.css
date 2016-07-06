@@ -1,15 +1,12 @@
 @value light, dark, grey from 'Stylesheets/colors';
 
-.link {
-	display: block;
-	margin-bottom: 2em;
-	&:last-child { margin-bottom: 0 }
-}
-
 .article {
 	color: dark;
 	position: relative;
 	box-shadow: 0px 1px 2px rgba(0,0,0,0.25);
+	margin-bottom: 2em;
+
+	&:last-child { margin-bottom: 0 }
 }
 
 .upper {
@@ -33,6 +30,10 @@
 	background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 80%);
 }
 
+.link {
+	display: block;
+}
+
 .title {
 	position: relative;
 	composes: condensed from 'Stylesheets/typography';
@@ -44,9 +45,17 @@
 .lower {
 	display: flex;
 	background: light;
-	padding: 1em;
+	padding: 0.75em 1em;
 	align-items: center;
 	position: relative;
+}
+
+.lower_left {
+	padding-left: calc(50px + 1em);
+}
+
+.lower_right {
+	margin-left: auto;
 }
 
 .date {
@@ -68,5 +77,4 @@
 .author_name {
 	composes: paragraph sans from 'Stylesheets/typography';
 	font-size: 0.875em;
-	padding-left: calc(50px + 0.5em);
 }

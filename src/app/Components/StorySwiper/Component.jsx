@@ -1,9 +1,9 @@
 import styles from './style.css';
 import { Link } from 'react-router';
+import Story from 'Components/Story';
 import { observer } from 'mobx-react';
 import Slider from 'Components/Slider';
 import { Iteratable } from 'Library/PropTypes';
-import Story from 'Components/Story/Component';
 import React, { Component, PropTypes } from 'react';
 
 export class StorySwiper extends Component {

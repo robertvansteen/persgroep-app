@@ -1,7 +1,7 @@
 import styles from './style';
 import { observer } from 'mobx-react';
 import React, { PropTypes } from 'react';
-import StoryExcerpt from 'Components/StoryExcerpt/Component';
+import StoryExcerpt from 'Components/StoryExcerpt';
 
 const Category = (props) => {
 	const category = props.category;

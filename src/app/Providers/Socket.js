@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import AuthStore from 'Stores/AuthStore';
+import Stories from 'Collections/Stories';
 import NotificationStore from 'Stores/Notifications';
 
 class SocketProvider {
@@ -22,6 +23,7 @@ class SocketProvider {
 	boot() {
 		this.socket = io('localhost:3000');
 		this.socket.on('story.liked', this.onStoryLike);
+		this.socket.on('story.unliked', this.onStoryUnlike);
 	}
 
 	/**
@@ -29,17 +31,34 @@ class SocketProvider {
 	 * We check if it's the story of the currently authenticated user, if so we
 	 * show a notification.
 	 *
-	 * @param  {Object} like
+	 * @param  {Object} payload
 	 * @return {void}
 	 */
-	onStoryLike({ like }) {
+	onStoryLike({ like, story }) {
 		const { user } = AuthStore;
-		if (user && like.story.user_id === user.id) {
+		const author = story.user_id;
+		const liker = like.user_id;
+
+		if (user && author === user.id && liker !== user.id) {
 			NotificationStore.addNotification({
 				type: 'like',
 				message: `Your story is liked by ${like.user.name}`,
 			});
 		}
+
+		const localStory = Stories.find(story.id);
+		localStory.like_count = story.like_count;
+	}
+
+	/**
+	 * Invoked when a story is unliked.
+	 *
+	 * @param  {Object} payload
+	 * @return {void}
+	 */
+	onStoryUnlike({ story }) {
+		const localStory = Stories.find(story.id);
+		localStory.like_count = story.like_count;
 	}
 }
 

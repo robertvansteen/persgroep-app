@@ -1,6 +1,8 @@
 import Users from 'Collections/Users';
 import { computed, action } from 'mobx';
+import AuthStore from 'Stores/AuthStore';
 import BaseModel from 'Entities/BaseModel';
+import { likeStory, unlikeStory } from 'Sources/Stories';
 
 export default class Story extends BaseModel {
 
@@ -11,12 +13,28 @@ export default class Story extends BaseModel {
 	}
 
 	/**
+	 * Toggle like for the current story.
+	 *
+	 * @return {void}
+	 */
+	@action toggleLike() {
+		if (!AuthStore.token) return false;
+
+		return this.liked ? this.unlike() : this.like();
+	}
+
+	/**
 	 * Like the current story.
 	 *
 	 * @return {void}
 	 */
 	@action like() {
-		this.liked_count = 1;
+		if (!AuthStore.token) return false;
+
+		this.liked = true;
+		this.like_count++;
+
+		likeStory(this.id);
 	}
 
 	/**
@@ -25,6 +43,11 @@ export default class Story extends BaseModel {
 	 * @return {void}
 	 */
 	@action unlike() {
-		this.liked_count = 0;
+		if (!AuthStore.token) return false;
+
+		this.liked = false;
+		this.like_count--;
+
+		unlikeStory(this.id);
 	}
 }

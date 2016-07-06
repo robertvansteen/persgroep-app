@@ -31,15 +31,9 @@ export function publishStory(payload) {
 }
 
 export function likeStory(id) {
-	stories.find(id).like();
-	return fetch.post(`/stories/${id}/likes`)
-		.then(() => stories.find(id).like())
-		.catch(() => stories.find(id).unlike());
+	return fetch.post(`/stories/${id}/likes`);
 }
 
 export function unlikeStory(id) {
-	stories.find(id).unlike();
-	return fetch.delete(`/stories/${id}/likes`)
-		.then(() => stories.find(id).unlike())
-		.catch(() => stories.find(id).like());
+	return fetch.delete(`/stories/${id}/likes`);
 }

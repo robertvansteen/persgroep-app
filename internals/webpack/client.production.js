@@ -1,6 +1,7 @@
 const PATH = process.cwd();
 const path = require('path');
 const webpack = require('webpack');
+const OfflinePlugin = require('offline-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = require('./base')({
@@ -16,6 +17,15 @@ module.exports = require('./base')({
 		new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
 		new webpack.DefinePlugin({
 			'process.env': { NODE_ENV: JSON.stringify('production') },
+		}),
+		new OfflinePlugin({
+			publicPath: '/',
+			relativePaths: false,
+			ServiceWorker: {
+				events: true,
+				entry: path.join(PATH, 'src/services/service-worker.js'),
+				navigateFallbackURL: '/',
+			},
 		}),
 	],
 

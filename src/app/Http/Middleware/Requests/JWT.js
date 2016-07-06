@@ -36,8 +36,7 @@ class JWT extends RequestMiddleware {
 
 		if (isExpired && !AuthStore.refreshing) {
 			AuthStore.refreshing = true;
-			return refresh().then((response) => {
-				AuthStore.token = response.data.token;
+			return refresh().then(() => {
 				AuthStore.refreshing = false;
 				return this.setAuthorizationHeader(request);
 			});
