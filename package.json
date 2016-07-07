@@ -5,7 +5,7 @@
   "scripts": {
     "start": "pm2 start process.json",
     "dev": "rm -rf ./build && nodemon -w server/development.js server/development.js",
-    "compile": "rm -rf ./build && npm run compile:client && npm run compile:server",
+    "compile": "npm run compile:client && npm run compile:server",
     "compile:client": "webpack -p --config internals/webpack/client.production.js",
     "compile:server": "webpack -p --config internals/webpack/server.production.js",
     "lint": "eslint src",
