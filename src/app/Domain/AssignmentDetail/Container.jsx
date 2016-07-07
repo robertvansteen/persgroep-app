@@ -1,7 +1,7 @@
 import store from './Store';
 import { compose } from 'recompose';
 import { observer } from 'mobx-react';
-import Spinner from 'Components/Spinner/Component';
+import Spinner from 'Components/Spinner';
 import React, { Component, PropTypes } from 'react';
 import AssignmentDetail from 'Components/AssignmentDetail/Component';
 import {

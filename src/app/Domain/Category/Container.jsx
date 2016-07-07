@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react';
+import Spinner from 'Components/Spinner';
 import StoryStore from 'Domain/Story/Store';
 import categories from 'Collections/Categories';
 import React, { Component, PropTypes } from 'react';
@@ -72,7 +73,7 @@ class CategoryContainer extends Component {
 	 */
 	render() {
 		if (!categories.find(this.props.params.id)) {
-			return (<div>Loading...</div>);
+			return <Spinner />;
 		}
 
 		return (

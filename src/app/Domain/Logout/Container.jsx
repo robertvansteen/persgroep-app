@@ -1,7 +1,7 @@
 import { compose } from 'recompose';
 import AuthStore from 'Stores/AuthStore';
 import { withRouter } from 'react-router';
-import Spinner from 'Components/Spinner/Component';
+import Spinner from 'Components/Spinner';
 import React, { Component, PropTypes } from 'react';
 
 class Logout extends Component {
