@@ -17,7 +17,7 @@ module.exports = require('./base')({
 	},
 
 	plugins: [
-		new ExtractTextPlugin('[name].[contenthash].css'),
+		new ExtractTextPlugin('bundle.[name].[contenthash].css'),
 		new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
 		new webpack.DefinePlugin({
 			'process.env': { NODE_ENV: JSON.stringify('production') },
