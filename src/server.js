@@ -1,8 +1,7 @@
 import getRoutes from 'routes';
 import { createElement } from 'react';
-import template from 'lodash/template';
 import AuthStore from 'Stores/AuthStore';
-import indexTemplate from 'build/_index.html';
+import renderTemplate from 'lodash/template';
 import { renderToString } from 'react-dom/server';
 import { RouterContext, match } from 'react-router';
 import createLocation from 'history/lib/createLocation';
@@ -27,15 +26,15 @@ function setSession(request) {
  *
  * @param  {Response} response
  * @param  {Object} routerState
- * @param  {Object} assets
+ * @param  {String} template
  * @return {Response}
  */
-function render(response, routerState) {
+function render(response, routerState, template) {
 	const componentHtml = renderToString(
 		createElement(RouterContext, routerState),
 	);
 
-	const HTML = template(indexTemplate)({ componentHtml });
+	const HTML = renderTemplate(template)({ componentHtml });
 	response.end(HTML);
 }
 
@@ -44,9 +43,10 @@ function render(response, routerState) {
  *
  * @param  {Request} request
  * @param  {Response} response
+ * @param  {String} template
  * @return {void}
  */
-export default function (request, response) {
+export default function (request, response, template) {
 	const routes = getRoutes();
 	const location = createLocation(request.url);
 	const history = createHistory(request.originalUrl);
@@ -67,6 +67,6 @@ export default function (request, response) {
 			return response.status(400).end('Not found');
 		}
 
-		render(response, routerState);
+		render(response, routerState, template);
 	});
 }
