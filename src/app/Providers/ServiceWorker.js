@@ -17,6 +17,8 @@ class ServiceWorkerProvider {
 	 * @return {void}
 	 */
 	boot() {
+		if (!process.env.SERVICE_WORKER) return false;
+
 		if ('serviceWorker' in navigator) {
 			navigator.serviceWorker.register('/service-worker.js');
 		}
