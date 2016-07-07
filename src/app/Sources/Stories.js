@@ -1,4 +1,5 @@
 import fetch from 'axios';
+import each from 'lodash/each';
 import users from 'Collections/Users';
 import stories from 'Collections/Stories';
 import { storySchema } from 'Stores/Schema';
@@ -26,8 +27,11 @@ export function fetchStory(id) {
 		});
 }
 
-export function publishStory(payload) {
-	return fetch.post(`/stories`, payload);
+export function publishStory(data, files) {
+	const form = new FormData();
+	each(data, (value, key) => form.append(key, value));
+	each(files, (file, id) => form.append(id, file));
+	return fetch.post(`/stories`, form);
 }
 
 export function likeStory(id) {

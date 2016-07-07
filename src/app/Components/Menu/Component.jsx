@@ -51,7 +51,7 @@ class Menu extends Component {
 		return (
 			<nav className={styles.menu}>
 				<Link to="/category/1" className={styles.item}>Stories</Link>
-				<Link to="/story/new" className={styles.item}>New Story</Link>
+				<Link to="/write" className={styles.item}>New Story</Link>
 				{currentUser ? <Link to="/assignments" className={styles.item}>Opdrachten</Link> : null}
 				<hr className={styles.divider} />
 				{currentUser

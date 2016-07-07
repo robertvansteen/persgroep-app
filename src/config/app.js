@@ -1,4 +1,5 @@
 import SocketProvider from 'Providers/Socket';
+import ServiceWorkerProvider from 'Providers/ServiceWorker';
 
 export default {
 
@@ -45,6 +46,7 @@ export default {
 	*/
 	providers: [
 		SocketProvider,
+		ServiceWorkerProvider,
 	],
 
 };

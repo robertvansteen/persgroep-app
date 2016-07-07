@@ -1,10 +1,13 @@
+/* eslint-disable no-param-reassign */
+
+import uuid from 'node-uuid';
 import 'draft-js/dist/Draft.css';
 import styles from './style.css';
+import reduce from 'lodash/reduce';
 import Sidebar from './Sidebar/Component';
 import ImageComponent from './Entities/Image';
 import ActionBar from './ActionBar/Component';
 import TitleInput from './TitleInput/Component';
-import { stateToHTML } from 'draft-js-export-html';
 import React, { Component, PropTypes } from 'react';
 import InlineToolbar from './InlineToolbar/Component';
 import { getSelectionRange, getSelectedBlockElement } from './Utils';
@@ -13,6 +16,7 @@ import {
 	Entity,
 	RichUtils,
 	EditorState,
+	convertToRaw,
 	AtomicBlockUtils,
 	getVisibleSelectionRect,
 } from 'draft-js';
@@ -122,8 +126,13 @@ class EditorComponent extends Component {
 	 */
 	onPublishClick = () => {
 		const contentState = this.state.editorState.getCurrentContent();
-		const content = stateToHTML(contentState);
-		this.props.onSave({ title: this.state.title, body: content });
+		const raw = convertToRaw(contentState);
+		const draft = JSON.stringify(raw);
+		const files = reduce(raw.entityMap, (prev, { data }) => {
+			prev[data.id] = data.file;
+			return prev;
+		}, {});
+		this.props.onSave({ title: this.state.title, draft }, files);
 	}
 
 	/**
@@ -189,7 +198,8 @@ class EditorComponent extends Component {
 	 * @return {void}
 	 */
 	insertImage = (file) => {
-		const source = { src: URL.createObjectURL(file) };
+		const id = uuid.v4();
+		const source = { src: URL.createObjectURL(file), id, file };
 		const entityKey = Entity.create('atomic', 'IMMUTABLE', source);
 		this.onChange(
 			AtomicBlockUtils.insertAtomicBlock(

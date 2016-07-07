@@ -184,6 +184,22 @@ class Slider extends Component {
 	}
 
 	/**
+	 * Set a pane to visible.
+	 * We do this by setting the pane index as visible state, this is compared &
+	 * passed down to the children so they know if they are visible or not.
+	 * We also set the scroll position to top left so we are back on top.
+	 *
+	 * @param  {Number} pane
+	 * @return {void}
+	 */
+	setVisible(pane) {
+		if (pane === this.state.visible) return true;
+
+		window.scrollTo(0, 0);
+		this.setState({ visible: pane });
+	}
+
+	/**
 	 * Get the previous pane.
 	 *
 	 * @return {void}
@@ -214,6 +230,7 @@ class Slider extends Component {
 	 */
 	updateContainerOffset() {
 		const el = this.refs.container;
+		if (!el) return false;
 		const offset = this.offset;
 		el.style.transform = `translateX(${offset}px)`;
 		requestAnimationFrame(this.updateContainerOffset.bind(this));
@@ -268,21 +285,6 @@ class Slider extends Component {
 		setTimeout(() => this.setVisible(pane), animate ? this.props.transitionSpeed : 0);
 	}
 
-	/**
-	 * Set a pane to visible.
-	 * We do this by setting the pane index as visible state, this is compared &
-	 * passed down to the children so they know if they are visible or not.
-	 * We also set the scroll position to top left so we are back on top.
-	 *
-	 * @param  {Number} pane
-	 * @return {void}
-	 */
-	setVisible(pane) {
-		if (pane === this.state.visible) return true;
-
-		window.scrollTo(0, 0);
-		this.setState({ visible: pane });
-	}
 
 	/**
 	 * Calculate the dimensions of the panes & container and set the width

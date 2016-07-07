@@ -2,7 +2,7 @@ export function getSelectionRange() {
 	const selection = window.getSelection();
 	if (selection.rangeCount === 0) return null;
 	return selection.getRangeAt(0);
-};
+}
 
 export function getSelectedBlockElement(range) {
 	let node = range.startContainer;
@@ -17,4 +17,4 @@ export function getSelectedBlockElement(range) {
 	} while (node !== null);
 
 	return null;
-};
+}

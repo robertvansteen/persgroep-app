@@ -1,7 +1,7 @@
 import { compose } from 'recompose';
+import Editor from 'Components/Editor';
 import { withRouter } from 'react-router';
 import { publishStory } from 'Sources/Stories';
-import Editor from 'Components/Editor/Component';
 import React, { Component, PropTypes } from 'react';
 
 class CreateStory extends Component {
@@ -21,8 +21,8 @@ class CreateStory extends Component {
 	 * @param  {Object} data
 	 * @return {void}
 	 */
-	onSave = (data) => {
-		publishStory(data)
+	onSave = (data, files) => {
+		publishStory(data, files)
 			.then(response => {
 				const id = response.data.story.id;
 				this.props.router.push(`/story/${id}`);

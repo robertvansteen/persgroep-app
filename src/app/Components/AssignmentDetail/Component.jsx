@@ -33,9 +33,9 @@ const AssignmentDetail = props => {
 
 				<Status status={subscribeStatus} />
 				<Actions status={subscribeStatus} onClick={props.onSubscribe} />
-				
+
 				{subscribeStatus === 'accepted'
-					? (<Link to="/story/new" className={styles.write}>
+					? (<Link to="/write" className={styles.write}>
 							Aan de slag met de opdracht!
 						</Link>)
 					: null

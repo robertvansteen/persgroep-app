@@ -7,14 +7,16 @@ module.exports = require('./base')({
 	output: {
 		path: path.join(PATH, 'hot'),
 		publicPath: `http://${process.env.HOST}:${process.env.HOT_PORT}/`,
-		filename: 'bundle.client.js',
+		filename: '[name].js',
 	},
 
-	entry: [
-		`webpack-dev-server/client?http://${process.env.HOST}:${process.env.HOT_PORT}`,
-		'webpack/hot/only-dev-server',
-		path.join(PATH, 'src/client'),
-	],
+	entry: {
+		'bundle.client': [
+			`webpack-dev-server/client?http://${process.env.HOST}:${process.env.HOT_PORT}`,
+			'webpack/hot/only-dev-server',
+			path.join(PATH, 'src/client'),
+		],
+	},
 
 	cssLoaders: 'style-loader!css-loader?'
 	+ 'localIdentName=[local]__[path][name]__[hash:base64:5]'
