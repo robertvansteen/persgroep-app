@@ -64,7 +64,7 @@ class Header extends Component {
 	getClassName() {
 		return classNames(styles.header, {
 			[styles.fixed]: this.props.fixed,
-			[styles.hidden]: this.state.hidden,
+			[styles.hidden]: this.state.hidden && this.props.fixed,
 		});
 	}
 

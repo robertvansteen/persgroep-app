@@ -59,6 +59,8 @@ class App extends Component {
 		if (nextProps.location !== this.props.location) {
 			this.setState({ menuCollapsed: false });
 		}
+
+		this.scrollToTop(this.props.location, nextProps.location);
 	}
 
 	/**
@@ -80,6 +82,24 @@ class App extends Component {
 	shouldHeaderBeFixed() {
 		if (this.state.menuCollapsed) return false;
 		return this.props.location.pathname.includes('/story/');
+	}
+
+	/**
+	 * Scroll to the top when the router changes.
+	 * We do this on every page, except on a page change of the story swiper
+	 * it has it's own logic for handling scroll position.
+	 *
+	 * @param {Object} location
+	 * @param {Object} newLocation
+	 * @return {void}
+	 */
+	scrollToTop(location, newLocation) {
+		const path = location.pathname;
+		const newPath = newLocation.pathname;
+
+		if (path.includes('/story/') && newPath.includes('/story/')) return false;
+		
+		window.scrollTo(0, 0);
 	}
 
 	/**
