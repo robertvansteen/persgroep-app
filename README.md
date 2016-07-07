@@ -32,31 +32,31 @@ For setting up a production environment run `npm run compile && npm run start`.
 ## Structure
 Here is an outline of the application structure.
 ```
-- internals						– This folder stores files that are internally used by the system and are not exported or compiled.
-  - testing							- Configuration & bootstrap files for testing
-	- webpack							- Webpack configuration files
-- public							- Public folder that is used for static assets that should be exposed publicly.
-- server							- Server files, this contains the bootstrap files for a development & production server
-- src									- Contains the source code of the application.
-  - app									- Contains the application source
-		- Collections					- The collections of the applications that are made up of entities
-		- Components					- Small, reusable components go here
-		- Domain							- React containers that hold our application logic
-		- Entities						- The model files that describe the entities of the application
-		- Http								- Folder that contains middleware & kernel
-		- Library							- First party library files
-		- Providers						- Providers that can be configured to do all sort of various actions
-		- Sources							- Source files that contain actions how to interact with the API
-		- Stores							- General stores that are shared among the application
-		- Stylesheets					- Shared, general stylesheets that do not belong to a component
-		- Templates						- The html templates used by the server (Sidenote: this should probably be moved outside the app folder)
-		- routes.jsx					- Route configuration of the application
-		- store.js						- Global store container
-	- bootstrap						- This folder contains the startup script of the application
-	- config							- Configuration files for the application
-	- client.js						- Entry point for the client bundle
-	- server.js 					- Entry point for the server bundle
-* 										- Everything inside the root is meta files, like .gitignore, package.json & .travis.yml.
+- internals           – This folder stores files that are internally used by the system and are not exported or compiled.
+  - testing             - Configuration & bootstrap files for testing
+  - webpack             - Webpack configuration files
+- public              - Public folder that is used for static assets that should be exposed publicly.
+- server              - Server files, this contains the bootstrap files for a development & production server
+- src                 - Contains the source code of the application.
+  - app                 - Contains the application source
+    - Collections         - The collections of the applications that are made up of entities
+    - Components          - Small, reusable components go here
+    - Domain              - React containers that hold our application logic
+    - Entities            - The model files that describe the entities of the application
+    - Http                - Folder that contains middleware & kernel
+    - Library             - First party library files
+    - Providers           - Providers that can be configured to do all sort of various actions
+    - Sources             - Source files that contain actions how to interact with the API
+    - Stores              - General stores that are shared among the application
+    - Stylesheets         - Shared, general stylesheets that do not belong to a component
+    - Templates           - The html templates used by the server (Sidenote: this should probably be moved outside the app folder)
+    - routes.jsx          - Route configuration of the application
+    - store.js            - Global store container
+  - bootstrap           - This folder contains the startup script of the application
+  - config              - Configuration files for the application
+  - client.js           - Entry point for the client bundle
+  - server.js           - Entry point for the server bundle
+*                     - Everything inside the root is meta files, like .gitignore, package.json & .travis.yml.
 ```
 
 Because of the isomorphic nature of the application there are 2 entry points to our bundle: `src/client.js` & `src/server.js`.
