@@ -21,7 +21,7 @@ class SocketProvider {
 	 * @return {void}
 	 */
 	boot() {
-		this.socket = io('localhost:3000');
+		this.socket = io(process.env.SOCKET);
 		this.socket.on('story.liked', this.onStoryLike);
 		this.socket.on('story.unliked', this.onStoryUnlike);
 	}
