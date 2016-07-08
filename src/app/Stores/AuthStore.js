@@ -11,6 +11,11 @@ export class AuthStore {
 	@observable token = cookie.get('token');
 
 	/**
+	 * The authenticated user.
+	 */
+	@observable user = null;
+
+	/**
 	 * Indicates if the token is in the process of being refreshed.
 	 *
 	 * @type {Boolean}

@@ -7,7 +7,7 @@ import { normalize, arrayOf } from 'normalizr';
 import categories from 'Collections/Categories';
 
 export function fetchStoriesByCategory(categoryId) {
-	return fetch.get(`/categories/${categoryId}/stories?limit=3`)
+	return fetch.get(`/categories/${categoryId}/stories?limit=10`)
 		.then(response => {
 			const data = normalize(response.data, { data: arrayOf(storySchema) });
 			categories.addCollection(data.entities.categories, false);

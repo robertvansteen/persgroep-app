@@ -22,6 +22,7 @@ class Logout extends Component {
 	 */
 	componentDidMount() {
 		AuthStore.token = null;
+		AuthStore.user = null;
 		setTimeout(() => this.props.router.push('/'), 1000);
 	}
 
