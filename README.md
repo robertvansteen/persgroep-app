@@ -1,7 +1,10 @@
 # Persgroep app
 
-[![Build Status](https://travis-ci.org/reauv/persgroep-app.svg?branch=master)](https://travis-ci.org/reauv/persgroep-app)
-[![Coverage Status](https://coveralls.io/repos/github/reauv/persgroep-app/badge.svg?branch=master)](https://coveralls.io/github/reauv/persgroep-app?branch=master)
+This project is a web app for the Persgroep, a group of newspaper and other media that were looking
+for a new way to interact with people below 40 that do read a lot of news but mainly via internet
+and not stick to a single website. This project is the start & experiment of a platform that
+allows user to read stories, write the stories themselves and curate which stories are the
+best as a community.
 
 ## Demo
 You can view a live demo of the application here:
@@ -12,11 +15,13 @@ https://persgroep.rovansteen.nl/
 * Create story
 * Assignments
 * Login
+* Upload images in story
 
 ### To do
 * Profile pages
 * Edit story
 * Register
+* Upload video
 
 ## Getting started
 `git clone https://github.com/reauv/persgroep-app.git`
@@ -126,6 +131,10 @@ For our API we use a a network first strategy, meaning if there is a connection
 available we use the network, otherwise the cache.
 You can see the details of this configuration in the [webpack production config](https://github.com/reauv/persgroep-app/blob/master/internals/webpack/client.production.js)
 
+* Animations
+For the story swiper I've also implemented some performance improvements like
+will-change & requestAnimationFrame to hit those 60 frames per second.
+
 ### Real time web
 Real time web is all about enhancing the user's experience with direct changes
 to what the user sees with outside information.
@@ -138,3 +147,7 @@ Behind the scenes we leverage redis & socket.io to communicate events from the A
 to the application.
 
 ## Process
+I tried to use Pull Requests as much as possible and work on features separately.
+Because there was a lot of experimenting in this project this was not always
+possible. Since I was the only developer on the project I was okay with using the
+master branch often.
