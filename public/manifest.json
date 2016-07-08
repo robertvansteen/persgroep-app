@@ -3,7 +3,7 @@
  "short_name": "Persgroep",
  "display": "standalone",
  "start_url": "/",
- "background_color": "#B36458",
+ "background_color": "#353E55",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
