@@ -42,6 +42,7 @@ class SocketProvider {
 		if (user && author === user.id && liker !== user.id) {
 			NotificationStore.addNotification({
 				type: 'like',
+				url: `/story/${story.id}`,
 				message: `Your story is liked by ${like.user.name}`,
 			});
 		}

@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './style';
+import { Link } from 'react-router';
 import { observer } from 'mobx-react';
 import { Iteratable } from 'Library/PropTypes';
 import Transition from 'react-addons-css-transition-group';
@@ -26,14 +27,14 @@ const NotificationBar = (props) => {
 				transitionLeaveTimeout={200}
 			>
 				{props.notifications.map(notification =>
-					<div className={styles.notification} key={notification.id}>
+					<Link to={notification.url} className={styles.notification} key={notification.id}>
 						<span className={styles.icon}>
 							<i className={getIcon(notification.type)} />
 						</span>
 						<span className={styles.text}>
 							{notification.message}
 						</span>
-					</div>
+					</Link>
 				)}
 			</Transition>
 		</div>

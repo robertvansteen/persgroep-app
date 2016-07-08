@@ -33,6 +33,11 @@ export class Notifications {
 		setTimeout(this.clearNotification.bind(this), 5000);
 	}
 
+	/**
+	 * Clear the current active notifications.
+	 *
+	 * @return {void}
+	 */
 	@action clearNotification() {
 		this.active = [];
 	}
