@@ -25,13 +25,20 @@ https://persgroep.rovansteen.nl/
 
 ## Getting started
 `git clone https://github.com/reauv/persgroep-app.git`
+
 `cd persgroep-app`
+
 `npm install`
+
 `cp .env.example .env`
+
 Now edit the `.env` file to suit your needs.
+
 For the API endpoint you can set up your own API, check it's repository for doing so, or you can use the demo API on `api.persgroep.rovansteen.nl/api`
 
+
 To set up a development environment run `npm run dev`.
+
 For setting up a production environment run `npm run compile && npm run start`.
 
 ## Structure
