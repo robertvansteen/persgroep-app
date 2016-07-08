@@ -151,3 +151,23 @@ I tried to use Pull Requests as much as possible and work on features separately
 Because there was a lot of experimenting in this project this was not always
 possible. Since I was the only developer on the project I was okay with using the
 master branch often.
+
+## Technologies used & experimented with
+I experimented a lot with different tools, libraries & technologies. Too much to go into detail about each one,
+but to illustrate here is a list of all the stuff I played with and implemented.
+* HTTPS/SSL
+* Sockets
+* Service worker
+* Laravel (PHP)
+* RESTful API
+* Video uploading
+* Json Web Tokens
+* Redis
+* MySQL & subqueries
+* Hammer.js
+* Node
+* Webpack
+* Karma, Mocha, Chai, Sinon (Testing)
+* Istanbul (Code coverage)
+* MobX
+* Draft.js
