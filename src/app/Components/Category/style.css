@@ -3,4 +3,9 @@
 .wrapper {
 	background: grey-vivid;
 	padding-bottom: 2em;
+
+	@media (min-width: 40em) {
+		padding-top: 2em;
+		background: white;
+	}
 }
