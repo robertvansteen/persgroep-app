@@ -1,3 +1,5 @@
+@value red from 'Stylesheets/colors';
+
 .wrapper {
 	composes: wrapper from 'Stylesheets/general';
 	display: flex;
@@ -8,6 +10,12 @@
 
 .title {
 	composes: condensed h3 from "Stylesheets/typography";
+}
+
+.error_message {
+	composes: small bold sans from 'Stylesheets/typography';
+	margin-top: 1rem;
+	color: red;
 }
 
 .form {

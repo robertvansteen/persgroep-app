@@ -6,6 +6,7 @@ import { compose, mapProps } from 'recompose';
 import React, { Component, PropTypes } from 'react';
 
 class FormContainer extends Component {
+
 	/**
 	 * Define the context types of the component.
 	 *
@@ -27,6 +28,11 @@ class FormContainer extends Component {
 		}
 	}
 
+	/**
+	 * Render the component.
+	 *
+	 * @return {ReactElement}
+	 */
 	render() {
 		return (
 			<LoginForm />

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { PropTypes } from 'react';
 
 const Button = props => {
-	const className = classNames(styles.base, styles[props.type], styles[props.state]);
+	const className = classNames(styles.base, styles[props.sort], styles[props.state]);
 
 	return (
 		<button
@@ -16,14 +16,14 @@ const Button = props => {
 };
 
 Button.propTypes = {
+	sort: PropTypes.string,
 	state: PropTypes.string,
-	type: PropTypes.string,
 	label: PropTypes.string.isRequired,
 };
 
 Button.defaultProps = {
+	sort: 'button',
 	state: 'default',
-	type: 'button',
 };
 
 export default Button;

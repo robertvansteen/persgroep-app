@@ -1,33 +1,16 @@
 import styles from './style';
-import LoginStore from './Store';
+import LoginFormStore from './Store';
 import { observer } from 'mobx-react';
 import Button from 'Components/Button';
+import React, { Component } from 'react';
 import AuthStore from 'Stores/AuthStore';
 import { compose, mapProps } from 'recompose';
 import Input from 'Components/Input/Component';
-import React, { Component, PropTypes } from 'react';
 
 export class Login extends Component {
 
-	/**
-	 * Define the prop types for the component.
-	 *
-	 * @type {Object}
-	*/
-	static propTypes = {
-		errors: PropTypes.object,
-		submit: PropTypes.func.isRequired,
-		input: PropTypes.object.isRequired,
-		updateInput: PropTypes.func.isRequired,
-	}
-
-	/**
-	* Define the default props for the component.
-	*
-	* @type {Object}
-	*/
-	static defaultProps = {
-		errors: {},
+	componentWillMount() {
+		this.store = new LoginFormStore();
 	}
 
 	/**
@@ -38,7 +21,7 @@ export class Login extends Component {
 	 */
 	onInputChange = (event) => {
 		const { name, value } = event.target;
-		this.props.updateInput(name, value);
+		this.store.updateInput(name, value);
 	}
 
 	/**
@@ -48,7 +31,7 @@ export class Login extends Component {
 	 * @return {void}
 	 */
 	onBlur = (event) => {
-		this.props.input[event.target.name].touched = true;
+		this.store.input[event.target.name].touched = true;
 	}
 
 	/**
@@ -59,7 +42,15 @@ export class Login extends Component {
 	 */
 	onSubmit = (event) => {
 		event.preventDefault();
-		this.props.submit();
+		this.store.submit();
+	}
+
+	renderLoginButton() {
+		const label = this.store.submitting ? 'Signing you in...' : 'Sign in';
+
+		return (
+			<Button type="submit" label={label} />
+		);
 	}
 
 	/**
@@ -68,7 +59,7 @@ export class Login extends Component {
 	 * @return {ReactElement}
 	 */
 	render() {
-		const { input, errors } = this.props;
+		const { input, errors, errorMessage } = this.store;
 		const { email, password } = input;
 
 		return (
@@ -76,6 +67,7 @@ export class Login extends Component {
 				<h2 className={styles.title}>
 					Login
 				</h2>
+				<p className={styles.error_message}>{errorMessage}</p>
 				<form onSubmit={this.onSubmit} className={styles.form}>
 					<Input
 						label="Email"
@@ -99,7 +91,7 @@ export class Login extends Component {
 						{...password}
 					/>
 					<div className={styles.form__actions}>
-						<Button type="submit" label="Sign in" />
+						{this.renderLoginButton()}
 					</div>
 				</form>
 			</div>
@@ -107,8 +99,4 @@ export class Login extends Component {
 	}
 }
 
-export default compose(
-	observer,
-	mapProps(() => ({ ...LoginStore, errors: LoginStore.errors, token: AuthStore.token })),
-	observer,
-)(Login);
+export default observer(Login);

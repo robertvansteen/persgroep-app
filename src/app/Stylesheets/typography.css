@@ -19,6 +19,10 @@
 	font-family: 'Open Sans', 'Helvetica Neue', Helvetica, sans-serif;
 }
 
+.bold {
+	font-weight: bold;
+}
+
 .condensed {
 	font-family: 'Open Sans Condensed', sans-serif;
 	letter-spacing: 0.015em;
@@ -49,4 +53,8 @@
 .paragraph {
 	font-size: 1.25em;
 	line-height: 1.6;
+}
+
+.small {
+	font-size: 0.875em;
 }
