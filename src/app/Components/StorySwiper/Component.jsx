@@ -48,6 +48,7 @@ export class StorySwiper extends Component {
 
 		return (
 			<div className={styles.wrapper}>
+				{this.renderBackButton()}
 				<Slider
 					ref="swiper"
 					currentPane={this.props.index}
