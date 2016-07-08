@@ -42,7 +42,6 @@ class StoryContainer extends Component {
 		this.setState({ index: initialIndex >= 0 ? initialIndex : 0 });
 	}
 
-
 	/**
 	 * Invoked when the component is mounted.
 	 *

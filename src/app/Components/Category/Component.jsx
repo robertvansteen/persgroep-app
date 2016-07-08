@@ -12,6 +12,7 @@ const Category = (props) => {
 
 	return (
 		<section className={styles.wrapper}>
+			<p className={styles.description}>The best stories, curated by our community.</p>
 			{category.topStories.map(story =>
 				<StoryExcerpt
 					key={story.id}
