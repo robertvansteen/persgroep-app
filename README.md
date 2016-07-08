@@ -163,8 +163,15 @@ Because there was a lot of experimenting in this project this was not always
 possible. Since I was the only developer on the project I was okay with using the
 master branch often.
 
-## Technologies used & experimented with
-I experimented a lot with different tools, libraries & technologies. Too much to go into detail about each one,
+## Miscellaneous mentions
+There is one other technical thing I'd like to highlight that's not part of the front-end and that's
+the **Story Rank** system. This is something I build in the API and what it does it uses the basics
+of Google's page rank to determine which stories are good and which are less good. In Google's Page Rank algorithm
+outgoing links from websites that have a lot of inbound links count more than outgoing links from websites that
+have less inbound links. I applied this concept to the stories, the more likes you have on your stories the
+more impact your likes will have on the ranking of those stories. The query I use to calculate can be found [here](https://github.com/reauv/persgroep-api/blob/master/app/Story.php#L97)
+
+Furthermore I experimented a lot with different tools, libraries & technologies. Too much to go into detail about each one,
 but to illustrate here is a list of all the stuff I played with and implemented.
 * HTTPS/SSL
 * Sockets
