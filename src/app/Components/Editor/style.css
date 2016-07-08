@@ -10,6 +10,7 @@
 }
 
 .editor {
+	line-height: 1.5;
 	position: relative;
 	margin-top: 1em;
 }

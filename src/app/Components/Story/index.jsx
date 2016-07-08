@@ -148,7 +148,11 @@ export class Story extends Component {
 		}
 
 		parsedBody = parsedBody.replace(/<p(.*?)>/g, `<p class="${styles.body__paragraph}">`);
-		// parsedBody = parsedBody.replace(/<p(.*?)>(\s*?)<\/p>/g, '');
+		parsedBody = parsedBody.replace(/<h1(.*?)>/g, `<h1 class="${styles.body__h1}">`);
+		parsedBody = parsedBody.replace(/<h2(.*?)>/g, `<h2 class="${styles.body__h2}">`);
+		parsedBody = parsedBody.replace(/<strong(.*?)>/g, `<strong class="${styles.body__strong}">`);
+		parsedBody = parsedBody.replace(/<em(.*?)>/g, `<em class="${styles.body__em}">`);
+		parsedBody = parsedBody.replace(/<u(.*?)>/g, `<u class="${styles.body__u}">`);
 
 		return parsedBody;
 	}

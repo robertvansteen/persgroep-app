@@ -60,7 +60,7 @@
 }
 
 .date {
-	composes: sans from "Stylesheets/typography";
+	composes: sans from 'Stylesheets/typography';
 	font-size: 0.875em;
 	font-weight: bold;
 	color: grey;
@@ -71,9 +71,29 @@
 }
 
 .body__paragraph {
-	composes: sans paragraph from "Stylesheets/typography";
+	composes: sans paragraph from 'Stylesheets/typography';
 	font-size: 1.125em;
 	margin-bottom: 1em;
+}
+
+.body__h1 {
+	composes: h1 from 'Stylesheets/typography';
+}
+
+.body__h2 {
+	composes: h2 from 'Stylesheets/typography';
+}
+
+.body__strong {
+	composes: bold from 'Stylesheets/typography';
+}
+
+.body__em {
+	font-style: italic;
+}
+
+.body__u {
+	text-decoration: underline;
 }
 
 .actions {}

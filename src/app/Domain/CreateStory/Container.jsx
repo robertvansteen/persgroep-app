@@ -1,6 +1,7 @@
 import { compose } from 'recompose';
 import Editor from 'Components/Editor';
 import { withRouter } from 'react-router';
+import StoryStore from 'Domain/Story/Store';
 import { publishStory } from 'Sources/Stories';
 import React, { Component, PropTypes } from 'react';
 
@@ -24,6 +25,7 @@ class CreateStory extends Component {
 	onSave = (data, files) => {
 		publishStory(data, files)
 			.then(response => {
+				StoryStore.context = [];
 				const id = response.data.story.id;
 				this.props.router.push(`/story/${id}`);
 			});
