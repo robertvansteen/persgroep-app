@@ -92,12 +92,16 @@ I wanted the posts you see when panning to be stickied to the top. So if you are
 on one story, and you pan to the left to go to the next story you should see the
 top of the new story. This is something that is not really supported on the web,
 but with some workarounds I managed to create this behavior.
-* MobX
+* Observable application state
 Application state can be incredibly difficult to manage for web applications and
 quickly becomes a bug herd. To manage my application state I use a library called
 MobX that allows us to observe properties. In combination with mobx-react it can
 tell a component exactly when it's changed & that it should rerender.
-
+* Real time form errors
+To provide a good experience when filling out a form I've played with real time
+form validation on the login page. It validates as you type but only displays error
+when you've touched the form & it's blurred. But if there is an error it will
+disappear instantly if you correct the input.
 
 ### CSS to the rescue
 For the course **CSS to the rescue** I've used CSS modules to make my CSS modular
